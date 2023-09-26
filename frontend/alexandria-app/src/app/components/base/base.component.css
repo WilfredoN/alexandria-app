@@ -1,0 +1,38 @@
+.container{
+    margin: 0 auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 3em;
+}
+
+.big-panel {
+    display: grid;
+    row-gap: 2.5em;
+    grid-template-columns: 32.5em auto;
+    margin-right: 2.5em;
+}
+
+.note{
+    background: rgba(49, 126, 159, 1);
+    width: 30em;
+    height:20em;
+    display: flex;
+    align-items: center;
+    border-radius:60px;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.little-panel{
+    displey: flex;
+}
+
+.notion{
+    width: 25em;
+    height:6em;
+    border-radius:60px;
+    background: rgba(238, 136, 17, 1);
+    margin-bottom: 2em;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
