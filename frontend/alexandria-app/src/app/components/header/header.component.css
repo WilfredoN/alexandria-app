@@ -1,0 +1,31 @@
+.toolbars{
+  background: rgba(30, 64, 89, 1);
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar{
+    display: flex;
+    align-items: center;
+}
+
+.no-select{
+  cursor: pointer;
+  user-select: none;
+}
+
+.logo{
+  font-family: 'Courgette', cursive;
+  font-size: 3em;
+  color:rgba(82, 135, 173, 1);
+}
+.profil{
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 3em;
+  color: rgba(217, 217, 217, 1);
+  display: flex;
+  align-items: center;
+}
