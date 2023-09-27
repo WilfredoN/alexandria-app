@@ -49,6 +49,10 @@ textarea:focus, input:focus{
     color: rgba(200, 200, 200, 1);
 }
 
+.example-button-row{
+    margin-bottom: 1em;
+}
+
 .log-inBtn{
     background: rgba(74, 176, 170, 1);
     color: #FFFFFF;
@@ -61,4 +65,9 @@ textarea:focus, input:focus{
 
 .log-inBtn:hover{
     background: rgba(52, 132, 127, 1);
+}
+
+.log-in-panel a {
+    color: white;
+    text-decoration: none;
 }
