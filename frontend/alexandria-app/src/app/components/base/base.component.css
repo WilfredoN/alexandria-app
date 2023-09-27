@@ -1,43 +1,57 @@
-.container{
-    margin: 0 auto 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding-top: 3em;
+.container {
+	margin: 0 auto 0;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	align-items: center;
+	padding-top: 3em;
 }
 
 .big-panel {
-    display: grid;
-    row-gap: 2.5em;
-    grid-template-columns: 32.5em auto;
-    margin-right: 2.5em;
-    margin-bottom: 2.5em;
+	display: grid;
+	row-gap: 2.5em;
+	grid-template-columns: 32.5em auto;
+	margin-right: 2.5em;
+	margin-bottom: 2.5em;
+}
+.little-panel {
+	display: grid;
+	grid-template-rows: repeat(3, 10em);
+	align-items: center;
+	column-gap: 2em;
+}
+.note {
+	background: rgba(49, 126, 159, 1);
+	width: 30em;
+	height: 20em;
+	display: flex;
+	align-items: center;
+	border-radius: 60px;
+	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
-.note{
-    background: rgba(49, 126, 159, 1);
-    width: 30em;
-    height:20em;
-    display: flex;
-    align-items: center;
-    border-radius:60px;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
+.notion {
+	width: 25em;
+	height: 6em;
+	border-radius: 60px;
+	background: rgba(238, 136, 17, 1);
+	margin-bottom: 2em;
+	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
 }
-
-
-.notion{
-    width: 25em;
-    height:6em;
-    border-radius:60px;
-    background: rgba(238, 136, 17, 1);
-    margin-bottom: 2em;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
+@media screen and (max-width: 1280px) {
+	.container {
+		grid-template-columns: auto;
+	}
+	.big-panel {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 0;
+	}
+	.little-panel {
+		justify-content: center;
+	}
 }
-@media screen and (max-width: 1000px) {
-    .big-panel {
-        width: 300px;
-        display: flex;
-        flex-wrap: wrap;
-        padding-left: 2em;
-    }
+@media screen and (max-width: 880px) {
+	.big-panel {
+		grid-template-columns: repeat(1, 1fr);
+		margin: 0;
+	}
 }
