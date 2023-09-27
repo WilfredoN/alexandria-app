@@ -2,12 +2,16 @@
 	margin: 0;
 	padding: 0;
 }
+.toolbars {
+	width: 100%;
+}
 .mat-toolbar {
-	background: rgba(30, 64, 89, 1);
+	background-color: rgba(30, 64, 89, 1);
 	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	flex-wrap: nowrap;
 }
 .no-select {
 	cursor: pointer;
