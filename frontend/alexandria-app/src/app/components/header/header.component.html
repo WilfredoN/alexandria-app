@@ -1,11 +1,22 @@
 <mat-toolbar class="toolbars">
     <div class="toolbar no-select">
-        <mat-icon style="margin-right: 1em; color:rgba(82, 135, 173, 1);">menu</mat-icon>
         <span class="logo">Alexandria</span>
     </div>
     <span class="example-spacer"></span>
     <div class="toolbar no-select">
-        <mat-icon class="profil">account_circle</mat-icon>
+        <mat-icon class="profil" [matMenuTriggerFor]="profileMenu">account_circle</mat-icon>
     </div>
-    
+
+    <div>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>Пункт меню 1</button>
+            <button mat-menu-item>Пункт меню 2</button>
+        </mat-menu>
+        
+        <mat-menu #profileMenu="matMenu">   
+            <button mat-menu-item>Мой профиль</button>
+            <button mat-menu-item>Выйти</button>
+        </mat-menu>
+    </div>
+
 </mat-toolbar>
