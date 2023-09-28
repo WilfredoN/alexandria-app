@@ -1,34 +1,16 @@
 <div class="container">
 	<div class="log-in-panel">
-		<h1>Регистрация</h1>
+		<h1>Registration</h1>
 		<form [formGroup]="myForm" ngSubmit="_formSubmit()">
-			<input class="em--input" type="text" placeholder="ФИО" />
+			<input class="em--input" type="text" placeholder="Full Name" />
 
-			<input
-				class="em--input"
-				type="text"
-				formControlName="email"
-				placeholder="e-mail"
-				updateOn="change"
-			/>
-			<div
-				*ngIf="myForm.controls.email.invalid && myForm.controls.email.dirty"
-				class="text-danger"
-			>
-				<small *ngIf="myForm.controls.email.errors?.required"
-					>Ввод электронной почты обязателен!</small
-				>
-				<small *ngIf="myForm.controls.email.errors?.email"
-					>Введите корректную электронную почту!</small
-				>
-			</div>
+			<input class="em--input" type="text" placeholder="Login" />
 
 			<input
 				class="em--input"
 				type="password"
 				formControlName="pwd"
-				placeholder="Введите пароль"
-				updateOn="change"
+				placeholder="Choose password"
 			/>
 			<div
 				*ngIf="myForm.controls.pwd.invalid && myForm.controls.pwd.dirty"
@@ -41,17 +23,17 @@
 					>Пароль должен быть размером хотя бы 6 символов</small
 				>
 			</div>
-			<input class="em--input" type="text" placeholder="Група" />
+			<input class="em--input" type="text" placeholder="Group" />
 
 			<div class="example-button-row">
 				<input
 					type="submit"
-					value="Создать аккаунт"
+					value="Register"
 					class="log-inBtn"
 					[disabled]="myForm.invalid"
 				/>
 			</div>
 		</form>
-		<a href="log-in">Вход</a>
+		<a href="log-in">Log in</a>
 	</div>
 </div>
