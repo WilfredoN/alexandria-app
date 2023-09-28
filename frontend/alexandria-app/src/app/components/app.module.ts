@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SingUpComponent } from './login-panel/sing-up/sing-up.component';
 import { LogInComponent } from './login-panel/log-in/log-in.component';
+import { TasksComponent } from './base/tasks/tasks.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { LogInComponent } from './login-panel/log-in/log-in.component';
     HeaderComponent,
     BaseComponent,
     SingUpComponent,
-    LogInComponent
+    LogInComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,

@@ -11,9 +11,6 @@ export class LogInComponent {
   constructor(private router: Router) {}
 
   logIn() {
-    // Здесь можно добавить логику выхода из аккаунта, например, очистку токена или данных сессии.
-  
-    // После выхода из аккаунта, перенаправляем пользователя на страницу входа.
-    window.location.href = 'base';
+    this.router.navigate(['base']);
   }
 }
