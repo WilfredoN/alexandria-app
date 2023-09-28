@@ -51,6 +51,7 @@
 	}
 	.little-panel {
 		justify-content: center;
+		margin-top: 3em;
 	}
 }
 @media screen and (max-width: 860px) {
