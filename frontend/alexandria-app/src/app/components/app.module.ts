@@ -14,6 +14,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SingUpComponent } from './login-panel/sing-up/sing-up.component';
 import { LogInComponent } from './login-panel/log-in/log-in.component';
 import { TasksComponent } from './base/tasks/tasks.component';
+import { ScheduleComponent } from './base/schedule/schedule.component';
+import { AdsComponent } from './base/ads/ads.component';
+import { TeachersComponent } from './base/teachers/teachers.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { TasksComponent } from './base/tasks/tasks.component';
     BaseComponent,
     SingUpComponent,
     LogInComponent,
-    TasksComponent
+    TasksComponent,
+    ScheduleComponent,
+    AdsComponent,
+    TeachersComponent
   ],
   imports: [
     BrowserModule,

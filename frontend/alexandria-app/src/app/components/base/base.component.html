@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="big-panel">
 		<mat-card class="example-card note"
-		(click)="isPanelExpanded = !isPanelExpanded">
+		(click)="clickTasksRout()">
 			<mat-card-header>
 				<mat-card-title>Задания</mat-card-title>
 			</mat-card-header>
@@ -10,7 +10,8 @@
 			</mat-card-content>
 		</mat-card>
 
-		<mat-card class="example-card note">
+		<mat-card class="example-card note"
+		(click)="clickScheduleRout()">
 			<mat-card-header>
 				<mat-card-title>Расписание</mat-card-title>
 			</mat-card-header>
@@ -19,16 +20,18 @@
 			</mat-card-content>
 		</mat-card>
 
-		<mat-card class="example-card note">
+		<mat-card class="example-card note"
+		(click)="clickAdsRout()">
 			<mat-card-header>
-				<mat-card-title>???</mat-card-title>
+				<mat-card-title>Объявления</mat-card-title>
 			</mat-card-header>
 			<mat-card-content>
 				<p></p>
 			</mat-card-content>
 		</mat-card>
 
-		<mat-card class="example-card note">
+		<mat-card class="example-card note"
+		(click)="clickTeachersRout()">
 			<mat-card-header>
 				<mat-card-title>Преподователи</mat-card-title>
 			</mat-card-header>
