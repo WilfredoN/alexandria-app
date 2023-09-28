@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'log-in', component: LogInComponent},
   {path: 'sing-up', component: SingUpComponent},
 
-  {path: '**', redirectTo:"",component: BaseComponent}
+  {path: '**', redirectTo:"",component: BaseComponent}/*проверить, при перекиде сюда - смотреть входил ли в акк*/
 ];
 
 @NgModule({
