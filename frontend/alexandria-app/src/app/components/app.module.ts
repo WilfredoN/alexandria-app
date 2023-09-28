@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,7 +10,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatInputModule} from '@angular/material/input';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SingUpComponent } from './login-panel/sing-up/sing-up.component';
+import { LogInComponent } from './login-panel/log-in/log-in.component';
 
 
 @NgModule({
@@ -19,6 +20,8 @@ import {MatInputModule} from '@angular/material/input';
     AppComponent,
     HeaderComponent,
     BaseComponent,
+    SingUpComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,9 @@ import {MatInputModule} from '@angular/material/input';
     MatIconModule,
     MatCardModule,
     MatMenuModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

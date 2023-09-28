@@ -1,18 +1,57 @@
 <div class="container">
 	<div class="log-in-panel">
 		<h1>Регистрация</h1>
-		<input class="em--input" type="email" placeholder="ФИО" />
+		<form [formGroup]="myForm" ngSubmit="_formSubmit()">
+			<input class="em--input" type="text" placeholder="ФИО" />
 
-		<input class="em--input" type="email" placeholder="e-mail" />
+			<input
+				class="em--input"
+				type="text"
+				formControlName="email"
+				placeholder="e-mail"
+				updateOn="change"
+			/>
+			<div
+				*ngIf="myForm.controls.email.invalid && myForm.controls.email.dirty"
+				class="text-danger"
+			>
+				<small *ngIf="myForm.controls.email.errors?.required"
+					>Ввод электронной почты обязателен!</small
+				>
+				<small *ngIf="myForm.controls.email.errors?.email"
+					>Введите корректную электронную почту!</small
+				>
+			</div>
 
-		<input class="em--input" type="password" placeholder="Пароль" />
+			<input
+				class="em--input"
+				type="password"
+				formControlName="pwd"
+				placeholder="Введите пароль"
+				updateOn="change"
+			/>
+			<div
+				*ngIf="myForm.controls.pwd.invalid && myForm.controls.pwd.dirty"
+				class="text-danger"
+			>
+				<small *ngIf="myForm.controls.pwd?.errors?.required"
+					>Ввод пароля обязателен!</small
+				>
+				<small *ngIf="myForm.controls.pwd?.errors?.minlength"
+					>Пароль должен быть размером хотя бы 6 символов</small
+				>
+			</div>
+			<input class="em--input" type="text" placeholder="Група" />
 
-		<input class="em--input" type="email" placeholder="Група" />
-
-		<div class="example-button-row">
-			<button class="log-inBtn">Регистрация</button>
-		</div>
-
+			<div class="example-button-row">
+				<input
+					type="submit"
+					value="Создать аккаунт"
+					class="log-inBtn"
+					[disabled]="myForm.invalid"
+				/>
+			</div>
+		</form>
 		<a href="log-in">Вход</a>
 	</div>
 </div>
