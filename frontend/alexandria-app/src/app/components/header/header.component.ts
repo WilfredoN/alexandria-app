@@ -16,4 +16,8 @@ export class HeaderComponent {
   profileIn(){
     this.router.navigate(['/profile']);
   }
+
+  goToBase(){
+    this.router.navigate(['/base']);
+  }
 }
