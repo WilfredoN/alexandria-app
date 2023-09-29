@@ -1,1 +1,9 @@
+com\example\alexandria\repository\UserRepository.class
+com\example\alexandria\service\UserService.class
+com\example\alexandria\controller\UserController.class
+com\example\alexandria\service\UserDTO$UserDTOBuilder.class
+com\example\alexandria\repository\BaseEntity.class
+com\example\alexandria\repository\User.class
+com\example\alexandria\service\UserDTO.class
 com\example\alexandria\AlexandriaApplication.class
+com\example\alexandria\repository\User$UserBuilder.class

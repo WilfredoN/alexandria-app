@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +13,7 @@ export class HeaderComponent {
     this.isLoggedOut = true;
     this.router.navigate(['/log-in']);
   }
-
-  profileIn() {
+  profileIn(){
     this.router.navigate(['/profile']);
   }
 }
