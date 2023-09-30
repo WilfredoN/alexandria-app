@@ -13,5 +13,7 @@ export class HeaderComponent {
     this.isLoggedOut = true;
     this.router.navigate(['/log-in']);
   }
-
+  profileIn(){
+    this.router.navigate(['/profile']);
+  }
 }
