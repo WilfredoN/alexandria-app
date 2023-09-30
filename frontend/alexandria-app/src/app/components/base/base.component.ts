@@ -2,28 +2,28 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-	selector: 'app-base',
-	templateUrl: './base.component.html',
-	styleUrls: ['./base.component.css'],
+  selector: 'app-base',
+  templateUrl: './base.component.html',
+  styleUrls: ['./base.component.css']
 })
 export class BaseComponent {
-	isPanelExpanded: boolean = false;
+  isPanelExpanded: boolean = false;
 
-	constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
-	clickTasksRout() {
-		this.router.navigate(['/tasks']);
-	}
+  clickTasksRout() {
+    this.router.navigate(['/tasks']);
+  }
 
-	clickScheduleRout() {
-		this.router.navigate(['/schedule']);
-	}
+  clickScheduleRout() {
+    this.router.navigate(['/schedule']);
+  }
 
-	clickAnnouncementsRout() {
-		this.router.navigate(['/announcements']);
-	}
+  clickAdsRout() {
+    this.router.navigate(['/ads']);
+  }
 
-	clickTeachersRout() {
-		this.router.navigate(['/teachers']);
-	}
+  clickTeachersRout() {
+    this.router.navigate(['/teachers']);
+  }
 }
