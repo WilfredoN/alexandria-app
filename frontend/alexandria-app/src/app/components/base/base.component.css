@@ -136,4 +136,7 @@ p {
 	.little-panel {
 		grid-template-rows: repeat(1, 10em);
 	}
+	.mat-mdc-card-header {
+		font-size: 1.5em;
+	}
 }
