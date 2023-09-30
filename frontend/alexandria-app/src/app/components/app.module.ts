@@ -18,7 +18,6 @@ import { ScheduleComponent } from './base/schedule/schedule.component';
 import { AdsComponent } from './base/ads/ads.component';
 import { TeachersComponent } from './base/teachers/teachers.component';
 import { ProfileComponent } from './base/profile/profile.component';
-import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -28,6 +27,7 @@ import {MatTableModule} from '@angular/material/table';
     BaseComponent,
     SingUpComponent,
     LogInComponent,
+    TasksComponent,
     ScheduleComponent,
     AdsComponent,
     TeachersComponent,
@@ -43,8 +43,7 @@ import {MatTableModule} from '@angular/material/table';
     MatMenuModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatTableModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
