@@ -17,7 +17,6 @@ import { TasksComponent } from './base/tasks/tasks.component';
 import { ScheduleComponent } from './base/schedule/schedule.component';
 import { AdsComponent } from './base/ads/ads.component';
 import { TeachersComponent } from './base/teachers/teachers.component';
-import { ProfileComponent } from './base/profile/profile.component';
 
 
 @NgModule({
@@ -30,8 +29,7 @@ import { ProfileComponent } from './base/profile/profile.component';
     TasksComponent,
     ScheduleComponent,
     AdsComponent,
-    TeachersComponent,
-    ProfileComponent
+    TeachersComponent
   ],
   imports: [
     BrowserModule,
