@@ -1,8 +1,10 @@
 package com.example.alexandria.repository;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -12,8 +14,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User extends BaseEntity {
-
     private String uid;
     private String fullName;
     private String login;

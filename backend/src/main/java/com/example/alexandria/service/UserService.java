@@ -5,7 +5,9 @@ import com.example.alexandria.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,11 @@ public class UserService {
                 .map(this::mapUser)
                 .orElseThrow();
     }
+    public List<UserDTO> findUsers(String fullName, String login, String password) {
+        return userRepository.findAll().stream()
+                .map(this::mapUser)
+                .collect(Collectors.toList());
+    }
     public void deleteUser(String uid) {
         var user = userRepository.findByUid(uid).orElseThrow();
         userRepository.delete(user);
@@ -41,6 +48,7 @@ public class UserService {
                 .fullName(user.fullName())
                 .login(user.login())
                 .password(user.password())
+                        .userGroup(user.userGroup())
                 .build());
         return mapUser(savedUser);
     }
