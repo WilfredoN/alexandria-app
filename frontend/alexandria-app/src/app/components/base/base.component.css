@@ -8,7 +8,7 @@ p {
 .container {
 	margin-top: 5em;
 	display: grid;
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 2.5fr 1fr;
 	align-items: center;
 	justify-content: center;
 }
@@ -87,6 +87,19 @@ p {
 }
 
 /*	Media styles  */
+@media screen and (max-width: 1920px) {
+	.big-panel {
+		column-gap: 12em;
+		row-gap: 5em;
+		grid-template-columns: 29em auto;
+		margin: 0;
+	}
+	.note {
+		width: 33em;
+		height: 22em;
+	}
+}
+
 @media screen and (max-width: 1440px) {
 	.container {
 		grid-template-columns: auto;
