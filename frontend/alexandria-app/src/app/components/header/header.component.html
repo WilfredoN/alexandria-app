@@ -16,7 +16,7 @@
 		</mat-menu>
 
 		<mat-menu #profileMenu="matMenu">
-			<button mat-menu-item>Мой профиль</button>
+			<button (click)="profileIn()" mat-menu-item>Мой профиль</button>
 			<button mat-menu-item (click)="logout()">Выйти</button>
 		</mat-menu>
 	</div>
