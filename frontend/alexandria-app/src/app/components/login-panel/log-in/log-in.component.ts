@@ -1,16 +1,15 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css'],
+	selector: 'app-log-in',
+	templateUrl: './log-in.component.html',
+	styleUrls: ['./log-in.component.css'],
 })
-
 export class LogInComponent {
-  constructor(private router: Router) {}
+	constructor(private router: Router) {}
 
-  logIn() {
-    this.router.navigate(['base']);
-  }
+	logIn() {
+		this.router.navigate(['base']);
+	}
 }

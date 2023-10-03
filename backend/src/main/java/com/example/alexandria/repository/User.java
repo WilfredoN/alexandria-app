@@ -10,16 +10,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class User extends BaseEntity {
     private String uid;
-    private String fullName;
+    private String full_name;
     private String login;
     private String password;
-    private String userGroup;
+    private String user_group;
 
 }

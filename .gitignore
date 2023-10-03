@@ -280,3 +280,4 @@ e2e/*.map
 .DS_Store/
 
 /frontend/alexandria-app/node_modules/
+/backend/target/

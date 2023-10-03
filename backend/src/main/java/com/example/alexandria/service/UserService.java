@@ -17,38 +17,44 @@ public class UserService {
     private UserDTO mapUser(User user) {
         return UserDTO.builder()
                 .id(UUID.randomUUID().toString())
-                .fullName(user.getFullName())
+                .full_name(user.getFull_name())
                 .login(user.getLogin())
                 .password(user.getPassword())
+                .user_group(user.getUser_group())
                 .build();
     }
+
     public UserDTO findUser(String id) {
         return userRepository.findByUid(id)
                 .map(this::mapUser)
                 .orElseThrow();
     }
-    public List<UserDTO> findUsers(String fullName, String login, String password) {
+
+    public List<UserDTO> findUsers() {
         return userRepository.findAll().stream()
                 .map(this::mapUser)
                 .collect(Collectors.toList());
     }
+
     public void deleteUser(String uid) {
         var user = userRepository.findByUid(uid).orElseThrow();
         userRepository.delete(user);
     }
+
     public UserDTO updateUser(String uid, UserDTO user) {
         var userToUpdate = userRepository.findByUid(uid).orElseThrow();
-        userToUpdate.setFullName(user.fullName());
+        userToUpdate.setFull_name(user.full_name());
         userToUpdate.setLogin(user.login());
         return mapUser(userRepository.save(userToUpdate));
     }
+
     public UserDTO create(UserDTO user) {
         var savedUser = userRepository.save(User.builder()
                 .uid(UUID.randomUUID().toString())
-                .fullName(user.fullName())
+                .full_name(user.full_name())
                 .login(user.login())
                 .password(user.password())
-                        .userGroup(user.userGroup())
+                .user_group(user.user_group())
                 .build());
         return mapUser(savedUser);
     }
