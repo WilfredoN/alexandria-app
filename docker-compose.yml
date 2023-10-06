@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root1234
-      POSTGRES_DB: portgres
+      POSTGRES_DB: postgres
     ports:
       - "5432:5432"
   backend:
