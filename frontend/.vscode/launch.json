@@ -1,12 +1,12 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "configurations": [
     {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
-      "url": "http://alexandria-frontend-1:4200/"
+      "url": "http://localhost:80/"
     },
     {
       "name": "ng test",

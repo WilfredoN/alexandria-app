@@ -10,7 +10,7 @@ import java.util.List;
 //@Slf4j
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -42,7 +42,6 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    @CrossOrigin(origins = "http://localhost:4200")
     public UserDTO createUser(@RequestBody UserDTO userDTO) {
         return userService.create(userDTO);
     }

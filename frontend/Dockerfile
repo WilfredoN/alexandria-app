@@ -1,10 +1,12 @@
-FROM node:latest AS node
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install
-RUN npm run build --prod
+FROM node:alpine as build
+WORKDIR /app
 COPY . .
-FROM nginx:alpine
-COPY --from=node /app/dist/alexandria-app /usr/share/alexandria-app/html
-EXPOSE 80
+RUN npm install
+RUN npm run build
 
+FROM nginx:alpine
+COPY .nginx/nginx.conf /etc/nginx/nginx.conf
+WORKDIR /usr/share/nginx/html
+COPY --from=build app/dist/alexandria-app/ .
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
