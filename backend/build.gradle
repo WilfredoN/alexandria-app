@@ -42,12 +42,5 @@ test {
 }
 
 jar {
-	enabled = false
-}
-sourceSets {
-	main {
-		java {
-			srcDirs = ['src/main/java']
-		}
-	}
+	enabled = true
 }
