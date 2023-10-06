@@ -3,12 +3,11 @@ package com.example.alexandria.controller;
 import com.example.alexandria.service.UserDTO;
 import com.example.alexandria.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
+//@Slf4j
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -38,7 +37,7 @@ public class UserController {
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String user_group
     ) {
-        log.info("getUsers: full_name={}, login={}, password={}, user_group={}", full_name, login, password, user_group);
+      //  log.info("getUsers: full_name={}, login={}, password={}, user_group={}", full_name, login, password, user_group);
         return userService.findUsers();
     }
 
