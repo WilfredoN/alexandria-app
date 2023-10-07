@@ -28,14 +28,18 @@
 }
 .em--input {
 	width: 12.5em;
-	height: 2.5em;
+	height: 2.7em;
 	border-radius: 30px;
 	border: 0;
 	background: rgba(46, 121, 176, 1);
-	margin-bottom: 30px;
+	margin-bottom: 1.5em;
 	padding-left: 1em;
-	font-size: 24px;
+	font-size: 2em;
 	color: white;
+  transition: font-size 0.25s ease-in-out;
+}
+.em--input:not(:focus) {
+  font-size: 1.8em;
 }
 textarea:focus,
 input:focus {
@@ -47,7 +51,7 @@ input:focus {
 }
 
 ::placeholder {
-	color: rgba(200, 200, 200, 0.5);
+	color: rgba(200, 200, 200, 0.3);
 }
 
 .example-button-row {
@@ -72,4 +76,10 @@ input:focus {
 .log-in-panel a {
 	color: white;
 	text-decoration: none;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

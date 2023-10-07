@@ -23,7 +23,14 @@ public class UserService {
                 .user_group(user.getUser_group())
                 .build();
     }
-
+    public UserDTO logIn(UserDTO user) {
+        var foundUser = userRepository.findByLogin(user.login());
+        if (foundUser.isPresent() && foundUser.get().getPassword().equals(user.password())) {
+            return mapUser(foundUser.get());
+        } else {
+            throw new RuntimeException("Invalid login or password");
+        }
+    }
     public UserDTO findUser(String id) {
         return userRepository.findByUid(id)
                 .map(this::mapUser)

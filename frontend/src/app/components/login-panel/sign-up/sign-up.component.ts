@@ -58,15 +58,5 @@ export class SignUpComponent implements OnInit {
 				console.error('Registration Failed - ', error);
 			},
 		});
-		/*(response) => {
-				// Успешная регистрация
-				console.log('User Registered - ', response);
-				this.router.navigate(['base']);
-			},
-			(error) => {
-				// Неудачная регистрация
-				console.error('Registration Failed - ', error);
-			}
-		);*/
 	}
 }
