@@ -107,7 +107,7 @@ p {
 	}
 
 	.big-panel {
-		grid-template-columns: minmax(1fr);
+		grid-template-columns: 1fr;
 		margin: 0;
 	}
 

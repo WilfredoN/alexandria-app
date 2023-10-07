@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    container_name: alexandria-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root1234
+      POSTGRES_DB: postgres
+      POSTGRES_URL: jdbc:postgresql://alexandria-db:5432/postgres
+      SPRING_FLYWAY_URL: jdbc:postgresql://alexandria-db:5432/postgres
+      SPRING_FLYWAY_USER: root
+      SPRING_FLYWAY_PASSWORD: root1234
+    ports:
+      - "5432:5432"
+  backend:
+    build:
+      context: ./backend # Path to your Spring project
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+  frontend:
+    build:
+      context: ./frontend # Path to your Angular project
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
