@@ -1,14 +1,16 @@
 <div class="container">
-	<div class="log-in-panel">
-		<h1>Authorization</h1>
-		<input class="em--input" type="email" placeholder="Login" />
+  <div class="log-in-panel">
+    <h1>Authorization</h1>
+    <form [formGroup]="myForm" (ngSubmit)="logIn()">
+      <input class="em--input" type="email" placeholder="Login" formControlName="login" />
 
-		<input class="em--input" type="password" placeholder="Password" />
+      <input class="em--input" type="password" placeholder="Password" formControlName="password" />
 
-		<div class="example-button-row">
-			<button class="log-inBtn" (click)="logIn()">Log in</button>
-		</div>
+      <div class="example-button-row">
+        <button class="log-inBtn" type="submit">Log in</button>
+      </div>
+    </form>
 
-		<a href="sign-up">Register</a>
-	</div>
+    <a href="sign-up">Register</a>
+  </div>
 </div>

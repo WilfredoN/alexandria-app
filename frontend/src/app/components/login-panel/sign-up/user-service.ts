@@ -4,16 +4,25 @@ import { Observable } from 'rxjs';
 import { UserDTO } from './user-dto';
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class UserService {
-	private apiURL = 'http://localhost:8080/api/users';
-	constructor(private http: HttpClient) {}
-	createUser(user: UserDTO): Observable<UserDTO> {
-		return this.http.post<UserDTO>(`${this.apiURL}/create`, user, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-	}
+  private apiURL = 'http://localhost:8080/api/users';
+  constructor(private http: HttpClient) {}
+
+  createUser(user: UserDTO): Observable<UserDTO> {
+    return this.http.post<UserDTO>(`${this.apiURL}/create`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
+  logIn(user: UserDTO): Observable<UserDTO> {
+    return this.http.post<UserDTO>(`${this.apiURL}/login`, user, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
