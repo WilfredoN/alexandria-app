@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit {
 				this.router.navigate(['base']).then(r => console.log(r));
 			},
 			error: (error) => {
-				// Неудачная регистрация
+				alert('Try to use another login!')
 				console.error('Registration Failed - ', error);
 			},
 		});

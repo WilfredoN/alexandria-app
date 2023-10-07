@@ -46,6 +46,7 @@ export class LogInComponent implements OnInit {
         console.log('User Logged In - ', response);
       },
       error: (error) => {
+        alert('Incorrect login or password!')
         console.error('Login Failed - ', error);
       },
     });
