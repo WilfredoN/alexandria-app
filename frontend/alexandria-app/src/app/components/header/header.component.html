@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbars">
 	<div class="mat-toolbar">
 		<div class="toolbar no-select">
-			<span class="logo">Alexandria</span>
+			<span class="logo" (click)="goToBase()">Alexandria</span>
 		</div>
 		<div class="toolbar no-select">
 			<mat-icon class="profile" [matMenuTriggerFor]="profileMenu"
@@ -16,7 +16,7 @@
 		</mat-menu>
 
 		<mat-menu #profileMenu="matMenu">
-			<button mat-menu-item>Мой профиль</button>
+			<button mat-menu-item (click)="profileIn()">Мой профиль</button>
 			<button mat-menu-item (click)="logout()">Выйти</button>
 		</mat-menu>
 	</div>
