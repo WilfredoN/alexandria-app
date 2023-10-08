@@ -46,7 +46,6 @@ export class SignUpComponent implements OnInit {
 			password: this.myForm.value.pwd,
 			user_group: this.myForm.value.user_group,
 		};
-
 		this.userService.createUser(userDTO).subscribe({
 			next: (response) => {
 				// Успешная регистрация
