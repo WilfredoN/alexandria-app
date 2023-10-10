@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './login-panel/sign-up/sign-up.component';
 import { LogInComponent } from './login-panel/log-in/log-in.component';
@@ -45,6 +46,7 @@ import { ProfileComponent } from './base/profile/profile.component';
 		ReactiveFormsModule,
 		HttpClientModule,
 		TasksComponent,
+    MatButtonToggleModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

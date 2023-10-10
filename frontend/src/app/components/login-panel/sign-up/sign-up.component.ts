@@ -24,7 +24,8 @@ export class SignUpComponent implements OnInit {
 
 	_formValidate() {
 		this.myForm = this.fb.group({
-			pwd: [
+			role: ['', Validators.required],
+      pwd: [
 				'',
 				Validators.compose([Validators.required, Validators.minLength(6)]),
 			],

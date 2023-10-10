@@ -22,7 +22,9 @@
 }
 
 :host {
-	--mdc-filled-text-field-container-color: rgba(46, 121, 176, 1);
+  --mdc-filled-text-field-container-color: rgba(46, 121, 176, 1);
+  --mat-standard-button-toggle-background-color: rgba(46, 121, 176, 1);
+  --mat-standard-button-toggle-selected-state-background-color: rgb(37, 100, 143)
 }
 .em--input {
 	width: 12.5em;
@@ -31,14 +33,30 @@
 	border: 0;
 	background: rgba(46, 121, 176, 1);
 	margin-bottom: 1em;
-	padding-left: 1em;
 	font-size: 2em;
 	color: white;
   transition: font-size 0.25s ease-in-out;
 }
+.em--input:not(mat-button-toggle-group) {
+  padding-left: 1em;
+
+}
 .em--input:not(:focus) {
   font-size: 1.8em;
   transition: font-size 0.25s ease-in-out;
+}
+mat-button-toggle-group {
+  width: 100%;
+  padding: 0;
+}
+.em--input mat-button-toggle {
+  width:100%;
+  padding: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  border: 0;
+  justify-content: space-between;
 }
 .text-danger {
 	color: red;
