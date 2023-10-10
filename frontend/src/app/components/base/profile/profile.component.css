@@ -82,6 +82,7 @@
 
 .bnt_change:hover{
     background: rgb(8, 77, 75);
+    cursor: pointer;
 }
 
 /*-------------Темы---------- */
