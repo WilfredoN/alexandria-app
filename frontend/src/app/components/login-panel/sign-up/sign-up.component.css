@@ -5,10 +5,10 @@
 	justify-content: center;
 	align-items: center;
 }
-
 .log-in-panel {
 	width: 35em;
-	min-height: 40em;
+  min-height: 40em;
+	max-height: 65em;
 	background: rgba(42, 87, 120, 1);
 	border-radius: 60px;
 	display: flex;
@@ -16,7 +16,6 @@
 	align-items: center;
 	box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
 }
-
 .log-in-panel h1 {
 	color: rgba(200, 200, 200, 1);
 }
@@ -107,4 +106,28 @@ form {
 	align-items: center;
 	justify-content: center;
 	margin-top: 3em;
+}
+.subject-selection-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+.subject-option {
+  max-width: 15em;
+  width: 15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background-color: #2e79b0;
+  color: white;
+}
+
+mat-list-option {
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  align-content: center;
+  justify-content: center;
+  margin: .5em;
 }

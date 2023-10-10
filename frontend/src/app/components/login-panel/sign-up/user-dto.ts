@@ -3,4 +3,5 @@ export interface UserDTO {
 	login: string;
 	password: string;
 	user_group: string;
+  subjects: string[];
 }

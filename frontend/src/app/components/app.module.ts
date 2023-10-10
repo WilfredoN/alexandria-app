@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from "@angular/material/chips";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './login-panel/sign-up/sign-up.component';
@@ -20,6 +21,7 @@ import { AnnouncementsComponent } from './base/announcements/announcements.compo
 import { TeachersComponent } from './base/teachers/teachers.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './base/profile/profile.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
 	declarations: [
@@ -33,21 +35,23 @@ import { ProfileComponent } from './base/profile/profile.component';
 		TeachersComponent,
 		ProfileComponent,
 	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		BrowserAnimationsModule,
-		MatToolbarModule,
-		MatIconModule,
-		MatCardModule,
-		MatMenuModule,
-		MatInputModule,
-		FormsModule,
-		ReactiveFormsModule,
-		HttpClientModule,
-		TasksComponent,
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatMenuModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    TasksComponent,
     MatButtonToggleModule,
-	],
+    MatChipsModule,
+    MatListModule,
+  ],
 	providers: [],
 	bootstrap: [AppComponent],
 })
