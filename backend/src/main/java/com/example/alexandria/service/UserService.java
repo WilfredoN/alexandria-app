@@ -21,8 +21,10 @@ public class UserService {
                 .login(user.getLogin())
                 .password(user.getPassword())
                 .user_group(user.getUser_group())
+                .role(user.getRole())
                 .build();
     }
+
     public UserDTO logIn(UserDTO user) {
         var foundUser = userRepository.findByLogin(user.login());
         if (foundUser.isPresent() && foundUser.get().getPassword().equals(user.password())) {
@@ -31,6 +33,7 @@ public class UserService {
             throw new RuntimeException("Invalid login or password");
         }
     }
+
     public UserDTO findUser(String id) {
         return userRepository.findByUid(id)
                 .map(this::mapUser)
@@ -62,6 +65,7 @@ public class UserService {
                 .login(user.login())
                 .password(user.password())
                 .user_group(user.user_group())
+                .role(user.role())
                 .build());
         return mapUser(savedUser);
     }

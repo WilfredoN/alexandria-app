@@ -294,3 +294,4 @@ e2e/*.map
 
 /frontend/alexandria-app/node_modules/
 /backend/target/
+backend/bin/main/**
