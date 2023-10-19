@@ -295,3 +295,11 @@ e2e/*.map
 /frontend/alexandria-app/node_modules/
 /backend/target/
 backend/bin/main/**
+/backend/build/classes/
+/backend/build/generated/
+/backend/build/lombok/
+/backend/build/reports/
+/backend/build/resources/
+/backend/build/test-results/
+/backend/build/tmp/
+/backend/build/resolvedMainClassName
