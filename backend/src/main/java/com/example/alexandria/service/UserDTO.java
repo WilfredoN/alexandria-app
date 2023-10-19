@@ -8,7 +8,8 @@ public record UserDTO(
         String full_name,
         String login,
         String password,
-        String user_group,
+        String prefix_group,
+        String code_group,
         String role
 ) {
 }

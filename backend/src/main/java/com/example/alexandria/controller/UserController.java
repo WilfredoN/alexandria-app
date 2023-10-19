@@ -36,9 +36,12 @@ public class UserController {
             @RequestParam(required = false) String full_name,
             @RequestParam(required = false) String login,
             @RequestParam(required = false) String password,
-            @RequestParam(required = false) String user_group
+            @RequestParam(required = false) String prefix_group,
+            @RequestParam(required = false) String code_group,
+            @RequestParam(required = false) String role
     ) {
-        log.info("getUsers: full_name={}, login={}, password={}, user_group={}", full_name, login, password, user_group);
+        log.info("getUsers: full_name={}, login={}, password={}, prefix_group={}, code_group={}, " +
+                "role={}", full_name, login, password, prefix_group, code_group, role);
         return userService.findUsers();
     }
     @PostMapping("/login")

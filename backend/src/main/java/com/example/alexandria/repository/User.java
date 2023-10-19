@@ -1,10 +1,10 @@
 package com.example.alexandria.repository;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,12 +20,7 @@ public class User extends BaseEntity {
     private String full_name;
     private String login;
     private String password;
-    private String user_group;
+    private String prefix_group;
+    private String code_group;
     private String role;
-
-    @ManyToMany
-    @JoinTable(name = "teacher_subjects",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    private List<Subject> subjects; // связь с предметом
 }

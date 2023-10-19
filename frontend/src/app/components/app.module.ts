@@ -22,6 +22,9 @@ import { TeachersComponent } from './base/teachers/teachers.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './base/profile/profile.component';
 import {MatListModule} from "@angular/material/list";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSelectModule} from "@angular/material/select";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
 	declarations: [
@@ -51,6 +54,9 @@ import {MatListModule} from "@angular/material/list";
     MatButtonToggleModule,
     MatChipsModule,
     MatListModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatTableModule,
   ],
 	providers: [],
 	bootstrap: [AppComponent],

@@ -1,1 +1,17 @@
-<p>schedule works!</p>
+<div *ngIf="dataSource">
+    <table mat-table [dataSource]="daysOfWeek" class="mat-elevation-z8">
+        <ng-container *ngFor="let day of daysOfWeek" [matColumnDef]="day">
+            <th mat-header-cell *matHeaderCellDef> {{day}} </th>
+            <td mat-cell *matCellDef="let i = index">
+                <div *ngIf="dataSource[day] && dataSource[day][i]">
+                    <div *ngFor="let lesson of Object.keys(dataSource[day][i])">
+                        {{dataSource[day][i][lesson]}}
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="daysOfWeek"></tr>
+        <tr mat-row *matRowDef="let row; columns: daysOfWeek;"></tr>
+    </table>
+</div>

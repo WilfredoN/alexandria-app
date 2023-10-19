@@ -20,8 +20,9 @@ public class UserService {
                 .full_name(user.getFull_name())
                 .login(user.getLogin())
                 .password(user.getPassword())
-                .user_group(user.getUser_group())
                 .role(user.getRole())
+                .prefix_group(user.getPrefix_group())
+                .code_group(user.getCode_group())
                 .build();
     }
 
@@ -55,6 +56,7 @@ public class UserService {
         var userToUpdate = userRepository.findByUid(uid).orElseThrow();
         userToUpdate.setFull_name(user.full_name());
         userToUpdate.setLogin(user.login());
+        userToUpdate.setPassword(user.password());
         return mapUser(userRepository.save(userToUpdate));
     }
 
@@ -64,8 +66,9 @@ public class UserService {
                 .full_name(user.full_name())
                 .login(user.login())
                 .password(user.password())
-                .user_group(user.user_group())
                 .role(user.role())
+                .prefix_group(user.prefix_group())
+                .code_group(user.code_group())
                 .build());
         return mapUser(savedUser);
     }
