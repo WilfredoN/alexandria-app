@@ -10,23 +10,32 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/lesson")
+@RequestMapping("/api/lessons")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class LessonController {
     private final LessonService lessonService;
+
+    @GetMapping
+    public List<Lesson> getLessons() {
+        return lessonService.findLessons();
+    }
+
     @GetMapping("/{id}")
     public Lesson getLesson(@PathVariable long id) {
         return lessonService.findLesson(id);
     }
+
     @PostMapping("/create")
     public Lesson createLesson(@RequestBody Lesson lesson) {
         return lessonService.create(lesson);
     }
+
     @DeleteMapping("/{id}")
     public void deleteLesson(@PathVariable long id) {
         lessonService.delete(id);
     }
+
     @PutMapping("/update")
     public Lesson updateLesson(@RequestBody Lesson lesson) {
         return lessonService.update(lesson);

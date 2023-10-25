@@ -1,5 +1,6 @@
 package com.example.alexandria.controller;
 
+import com.example.alexandria.repository.Group;
 import com.example.alexandria.repository.Schedule;
 import com.example.alexandria.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
-
+    @GetMapping
+    public List<Schedule> getSchedules() {
+        return scheduleService.findSchedules();
+    }
     @GetMapping("/{id}")
     public Schedule getSchedule(@PathVariable long id) {
         return scheduleService.findSchedule(id);
     }
-    @GetMapping("/group/{group_name}")
-    public List<Schedule> getScheduleByGroup(@PathVariable String group_name) {
-        return scheduleService.findScheduleByGroup(group_name);
+    @GetMapping("/groups/{name}")
+    public List<Schedule> getScheduleByGroup(@PathVariable Group name) {
+        return scheduleService.findScheduleByGroup(name);
     }
     @PostMapping("/create")
     public Schedule createSchedule(@RequestBody Schedule schedule) {

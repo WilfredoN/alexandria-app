@@ -1,5 +1,6 @@
 package com.example.alexandria.service;
 
+import com.example.alexandria.repository.Group;
 import com.example.alexandria.repository.Schedule;
 import com.example.alexandria.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,27 +18,29 @@ public class ScheduleService {
                 .map(this::mapSchedule)
                 .orElseThrow();
     }
-
-    public List<Schedule> findScheduleByGroup(String group_name) {
-        return scheduleRepository.findScheduleByGroup_id(group_name);
+    public List<Schedule> findSchedules() {
+        return scheduleRepository.findAll();
+    }
+    public List<Schedule> findScheduleByGroup(Group groupId) {
+        return scheduleRepository.findScheduleByGroupId(groupId);
     }
 
     public Schedule mapSchedule(Schedule schedule) {
         return Schedule.builder()
                 .id(schedule.getId())
                 .day_of_week(schedule.getDay_of_week())
-                .lesson_id(schedule.getLesson_id())
-                .group_id(schedule.getGroup_id())
-                .teacher_id(schedule.getTeacher_id())
+                .lessonId(schedule.getLessonId())
+                .groupId(schedule.getGroupId())
+                .teacherId(schedule.getTeacherId())
                 .build();
     }
 
     public Schedule create(Schedule schedule) {
         return scheduleRepository.save(Schedule.builder()
                 .day_of_week(schedule.getDay_of_week())
-                .lesson_id(schedule.getLesson_id())
-                .group_id(schedule.getGroup_id())
-                .teacher_id(schedule.getTeacher_id())
+                .lessonId(schedule.getLessonId())
+                .groupId(schedule.getGroupId())
+                .teacherId(schedule.getTeacherId())
                 .build());
     }
 
@@ -45,9 +48,9 @@ public class ScheduleService {
         return scheduleRepository.save(Schedule.builder()
                 .id(schedule.getId())
                 .day_of_week(schedule.getDay_of_week())
-                .lesson_id(schedule.getLesson_id())
-                .group_id(schedule.getGroup_id())
-                .teacher_id(schedule.getTeacher_id())
+                .lessonId(schedule.getLessonId())
+                .groupId(schedule.getGroupId())
+                .teacherId(schedule.getTeacherId())
                 .build());
     }
 

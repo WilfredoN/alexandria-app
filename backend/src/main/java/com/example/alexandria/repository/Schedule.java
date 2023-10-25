@@ -18,12 +18,12 @@ public class Schedule {
     private long id;
     private String day_of_week;
     @ManyToOne
-    @JoinColumn(name = "lesson_id", nullable = false)
-    private Lesson lesson_id;
+    @JoinColumn(name = "lesson_id")
+    private Lesson lessonId;
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
-    private Group group_id;
+    @JoinColumn(name = "group_id")
+    private Group groupId;
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher_id;
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacherId;
 }

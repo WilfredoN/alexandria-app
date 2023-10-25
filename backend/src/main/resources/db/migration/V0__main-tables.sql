@@ -29,13 +29,9 @@ CREATE TABLE IF NOT EXISTS lessons
 (
     id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     lesson_name VARCHAR(65) NOT NULL,
+    lesson_type VARCHAR(40) NOT NULL,
     start_time  TIME        NOT NULL,
     end_time    TIME        NOT NULL
-);
-CREATE TABLE IF NOT EXISTS lessons_type
-(
-    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    lesson_type VARCHAR(40) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS schedule
 (
@@ -43,6 +39,5 @@ CREATE TABLE IF NOT EXISTS schedule
     day_of_week VARCHAR(255) NOT NULL,
     lesson_id   INTEGER      NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
     group_id    INTEGER      NOT NULL REFERENCES groups (id) ON DELETE CASCADE,
-    teacher_id  INTEGER      NOT NULL REFERENCES teachers (id) ON DELETE CASCADE,
-    lesson_type INTEGER      NOT NULL REFERENCES lessons_type (id) ON DELETE CASCADE
+    teacher_id  INTEGER      NOT NULL REFERENCES teachers (id) ON DELETE CASCADE
 );

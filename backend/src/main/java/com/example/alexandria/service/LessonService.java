@@ -5,6 +5,8 @@ import com.example.alexandria.repository.LessonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class LessonService {
@@ -13,17 +15,19 @@ public class LessonService {
     public Lesson findLesson(Long id) {
         return lessonRepository.findLessonById(id);
     }
-
+    public List<Lesson> findLessons() {
+        return lessonRepository.findAll();
+    }
     public Lesson create(Lesson lesson) {
         return lessonRepository.save(Lesson.builder()
-                .name(lesson.getName())
+                .lesson_name(lesson.getLesson_name())
                 .build());
     }
 
     public Lesson update(Lesson lesson) {
         return lessonRepository.save(Lesson.builder()
                 .id(lesson.getId())
-                .name(lesson.getName())
+                .lesson_name(lesson.getLesson_name())
                 .build());
     }
 

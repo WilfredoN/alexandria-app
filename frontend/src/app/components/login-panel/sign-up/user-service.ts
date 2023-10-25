@@ -10,7 +10,6 @@ export class UserService {
     currentUser: UserDTO | null = null;
     private apiURL = 'http://localhost:8080/api/students';
     private teacher_apiURL = 'http://localhost:8080/api/teachers';
-
     constructor(private http: HttpClient) {
     }
 

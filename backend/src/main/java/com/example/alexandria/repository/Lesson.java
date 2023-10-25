@@ -18,7 +18,7 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
+    private String lesson_name;
     private String lesson_type;
     private LocalTime start_time;
     private LocalTime end_time;

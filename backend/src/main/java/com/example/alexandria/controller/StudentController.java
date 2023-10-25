@@ -42,6 +42,7 @@ public class StudentController {
                 , full_name, login, password, group_name);
         return studentService.findStudents();
     }
+
     @PostMapping("/login")
     public StudentDTO logIn(@RequestBody StudentDTO studentDTO) {
         return studentService.logIn(studentDTO);
