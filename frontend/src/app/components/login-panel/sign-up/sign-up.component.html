@@ -29,18 +29,6 @@
                 placeholder="Choose password"
                 required
             />
-
-            <div
-                *ngIf="myForm.controls.pwd.invalid && myForm.controls.pwd.dirty"
-                class="text-danger"
-            >
-                <small *ngIf="myForm.controls.pwd?.errors?.required">
-                    Ввод пароля обязателен!
-                </small>
-                <small *ngIf="myForm.controls.pwd?.errors?.minlength">
-                    Пароль должен быть размером хотя бы 6 символов
-                </small>
-            </div>
             <div *ngIf="myForm.controls.role.value !== 'Teacher'" class="group_input">
                 <select class="em--input" formControlName="prefix_group">
                     <option value="KI">KI</option>

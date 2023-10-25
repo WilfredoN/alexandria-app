@@ -52,9 +52,20 @@ export class SignUpComponent implements OnInit {
 
 
     _formSubmit(): void {
-        if (this.myForm.invalid) {
-            this._snackBar.open('Ошибка валидации!', 'Закрыть', {duration: 3000});
-            return;
+        if (this.myForm.controls.full_name.value.length < 5) {
+            this._snackBar.open('Ваше ФИО должно быть больше 5 символов', 'Закрыть', {duration: 3000});
+        }
+        if (this.myForm.controls.login.value.length < 3) {
+            this._snackBar.open('Логин должен быть больше 3 символов', 'Закрыть', {duration: 3000});
+        }
+        if (this.myForm.controls.pwd.value.length < 6) {
+            this._snackBar.open('Пароль должен быть больше 6 символов', 'Закрыть', {duration: 3000});
+        }
+        if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.prefix_group.value.length === 0) {
+            this._snackBar.open('Префикс группы не может быть пустым', 'Закрыть', {duration: 3000});
+        }
+        if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.code_group.value.length === 0) {
+            this._snackBar.open('Код группы не может быть пустым', 'Закрыть', {duration: 3000});
         }
 
         const userDTO: UserDTO = {
@@ -84,7 +95,6 @@ export class SignUpComponent implements OnInit {
                 this.router.navigate(['base']).then(r => console.log(r));
             },
             error: (error) => {
-                this._snackBar.open('Неправильно введены данные!', 'Закрыть', {duration: 3000});
                 console.error('Ошибка регистрации - ', error);
             },
         });
