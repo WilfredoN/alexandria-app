@@ -21,5 +21,14 @@ public class GroupService {
                 .name(group.getName())
                 .build());
     }
+    public Group update(Group group) {
+        return groupRepository.save(Group.builder()
+                .id(group.getId())
+                .name(group.getName())
+                .build());
+    }
+    public void delete(Long id) {
+        groupRepository.deleteById(id);
+    }
 }
 
