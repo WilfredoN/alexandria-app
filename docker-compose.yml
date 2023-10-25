@@ -18,6 +18,7 @@ services:
       - db
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      FLYWAY_URL: jdbc:postgresql://db:5432/postgres
   frontend:
     build:
       context: ./frontend # Path to your Angular project

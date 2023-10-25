@@ -16,5 +16,5 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String group_name;
+    private String name;
 }

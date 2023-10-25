@@ -16,7 +16,7 @@ export class ScheduleComponent implements OnInit {
 
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('user') || 'null');
-        const userGroup = this.user?.prefix_group + '-' + this.user?.code_group;
+        const userGroup = this.user?.group_name;
         console.log(userGroup);
         this.http.get<Map<string, any>>(`http://localhost:8080/api/schedule/${userGroup}`).subscribe(data => {
             this.dataSource = data;

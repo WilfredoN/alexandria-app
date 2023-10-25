@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {UserService} from './user-service';
 import {UserDTO} from './user-dto';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-sign-up',
@@ -12,7 +13,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class SignUpComponent implements OnInit {
     myForm: FormGroup;
-    subjects = ['Math', 'Physics', 'Chemistry', 'Biology', 'English'];
 
     constructor(
         private fb: FormBuilder,
@@ -33,19 +33,20 @@ export class SignUpComponent implements OnInit {
             full_name: ['', Validators.required],
             login: ['', Validators.required],
             pwd: ['', [Validators.required, Validators.minLength(6)]],
-            prefix_group: ['KI', Validators.required],
-            code_group: ['', [Validators.required, Validators.pattern("[0-9]{3}")]],
-            subjects: [''],
+            prefix_group: ['', Validators.required],
+            code_group: ['', Validators.required],
         });
     }
 
 
     onRoleChange(event: { value: string }) {
+        console.log(this.myForm.controls)
         if (event.value === 'Teacher') {
             this.myForm.controls.prefix_group.reset();
+            this.myForm.controls.prefix_group.disable();
+            this.myForm.controls.code_group.disable();
             this.myForm.controls.code_group.reset();
         } else {
-            this.myForm.controls.subjects.reset();
         }
     }
 
@@ -60,13 +61,23 @@ export class SignUpComponent implements OnInit {
             full_name: this.myForm.value.full_name,
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
-            prefix_group: this.myForm.value.prefix_group,
-            code_group: this.myForm.value.code_group,
-            role: this.myForm.value.role,
+            group_name: this.myForm.value.prefix_group + "-" + this.myForm.value.code_group,
         };
+        const userDTO_teacher: UserDTO = {
+            full_name: this.myForm.value.full_name,
+            login: this.myForm.value.login,
+            password: this.myForm.value.pwd,
+        }
+        if (this.myForm.value.role === 'Teacher') {
+            this.handleResponse(this.userService.createTeacher(userDTO_teacher));
+        } else {
+            this.handleResponse(this.userService.createUser(userDTO));
+        }
+    }
 
-        this.userService.createUser(userDTO).subscribe({
-            next: ( response) => {
+    private handleResponse(response: Observable<UserDTO>) {
+        response.subscribe({
+            next: (response) => {
                 localStorage.setItem('user', JSON.stringify(response));
                 this._snackBar.open('Регистрация успешна!', 'Закрыть', {duration: 3000});
                 console.log('Регистрация прошла успешно - ', response);
@@ -77,6 +88,5 @@ export class SignUpComponent implements OnInit {
                 console.error('Ошибка регистрации - ', error);
             },
         });
-
     }
 }

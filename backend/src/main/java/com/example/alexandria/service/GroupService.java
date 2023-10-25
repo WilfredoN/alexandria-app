@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 public class GroupService {
     private final GroupRepository groupRepository;
 
-    public Group findGroup(long id) {
-        return groupRepository.findGroupById(id)
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+    public Group findGroup(String name) {
+        return groupRepository.findGroupByName(name)
+                .orElse(null);
     }
 
     public Group create(Group group) {
         return groupRepository.save(Group.builder()
-                .group_name(group.getGroup_name())
+                .name(group.getName())
                 .build());
     }
 }

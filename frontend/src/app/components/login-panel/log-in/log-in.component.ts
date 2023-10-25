@@ -39,10 +39,9 @@ export class LogInComponent implements OnInit {
         }
 
         const userDTO: UserDTO = {
-            full_name: "", code_group: "", prefix_group: "", subjects: [],
+            full_name: "", group_name:"",
             login: this.myForm.value.login,
             password: this.myForm.value.password,
-            role: ""
         };
 
         this.userService.logIn(userDTO).subscribe({

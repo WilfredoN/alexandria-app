@@ -49,16 +49,6 @@
                 </select>
                 <input type="text" class="em--input" formControlName="code_group" maxlength="3">
             </div>
-
-
-            <mat-selection-list *ngIf="myForm.controls.role.value === 'Teacher'" formControlName="subjects"
-                                class="subject-selection-list">
-                <mat-list-option *ngFor="let subject of subjects" [value]="subject" class="subject-option">
-                    {{subject}}
-                </mat-list-option>
-            </mat-selection-list>
-
-
             <div class="example-button-row">
                 <input type="submit" value="Register" class="log-inBtn"/>
             </div>
