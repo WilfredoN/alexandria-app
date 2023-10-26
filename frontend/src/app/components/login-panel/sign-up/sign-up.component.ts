@@ -54,18 +54,23 @@ export class SignUpComponent implements OnInit {
     _formSubmit(): void {
         if (this.myForm.controls.full_name.value.length < 5) {
             this._snackBar.open('Ваше ФИО должно быть больше 5 символов', 'Закрыть', {duration: 3000});
+            return;
         }
         if (this.myForm.controls.login.value.length < 3) {
             this._snackBar.open('Логин должен быть больше 3 символов', 'Закрыть', {duration: 3000});
+            return;
         }
         if (this.myForm.controls.pwd.value.length < 6) {
             this._snackBar.open('Пароль должен быть больше 6 символов', 'Закрыть', {duration: 3000});
+            return;
         }
         if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.prefix_group.value.length === 0) {
             this._snackBar.open('Префикс группы не может быть пустым', 'Закрыть', {duration: 3000});
+            return;
         }
         if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.code_group.value.length === 0) {
             this._snackBar.open('Код группы не может быть пустым', 'Закрыть', {duration: 3000});
+            return;
         }
 
         const userDTO: UserDTO = {

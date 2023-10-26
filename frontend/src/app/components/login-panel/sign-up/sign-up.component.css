@@ -79,12 +79,14 @@ input:focus {
 ::placeholder {
     color: rgba(200, 200, 200, 0.3);
 }
+
 mat-label {
     width: 20%;
     color: rgba(200, 200, 200, 0.3);
     cursor: default;
     position: absolute;
 }
+
 .example-button-row {
     margin-bottom: 1em;
 }
@@ -143,6 +145,7 @@ mat-list-option {
     justify-content: center;
     margin: .5em;
 }
+
 .group_input {
     width: 100%;
     display: flex;
@@ -150,6 +153,7 @@ mat-list-option {
     align-items: center;
     justify-content: center;
 }
+
 .group_input select {
     width: 25%;
     height: 2.55em;
@@ -157,6 +161,7 @@ mat-list-option {
     outline: none;
     border-radius: 30px 0 0 30px;
 }
+
 .group_input input {
     width: 50%;
     padding-left: 1em;

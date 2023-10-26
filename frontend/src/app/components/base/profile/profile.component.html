@@ -11,8 +11,7 @@
             <div class="info_about">
                 <p>Имя аккаунта: {{ user.full_name }}</p>
                 <p>Логин: {{ user.login }}</p>
-                <p>Группа: {{ user.group_name}}</p>
-                <p>Классный руководитель: -</p>
+                <p *ngIf="user.group_name !== undefined">Группа: {{ user.group_name}}</p>
                 <button class="bnt_change">Поменять пароль</button>
             </div>
         </div>
