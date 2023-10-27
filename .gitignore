@@ -68,7 +68,6 @@ replay_pid*
 .idea/**/gradle.xml
 .idea/**/libraries
 .gradle
-/build/
 # Ignore Gradle GUI config
 gradle-app.setting
 
