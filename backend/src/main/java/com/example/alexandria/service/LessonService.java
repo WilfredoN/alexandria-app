@@ -12,7 +12,7 @@ import java.util.List;
 public class LessonService {
     LessonRepository lessonRepository;
 
-    public Lesson findLesson(Long id) {
+    public List<Lesson> findLesson(Long id) {
         return lessonRepository.findLessonById(id);
     }
     public List<Lesson> findLessons() {

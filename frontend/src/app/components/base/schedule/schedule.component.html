@@ -1,3 +1,4 @@
+<div class="container" *ngIf="user">
 <table>
     <thead>
     <tr>
@@ -11,9 +12,13 @@
     </thead>
     <tbody>
     <tr *ngFor="let scheduleItem of schedule">
-        <td>{{ scheduleItem.day_of_week }}</td>
-        <td>{{ scheduleItem.lesson_id }}</td>
-        <td>{{ scheduleItem.teacher_id }}</td>
+        <td>{{ scheduleItem.day_of_week}}</td>
+        <td>{{ scheduleItem.lessonId.lesson_name }}</td>
+        <td>{{ scheduleItem.lessonId.lesson_type }}</td>
+        <td>{{ scheduleItem.lessonId.start_time }}</td>
+        <td>{{ scheduleItem.lessonId.end_time }}</td>
+        <td>{{ scheduleItem.teacherId.full_name }}</td>
     </tr>
     </tbody>
 </table>
+</div>

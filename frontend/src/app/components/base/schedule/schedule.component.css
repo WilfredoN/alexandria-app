@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+table {
+    color: #ffffff;
+    font-size: 1.2em;
+}
+table, th, td {
+    border: 1px solid #ffffff;
+    border-collapse: collapse;
+}
+td {
+    height: 100%;
+    padding: 2em;
+}
+

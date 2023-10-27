@@ -12,16 +12,28 @@ export class ScheduleComponent implements OnInit {
     schedule: ScheduleItem[] = [];
     user: UserDTO | null = null;
 
-    constructor(private scheduleService: ScheduleService) { }
+    constructor(private scheduleService: ScheduleService) {
+    }
 
     ngOnInit(): void {
-        // Получите группу из LocalStorage или другим способом
         this.user = JSON.parse(localStorage.getItem('user') || 'null');
         console.log(this.user);
         let groupName = this.user?.group_name;
-        // Используйте ваш сервис для получения расписания по выбранной группе
-        this.scheduleService.getScheduleByGroup(groupName).subscribe((data : ScheduleItem[]) => {
-            this.schedule = data;
+        this.scheduleService.getScheduleByGroup(groupName).subscribe((data: ScheduleItem[]) => {
+            this.schedule = data.sort((a, b) => {
+                // Сначала сортируем по дням недели
+                if (a.day_of_week > b.day_of_week) return -1;
+                if (a.day_of_week < b.day_of_week) return 1;
+
+                // Если дни недели одинаковые, сортируем по времени начала
+                if (a.lessonId.start_time < b.lessonId.start_time) return -1;
+                if (a.lessonId.start_time > b.lessonId.start_time) return 1;
+
+                return 0;  // Если и дни недели, и время начала одинаковые
+            });
+
+            console.log(data);
         });
+
     }
 }

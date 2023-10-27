@@ -1,7 +1,15 @@
-export interface ScheduleItem {
-    id: number;
+export class ScheduleItem {
     day_of_week: string;
-    lesson_id: number;
-    group_id: number;
-    teacher_id: number;
+    lessonId: {
+        lesson_name: string;
+        lesson_type: string;
+        start_time: string;
+        end_time: string;
+    };
+    groupId: {
+        name: string;
+    };
+    teacherId: {
+        full_name: string;
+    };
 }

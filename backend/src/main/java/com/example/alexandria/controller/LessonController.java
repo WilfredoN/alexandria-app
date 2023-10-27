@@ -22,7 +22,7 @@ public class LessonController {
     }
 
     @GetMapping("/{id}")
-    public Lesson getLesson(@PathVariable long id) {
+    public List<Lesson> getLesson(@PathVariable long id) {
         return lessonService.findLesson(id);
     }
 

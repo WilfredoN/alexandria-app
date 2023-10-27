@@ -1,6 +1,5 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Group;
 import com.example.alexandria.repository.Schedule;
 import com.example.alexandria.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,13 @@ public class ScheduleService {
                 .map(this::mapSchedule)
                 .orElseThrow();
     }
+
     public List<Schedule> findSchedules() {
         return scheduleRepository.findAll();
     }
-    public List<Schedule> findScheduleByGroup(Group groupId) {
-        return scheduleRepository.findScheduleByGroupId(groupId);
+
+    public List<Schedule> findScheduleByGroupName(String groupName) {
+        return scheduleRepository.findScheduleByGroupId_Name(groupName);
     }
 
     public Schedule mapSchedule(Schedule schedule) {
