@@ -39,7 +39,7 @@ export class LogInComponent implements OnInit {
         }
 
         const userDTO: UserDTO = {
-            full_name: "", group_name:"",
+            full_name: "", group_name: "",
             login: this.myForm.value.login,
             password: this.myForm.value.password,
         };
