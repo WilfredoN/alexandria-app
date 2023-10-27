@@ -1,0 +1,43 @@
+CREATE TABLE IF NOT EXISTS students
+(
+    uid        VARCHAR(255)        NOT NULL UNIQUE,
+    id         INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    full_name  VARCHAR(255)        NOT NULL CHECK ( LENGTH(full_name) >= 5 AND LENGTH(full_name) <= 255 ),
+    login      VARCHAR(255) UNIQUE NOT NULL CHECK ( LENGTH(login) >= 3 AND LENGTH(login) <= 255 ),
+    password   VARCHAR(255)        NOT NULL,
+    group_name VARCHAR(8)          NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS teachers
+(
+    uid        VARCHAR(255)        NOT NULL UNIQUE,
+    id         INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    full_name  VARCHAR(255)        NOT NULL CHECK ( LENGTH(full_name) >= 5 AND LENGTH(full_name) <= 255 ),
+    login      VARCHAR(255) UNIQUE NOT NULL CHECK ( LENGTH(login) >= 3 AND LENGTH(login) <= 255 ),
+    password   VARCHAR(255)        NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS groups
+(
+    id   INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(8) NOT NULL UNIQUE
+);
+CREATE TABLE IF NOT EXISTS lessons
+(
+    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    lesson_name VARCHAR(65) NOT NULL,
+    lesson_type VARCHAR(40) NOT NULL,
+    start_time  TIME        NOT NULL,
+    end_time    TIME        NOT NULL
+);
+CREATE TABLE IF NOT EXISTS schedule
+(
+    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    day_of_week VARCHAR(255) NOT NULL,
+    lesson_id   INTEGER      NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+    group_id    INTEGER      NOT NULL REFERENCES groups (id) ON DELETE CASCADE,
+    teacher_id  INTEGER      NOT NULL REFERENCES teachers (id) ON DELETE CASCADE
+);

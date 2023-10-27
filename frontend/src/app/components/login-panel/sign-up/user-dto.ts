@@ -1,6 +1,6 @@
 export interface UserDTO {
-	full_name: string;
-	login: string;
-	password: string;
-	user_group: string;
+    full_name: string;
+    login: string;
+    password: string;
+    group_name?: string;
 }

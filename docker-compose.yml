@@ -6,11 +6,6 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root1234
-      POSTGRES_DB: postgres
-      POSTGRES_URL: jdbc:postgresql://alexandria-db:5432/postgres
-      SPRING_FLYWAY_URL: jdbc:postgresql://alexandria-db:5432/postgres
-      SPRING_FLYWAY_USER: root
-      SPRING_FLYWAY_PASSWORD: root1234
     ports:
       - "5432:5432"
   backend:
@@ -23,6 +18,7 @@ services:
       - db
     environment:
       SPRING_PROFILES_ACTIVE: docker
+      FLYWAY_URL: jdbc:postgresql://db:5432/postgres
   frontend:
     build:
       context: ./frontend # Path to your Angular project
