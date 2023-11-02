@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import {UserDTO} from './user-dto';
-import {TeacherDTO} from "../../base/teachers/teacher-dto";
+import {TeacherDTO} from '../../base/teachers/teacher-dto';
 
 @Injectable({
     providedIn: 'root',
