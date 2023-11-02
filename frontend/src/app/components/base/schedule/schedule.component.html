@@ -1,24 +1,76 @@
-<div class="container" *ngIf="user">
-<table>
-    <thead>
-    <tr>
-        <th>День недели</th>
-        <th>Название занятия</th>
-        <th>Тип занятия</th>
-        <th>Начало</th>
-        <th>Конец</th>
-        <th>Преподаватель</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let scheduleItem of schedule">
-        <td>{{ scheduleItem.day_of_week}}</td>
-        <td>{{ scheduleItem.lessonId.lesson_name }}</td>
-        <td>{{ scheduleItem.lessonId.lesson_type }}</td>
-        <td>{{ scheduleItem.lessonId.start_time }}</td>
-        <td>{{ scheduleItem.lessonId.end_time }}</td>
-        <td>{{ scheduleItem.teacherId.full_name }}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="container">
+    <div class="current-info">
+        <div class="num-of-week">
+            <p class="num-of-week-label">Текущий номер недели:</p>
+            <p class="num-of-week-text">{{ weekNumber }} неделя</p>
+        </div>
+    </div>
+    <div class="main-schedule-table">
+        <table>
+            <tbody>
+              <tr class="days-of-week">
+                <td></td>
+                <td [ngStyle]="getColumnColor(0)"><p class="base-week-text" [ngClass]="{ 'bold-text': isRedColor(0) }">Понедельник</p></td>
+                <td [ngStyle]="getColumnColor(1)"><p class="base-week-text" [ngClass]="{ 'bold-text': isRedColor(1) }">Вторник</p></td>
+                <td [ngStyle]="getColumnColor(2)"><p class="base-week-text" [ngClass]="{ 'bold-text': isRedColor(2) }">Среда</p></td>
+                <td [ngStyle]="getColumnColor(3)"><p class="base-week-text" [ngClass]="{ 'bold-text': isRedColor(3) }">Четверг</p></td>
+                <td [ngStyle]="getColumnColor(4)"><p class="base-week-text" [ngClass]="{ 'bold-text': isRedColor(4) }">Пятница</p></td>
+              </tr>
+              <tr>
+                <td>
+                    <ul class="num-lessons">
+                        <li [ngStyle]="getTimeSlotStyle(0)">Пара 1</li>
+                        <li [ngStyle]="getTimeSlotStyle(1)">Пара 2</li>
+                        <li [ngStyle]="getTimeSlotStyle(2)">Пара 3</li>
+                        <li [ngStyle]="getTimeSlotStyle(3)">Пара 4</li>
+                    </ul>
+                </td>
+                <td class="lesson">
+                    <ul>
+                        <li>
+                            <p class="lesson-name">КСМ</p>
+                            <p class="equals">-</p>
+                            <p class="lesson-teacher">Архіпцева Н.О.</p>
+                        </li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </td>
+                <td class="lesson">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </td>
+                <td class="lesson">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </td>
+                <td class="lesson">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </td>
+                <td class="lesson">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
 </div>

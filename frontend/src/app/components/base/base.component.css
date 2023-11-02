@@ -153,3 +153,17 @@ p {
 		font-size: 1.5em;
 	}
 }
+
+@media screen and (max-width: 1920px) {
+	.big-panel {
+		margin-left: 2em;
+		row-gap: 3em;
+		grid-template-columns: 23.5em auto;
+	}
+
+	.note{
+		width: 35em;
+		height: 23em;
+	}
+}
+
