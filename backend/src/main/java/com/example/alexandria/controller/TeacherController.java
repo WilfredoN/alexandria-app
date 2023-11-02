@@ -1,8 +1,9 @@
 package com.example.alexandria.controller;
 
 
-import com.example.alexandria.service.TeacherService;
+import com.example.alexandria.repository.Teacher;
 import com.example.alexandria.service.TeacherDTO;
+import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,6 @@ public class TeacherController {
     public TeacherDTO updateTeacher(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) {
         return teacherService.updateTeacher(id, teacherDTO);
     }
-
     @GetMapping
     public List<TeacherDTO> getTeacher(
             @RequestParam(required = false) String full_name,
@@ -41,6 +41,10 @@ public class TeacherController {
         log.info("getUsers: full_name={}, login={}, password={}, "
                 , full_name, login, password);
         return teacherService.findTeachers();
+    }
+    @GetMapping("/group/{group_name}")
+    public List<Teacher> getTeachersForGroup(@PathVariable String group_name) {
+        return teacherService.getTeachersByGroupName(group_name);
     }
 
     @PostMapping("/login")

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class GroupService {
@@ -22,7 +24,20 @@ public class GroupService {
                 .orElse(null);
     }
     public List<Group> findGroups() {
-        return groupRepository.findAll();
+        return groupRepository.findAll().stream()
+                .map(this::mapGroup)
+                .collect(toList());
+    }
+
+    private Group mapGroup(Group group) {
+        return Group.builder()
+                .id(group.getId())
+                .name(group.getName())
+                .build();
+    }
+
+    public List<Group> getGroupsByTeacherId(long teacherId) {
+        return groupRepository.findGroupsByTeachersId(teacherId);
     }
     public Group create(Group group) {
         return groupRepository.save(Group.builder()

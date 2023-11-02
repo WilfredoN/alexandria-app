@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import {UserDTO} from './user-dto';
+import {TeacherDTO} from "../../base/teachers/teacher-dto";
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
-    currentUser: UserDTO | null = null;
+    currentUser: UserDTO | TeacherDTO | null = null;
     private apiURL = 'http://localhost:8080/api/students';
     private teacher_apiURL = 'http://localhost:8080/api/teachers';
     constructor(private http: HttpClient) {
@@ -20,7 +21,7 @@ export class UserService {
             },
         });
     }
-    createTeacher(user: UserDTO): Observable<UserDTO> {
+    createTeacher(user: TeacherDTO): Observable<UserDTO> {
         return this.http.post<UserDTO>(`${this.teacher_apiURL}/create`, user, {
             headers: {
                 'Content-Type': 'application/json',

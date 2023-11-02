@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
@@ -15,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 public class TeacherService {
     private final TeacherRepository teacherRepository;
 
-    private TeacherDTO mapTeacher(Teacher teacher) {
+    public TeacherDTO mapTeacher(Teacher teacher) {
         return TeacherDTO.builder()
                 .id(UUID.randomUUID().toString())
                 .full_name(teacher.getFull_name())
@@ -32,7 +33,9 @@ public class TeacherService {
             throw new RuntimeException("Invalid login or password");
         }
     }
-
+    public List<Teacher> getTeachersByGroupName(String name) {
+        return teacherRepository.findTeachersByGroups_Name(name);
+    }
     public TeacherDTO findTeacher(String id) {
         return teacherRepository.findByUid(id)
                 .map(this::mapTeacher)

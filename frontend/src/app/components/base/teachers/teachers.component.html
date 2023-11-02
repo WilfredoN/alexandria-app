@@ -5,15 +5,13 @@
             <input type="search" placeholder="поиск">
         </div>
         <div class="teachers">
-            <div class="teacher">
+            <div class="teacher" *ngFor="let teacher of teachers">
                 <div class="iconOfTeacher">
                 </div>
-                <p>Архипцева Наталья</p>
+                <p>{{ teacher.full_name }}</p>
                 <div class="icons">
-                    <mat-icon class="icon"
-                    >mail</mat-icon>
-                    <mat-icon class="icon ri"
-                    >telegram</mat-icon>
+                    <mat-icon class="icon">mail</mat-icon>
+                    <mat-icon class="icon ri">telegram</mat-icon>
                 </div>
             </div>
         </div>

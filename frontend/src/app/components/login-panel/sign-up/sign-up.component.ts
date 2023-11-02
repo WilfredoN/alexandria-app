@@ -5,6 +5,7 @@ import {UserService} from './user-service';
 import {UserDTO} from './user-dto';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Observable} from "rxjs";
+import {TeacherDTO} from "../../base/teachers/teacher-dto";
 
 @Component({
     selector: 'app-sign-up',
@@ -79,13 +80,13 @@ export class SignUpComponent implements OnInit {
             password: this.myForm.value.pwd,
             group_name: this.myForm.value.prefix_group + "-" + this.myForm.value.code_group,
         };
-        const userDTO_teacher: UserDTO = {
+        const teacherDTO: TeacherDTO = {
             full_name: this.myForm.value.full_name,
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
-        }
+        };
         if (this.myForm.value.role === 'Teacher') {
-            this.handleResponse(this.userService.createTeacher(userDTO_teacher));
+            this.handleResponse(this.userService.createTeacher(teacherDTO));
         } else {
             this.handleResponse(this.userService.createUser(userDTO));
         }

@@ -23,7 +23,7 @@ table {
 }
 .base-week-text{
     font-size: 18px;
-    
+
 
 }
 .container{
@@ -65,7 +65,7 @@ table {
 .num-lessons {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     margin-top: 1em;
 }
 .num-lessons li{
