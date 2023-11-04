@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -17,7 +16,6 @@ public class TeacherService {
 
     public TeacherDTO mapTeacher(Teacher teacher) {
         return TeacherDTO.builder()
-                .id(UUID.randomUUID().toString())
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
                 .password(teacher.getPassword())
@@ -35,34 +33,37 @@ public class TeacherService {
     public List<Teacher> getTeachersByGroupName(String name) {
         return teacherRepository.findTeachersByGroups_Name(name);
     }
-    public TeacherDTO findTeacher(String id) {
-        return teacherRepository.findByUid(id)
+    public TeacherDTO findTeacher(long id) {
+        return teacherRepository.findById(id)
                 .map(this::mapTeacher)
                 .orElseThrow();
     }
-
+    public TeacherDTO findTeacherByLogin(String login) {
+        return teacherRepository.findByLogin(login)
+                .map(this::mapTeacher)
+                .orElseThrow();
+    }
     public List<TeacherDTO> findTeachers() {
         return teacherRepository.findAll().stream()
                 .map(this::mapTeacher)
                 .collect(toList());
     }
 
-    public void deleteTeacher(String uid) {
-        var teacher = teacherRepository.findByUid(uid).orElseThrow();
+    public void deleteTeacher(long id) {
+        var teacher = teacherRepository.findById(id).orElseThrow();
         teacherRepository.delete(teacher);
     }
 
-    public TeacherDTO updateTeacher(String uid, TeacherDTO teacher) {
-        var teacherToUpdate = teacherRepository.findByUid(uid).orElseThrow();
-        teacherToUpdate.setFull_name(teacher.full_name());
-        teacherToUpdate.setLogin(teacher.login());
+    public TeacherDTO updateTeacher(String login, TeacherDTO teacher) {
+        var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
+//        teacherToUpdate.setFull_name(teacher.full_name());
+//        teacherToUpdate.setLogin(teacher.login());
         teacherToUpdate.setPassword(teacher.password());
         return mapTeacher(teacherRepository.save(teacherToUpdate));
     }
 
     public TeacherDTO create(TeacherDTO teacher) {
         var savedTeacher = teacherRepository.save(Teacher.builder()
-                .uid(UUID.randomUUID().toString())
                 .full_name(teacher.full_name())
                 .login(teacher.login())
                 .password(teacher.password())

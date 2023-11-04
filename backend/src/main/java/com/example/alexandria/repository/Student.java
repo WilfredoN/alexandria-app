@@ -24,7 +24,6 @@ public class Student {
     private Instant createdAt;
     @LastModifiedDate
     private Instant updatedAt;
-    private String uid;
     private String full_name;
     private String login;
     private String password;

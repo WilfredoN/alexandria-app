@@ -16,19 +16,23 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping("/{id}")
-    public StudentDTO findStudent(@PathVariable String id) {
+    @GetMapping("/by-id/{id}")
+    public StudentDTO findStudent(@PathVariable long id) {
         return studentService.findStudent(id);
     }
+    @GetMapping("/by-login/{login}")
+    public StudentDTO findStudentByLogin(@PathVariable String login) {
+        return studentService.findStudentByLogin(login);
+    }
 
-    @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable String id) {
+    @DeleteMapping("/by-id/{id}")
+    public void deleteStudent(@PathVariable long id) {
         studentService.deleteStudent(id);
     }
 
-    @PutMapping("/{id}")
-    public StudentDTO updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
-        return studentService.updateStudent(id, studentDTO);
+    @PutMapping("/by-login/{login}")
+    public StudentDTO updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {
+        return studentService.updateStudent(login, studentDTO);
     }
 
     @GetMapping

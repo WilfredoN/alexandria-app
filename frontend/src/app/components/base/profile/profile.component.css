@@ -100,3 +100,21 @@
     margin-bottom: 15px;
     text-align: center;
 }
+.groups_selector ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.groups_selector li{
+    padding: 1em;
+    margin: .5em;
+    font-size: 1.2em;
+    color: white;
+    text-decoration: none;
+    background: rgb(61, 143, 208);
+    border-radius: 1.5em;
+}

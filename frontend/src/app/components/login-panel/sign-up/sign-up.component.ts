@@ -96,6 +96,7 @@ export class SignUpComponent implements OnInit {
         response.subscribe({
             next: (response) => {
                 localStorage.setItem('user', JSON.stringify(response));
+                localStorage.setItem('role', this.myForm.value.role);
                 this._snackBar.open('Регистрация успешна!', 'Закрыть', {duration: 3000});
                 console.log('Регистрация прошла успешно - ', response);
                 this.router.navigate(['base']).then(r => console.log(r));

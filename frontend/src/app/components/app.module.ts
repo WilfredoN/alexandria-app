@@ -25,7 +25,9 @@ import {MatListModule} from "@angular/material/list";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {DialogChangePasswordComponent} from "./base/profile/dialog-change-password";
+import {MatButtonModule} from "@angular/material/button";
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -37,27 +39,30 @@ import { MatTableModule } from "@angular/material/table";
 		AnnouncementsComponent,
 		TeachersComponent,
 		ProfileComponent,
+        DialogChangePasswordComponent
 	],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatMenuModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    TasksComponent,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatTableModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        TasksComponent,
+        MatButtonToggleModule,
+        MatChipsModule,
+        MatListModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatTableModule,
+        MatDialogModule,
+        MatButtonModule
+    ],
 	providers: [],
 	bootstrap: [AppComponent],
 })

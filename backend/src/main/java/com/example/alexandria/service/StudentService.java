@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,7 +17,7 @@ public class StudentService {
 
     private StudentDTO mapStudent(Student student) {
         return StudentDTO.builder()
-                .id(UUID.randomUUID().toString())
+                .id(student.getId())
                 .full_name(student.getFull_name())
                 .login(student.getLogin())
                 .password(student.getPassword())
@@ -35,27 +34,31 @@ public class StudentService {
         }
     }
 
-    public StudentDTO findStudent(String id) {
-        return studentRepository.findByUid(id)
+    public StudentDTO findStudent(long id) {
+        return studentRepository.findById(id)
                 .map(this::mapStudent)
                 .orElseThrow();
     }
-
+    public StudentDTO findStudentByLogin(String login) {
+        return studentRepository.findByLogin(login)
+                .map(this::mapStudent)
+                .orElseThrow();
+    }
     public List<StudentDTO> findStudents() {
         return studentRepository.findAll().stream()
                 .map(this::mapStudent)
                 .collect(Collectors.toList());
     }
 
-    public void deleteStudent(String uid) {
-        var user = studentRepository.findByUid(uid).orElseThrow();
+    public void deleteStudent(long id) {
+        var user = studentRepository.findById(id).orElseThrow();
         studentRepository.delete(user);
     }
 
-    public StudentDTO updateStudent(String uid, StudentDTO user) {
-        var userToUpdate = studentRepository.findByUid(uid).orElseThrow();
-        userToUpdate.setFull_name(user.full_name());
-        userToUpdate.setLogin(user.login());
+    public StudentDTO updateStudent(String login, StudentDTO user) {
+        var userToUpdate = studentRepository.findByLogin(login).orElseThrow();
+//        userToUpdate.setFull_name(user.full_name());
+//        userToUpdate.setLogin(user.login());
         userToUpdate.setPassword(user.password());
         return mapStudent(studentRepository.save(userToUpdate));
     }
@@ -68,7 +71,7 @@ public class StudentService {
                     .build());
         }
         var savedStudent = studentRepository.save(Student.builder()
-                .uid(UUID.randomUUID().toString())
+                .id(user.id())
                 .full_name(user.full_name())
                 .login(user.login())
                 .password(user.password())
