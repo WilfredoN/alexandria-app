@@ -1,10 +1,12 @@
 package com.example.alexandria.service;
 
+import com.example.alexandria.repository.Group;
 import com.example.alexandria.repository.Student;
 import com.example.alexandria.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,12 +18,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final GroupService groupService;
 
     public StudentDTO mapStudent(Student student) {
         return StudentDTO.builder()
                 .full_name(student.getFull_name())
                 .login(student.getLogin())
                 .group_name(student.getGroup_name())
+                .password(student.getPassword())
                 .build();
     }
 
@@ -52,19 +56,35 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteStudent(String login) {
-        var student = studentRepository.findByLogin(login).orElseThrow();
-        studentRepository.delete(student);
+    public ResponseEntity<String> delete(String login) {
+        try {
+            var student = studentRepository.findByLogin(login).orElseThrow();
+            studentRepository.delete(student);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public StudentDTO updateStudent(String login, StudentDTO student) {
-        var studentToUpdate = studentRepository.findByLogin(login).orElseThrow();
-        studentToUpdate.setPassword(student.password()); // Убедитесь, что здесь вызывается setPassword
-        return mapStudent(studentRepository.save(studentToUpdate));
+    public void update(String login, StudentDTO student) {
+        try {
+            var studentToUpdate = studentRepository.findByLogin(login).orElseThrow();
+            studentToUpdate.setPassword(student.password());
+            studentRepository.save(studentToUpdate);
+            new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public StudentDTO create(StudentDTO student) {
         String hashedPassword = BCrypt.hashpw(student.password(), BCrypt.gensalt());
+        Group group = groupService.findGroup(student.group_name());
+        if (group == null) {
+            groupService.create(Group.builder()
+                    .name(student.group_name())
+                    .build());
+        }
         var savedStudent = studentRepository.save(Student.builder()
                 .full_name(student.full_name())
                 .login(student.login())

@@ -1,7 +1,6 @@
 package com.example.alexandria.controller;
 
 
-import com.example.alexandria.service.StudentDTO;
 import com.example.alexandria.service.TeacherDTO;
 import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +43,28 @@ public class TeacherController {
     @PostMapping("/create")
     public ResponseEntity<String> createTeacher(@RequestBody TeacherDTO teacherDTO) {
         try {
-            TeacherDTO createdTeacher = teacherService.create(teacherDTO);
+            teacherService.create(teacherDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{login}")
+    public ResponseEntity<String> updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
+        try {
+            teacherService.update(login, teacherDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{login}")
+    public ResponseEntity<String> deleteTeacher(@PathVariable String login) {
+        try {
+            teacherService.delete(login);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -1,4 +1,4 @@
-<!--<div class="container" *ngIf="user">
+<div class="container" *ngIf="user">
     <div class="container_inner">
         <div class="profile_info">
             <div class="img-container">
@@ -8,14 +8,14 @@
                 </div>
             </div>
             <div class="info_about">
-                <p>Имя аккаунта: {{ user.full_name }}</p>
-                <p>Логин: {{ user.login }}</p>
-                <p>Группа: {{ user.group_name }}</p>
+                <p>Имя аккаунта: {{ userDTO?.full_name }}</p>
+                <p>Логин: {{ userDTO?.login }}</p>
+                <p *ngIf="isStudent && userDTO?.group_name">Группа: {{ userDTO.group_name }}</p>
                 <button class="bnt_change" (click)="openChangePasswordDialog()">Изменить пароль</button>
                 <button class="btn_delete" (click)="deleteAccount()">Удалить аккаунт</button>
             </div>
         </div>
-        <div class="groups_selector" *ngIf="!user.group_name">
+        <div class="groups_selector" *ngIf="!isStudent">
             <h3>Выберите группы, у которых вы преподаете:</h3>
             <ul>
                 <li *ngFor="let group of groups">
@@ -27,4 +27,4 @@
             </ul>
         </div>
     </div>
-</div>-->
+</div>

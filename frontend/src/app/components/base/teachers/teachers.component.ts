@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {StudentDTO} from "../../service/student-dto";
 import {TeacherDTO} from "../../service/teacher-dto";
-import {TeacherService} from "./teacher-service";
+import {TeacherService} from "../../service/teacher-service";
 import {Router} from "@angular/router";
 
 @Component({

@@ -9,7 +9,6 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
 	title = 'alexandria-app';
 	isShowHeader: boolean = true; // Флаг для показа/скрытия хедера
-
 	constructor(private router: Router) {}
 
 	ngOnInit() {

@@ -1,64 +1,75 @@
-import {Component, Injectable, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {GroupService} from './group-service';
-import {Group} from './group.model';
-import {DialogChangePasswordComponent} from "./dialog-change-password";
-import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../../service/auth-service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { GroupService } from './group-service';
+import { Group } from './group.model';
+import { MatDialog } from "@angular/material/dialog";
+import { AuthService } from "../../service/auth-service";
+import { loginDTO } from "../../service/login-dto";
+import { DialogChangePasswordComponent } from "./dialog-change-password";
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.css'],
 })
-@Injectable({providedIn: 'root'})
 export class ProfileComponent implements OnInit {
     isStudent: boolean;
-
-    constructor(private router: Router, private groupService: GroupService,
-                public dialog: MatDialog,
-                private authService: AuthService) {
-    }
-
-    user: any;
+    user: loginDTO;
     groups: Group[] = [];
-    password: string;
+    userDTO: any;
+
+    constructor(
+        private router: Router,
+        private groupService: GroupService,
+        public dialog: MatDialog,
+        public authService: AuthService
+    ) {}
 
     ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem('user') || 'null');
-        this.isStudent = "group_name" in this.user && this.user?.group_name !== undefined;
-        console.log(this.user);
-        console.log(this.isStudent);
-        if (this.user && "group_name" in this.user && this.user?.group_name === undefined) {
+        const storedUser = localStorage.getItem('user');
+        if (!storedUser) {
+            this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
+            return;
+        }
+        this.user = JSON.parse(storedUser);
+        this.user.role = localStorage.getItem('role') as string;
+        this.isStudent = this.user.role === 'student';
+        if (!this.isStudent) {
             this.groupService.getGroups().subscribe((groups) => {
                 this.groups = groups;
             });
         }
+        this.authService.getUser(this.user).subscribe((userDTO: any) => {
+            this.userDTO = userDTO;
+            localStorage.setItem('user', JSON.stringify(userDTO));
+            this.user = JSON.parse(localStorage.getItem('user') as string);
+        });
+        console.log(this.user);
     }
 
     openChangePasswordDialog() {
         const dialogRef = this.dialog.open(DialogChangePasswordComponent, {
-            data: {user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: ''},
+            data: { user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: '' },
         });
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.user = result;
+                // Обновите данные пользователя в localStorage
+                this.user.password = result.user.newPassword;
+                localStorage.setItem('user', JSON.stringify(this.user));
             }
         });
     }
 
-   /* deleteAccount() {
+    deleteAccount() {
         this.authService.delete(this.user).subscribe({
-            next: response => {
-                console.log(response);
+            next: () => {
                 localStorage.removeItem('user');
-                localStorage.removeItem('role');
-                this.router.navigate(['/log-in']).then(r => console.log(r));
+                console.log(localStorage.getItem('user') === null ? 'Account deleted' : 'Account not deleted');
+                this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
             },
             error: (error) => {
                 console.error('Ошибка при удалении аккаунта', error);
             }
         });
-    }*/
-
+    }
 }

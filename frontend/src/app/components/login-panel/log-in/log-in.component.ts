@@ -48,7 +48,9 @@ export class LogInComponent implements OnInit {
         this.authService.logIn(userDTO).subscribe({
             next: () => {
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
-                this.router.navigate(['/base']).then(r => console.log('navigate to /base'));
+                localStorage.setItem('user', JSON.stringify(userDTO));
+                localStorage.setItem('role', userDTO.role);
+                this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },
             error: () => {
                 this._snackBar.open('Неверный логин или пароль', 'Закрыть', {duration: 3000});

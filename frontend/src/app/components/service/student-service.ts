@@ -11,36 +11,14 @@ export class StudentService {
     findByLogin(login : string) {
         return this.http.get('http://localhost:8080/api/students/' + login);
     }
-    /*createStudent(student: StudentDTO): Observable<StudentDTO> {
-        return this.http.post<StudentDTO>('http://localhost:8080/api/students/create', student, {
+    getStudent(user: StudentDTO): Observable<StudentDTO> {
+        this.user = user;
+        console.log(this.user.login)
+        return this.http.get<StudentDTO>('http://localhost:8080/api/students/' + this.user.login, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-    }*/
-    /*logIn(login: string, password: string): Observable<StudentDTO> {
-        return this.http.post<StudentDTO>('http://localhost:8080/api/students/login',
-            {
-                "login": login,
-                "password": password,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    }*/
-    updateStudent(student: StudentDTO, password: string): Observable<StudentDTO> {
-        return this.http.put<StudentDTO>(`http://localhost:8080/api/students/${student.login}`,
-            {
-                "password": password,
-            }, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    }
-    deleteStudent(login: string): Observable<StudentDTO> {
-        return this.http.delete<StudentDTO>(`http://localhost:8080/api/students/${login}`);
     }
 }
 

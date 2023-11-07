@@ -5,13 +5,12 @@ import com.example.alexandria.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.toList;
 
@@ -24,6 +23,7 @@ public class TeacherService {
         return TeacherDTO.builder()
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
+                .password(teacher.getPassword())
                 .build();
     }
 
@@ -59,15 +59,25 @@ public class TeacherService {
                 .collect(toList());
     }
 
-    public void deleteTeacher(String login) {
-        var teacher = teacherRepository.findByLogin(login).orElseThrow();
-        teacherRepository.delete(teacher);
+    public ResponseEntity<String> delete(String login) {
+        try {
+            var teacher = teacherRepository.findByLogin(login).orElseThrow();
+            teacherRepository.delete(teacher);
+            return new ResponseEntity<>("Teacher deleted", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error deleting teacher", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public TeacherDTO updateTeacher(String login, TeacherDTO teacher) {
-        var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
-        teacherToUpdate.setPassword(teacher.password());
-        return mapTeacher(teacherRepository.save(teacherToUpdate));
+    public void update(String login, TeacherDTO teacher) {
+        try {
+            var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
+            teacherToUpdate.setPassword(teacher.password());
+            teacherRepository.save(teacherToUpdate);
+            new ResponseEntity<>("Teacher updated", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            new ResponseEntity<>("Error updating teacher", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public TeacherDTO create(TeacherDTO teacher) {
