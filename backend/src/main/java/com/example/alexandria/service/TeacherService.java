@@ -30,27 +30,31 @@ public class TeacherService {
             throw new RuntimeException("Invalid login or password");
         }
     }
+
     public List<Teacher> getTeachersByGroupName(String name) {
         return teacherRepository.findTeachersByGroups_Name(name);
     }
+
     public TeacherDTO findTeacher(long id) {
         return teacherRepository.findById(id)
                 .map(this::mapTeacher)
                 .orElseThrow();
     }
+
     public TeacherDTO findTeacherByLogin(String login) {
         return teacherRepository.findByLogin(login)
                 .map(this::mapTeacher)
                 .orElseThrow();
     }
+
     public List<TeacherDTO> findTeachers() {
         return teacherRepository.findAll().stream()
                 .map(this::mapTeacher)
                 .collect(toList());
     }
 
-    public void deleteTeacher(long id) {
-        var teacher = teacherRepository.findById(id).orElseThrow();
+    public void deleteTeacher(String login) {
+        var teacher = teacherRepository.findByLogin(login).orElseThrow();
         teacherRepository.delete(teacher);
     }
 

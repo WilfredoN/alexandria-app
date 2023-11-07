@@ -18,21 +18,21 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
-    @GetMapping("/by-id/{id}")
+   /* @GetMapping("/{id}")
     public TeacherDTO findTeacher(@PathVariable long id) {
         return teacherService.findTeacher(id);
-    }
+    }*/
 
-    @GetMapping("/by-login/{login}")
+    @GetMapping("/{login}")
     public TeacherDTO findTeacherByLogin(@PathVariable String login) {
         return teacherService.findTeacherByLogin(login);
     }
-    @DeleteMapping("/by-id/{id}")
-    public void deleteTeacher(@PathVariable long id) {
-        teacherService.deleteTeacher(id);
+    @DeleteMapping("/{login}")
+    public void deleteTeacher(@PathVariable String login) {
+        teacherService.deleteTeacher(login);
     }
 
-    @PutMapping("/by-login/{login}")
+    @PutMapping("/{login}")
     public TeacherDTO updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
         return teacherService.updateTeacher(login, teacherDTO);
     }

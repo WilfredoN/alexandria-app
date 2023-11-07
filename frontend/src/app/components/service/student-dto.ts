@@ -1,4 +1,4 @@
-export interface UserDTO {
+export interface StudentDTO {
     full_name: string;
     login: string;
     password: string;

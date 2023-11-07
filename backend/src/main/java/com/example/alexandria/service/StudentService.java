@@ -39,19 +39,21 @@ public class StudentService {
                 .map(this::mapStudent)
                 .orElseThrow();
     }
+
     public StudentDTO findStudentByLogin(String login) {
         return studentRepository.findByLogin(login)
                 .map(this::mapStudent)
                 .orElseThrow();
     }
+
     public List<StudentDTO> findStudents() {
         return studentRepository.findAll().stream()
                 .map(this::mapStudent)
                 .collect(Collectors.toList());
     }
 
-    public void deleteStudent(long id) {
-        var user = studentRepository.findById(id).orElseThrow();
+    public void deleteStudent(String login) {
+        var user = studentRepository.findByLogin(login).orElseThrow();
         studentRepository.delete(user);
     }
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ScheduleService} from './schedule-service.component';
-import {UserDTO} from "../../login-panel/sign-up/user-dto";
 import {ScheduleItem} from "./schedule-dto";
+import {StudentDTO} from "../../service/student-dto";
 
 @Component({
     selector: 'app-schedule',
@@ -10,7 +10,7 @@ import {ScheduleItem} from "./schedule-dto";
 })
 export class ScheduleComponent implements OnInit {
     schedule: ScheduleItem[] = [];
-    user: UserDTO | null = null;
+    user: StudentDTO;
 
     constructor(private scheduleService: ScheduleService) { }
     //////// /////////////мое
@@ -43,7 +43,7 @@ export class ScheduleComponent implements OnInit {
     getColumnColor(dayIndex: number): object {
         const today = new Date().getDay();
         const color = (today === dayIndex + 1) ? 'red' : 'rgba(147, 147, 147, 1)';
-        
+
         return { 'background-color': color};
     }
 

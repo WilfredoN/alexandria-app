@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from './user-service';
-import {UserDTO} from './user-dto';
+import {StudentService} from "../../service/student-service";
+import {TeacherService} from "../../service/teacher-service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Observable} from "rxjs";
-import {TeacherDTO} from "../../base/teachers/teacher-dto";
+import {TeacherDTO} from "../../service/teacher-dto";
+import {StudentDTO} from "../../service/student-dto";
+import {AuthService} from "../../service/auth-service";
 
 @Component({
     selector: 'app-sign-up',
@@ -18,8 +20,10 @@ export class SignUpComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private userService: UserService,
-        private _snackBar: MatSnackBar
+        private studentService: StudentService,
+        private teacherService: TeacherService,
+        private _snackBar: MatSnackBar,
+        private authService: AuthService,
     ) {
     }
 
@@ -74,7 +78,7 @@ export class SignUpComponent implements OnInit {
             return;
         }
 
-        const userDTO: UserDTO = {
+        const studentDTO: StudentDTO = {
             full_name: this.myForm.value.full_name,
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
@@ -86,13 +90,13 @@ export class SignUpComponent implements OnInit {
             password: this.myForm.value.pwd,
         };
         if (this.myForm.value.role === 'Teacher') {
-            this.handleResponse(this.userService.createTeacher(teacherDTO));
+            this.handleResponse(this.authService.register(teacherDTO, false));
         } else {
-            this.handleResponse(this.userService.createUser(userDTO));
+            this.handleResponse(this.authService.register(studentDTO, true));
         }
     }
 
-    private handleResponse(response: Observable<UserDTO>) {
+    private handleResponse(response: Observable<any>) {
         response.subscribe({
             next: (response) => {
                 localStorage.setItem('user', JSON.stringify(response));
@@ -102,6 +106,7 @@ export class SignUpComponent implements OnInit {
                 this.router.navigate(['base']).then(r => console.log(r));
             },
             error: (error) => {
+                this._snackBar.open('Ошибка регистрации', 'Закрыть', {duration: 3000});
                 console.error('Ошибка регистрации - ', error);
             },
         });

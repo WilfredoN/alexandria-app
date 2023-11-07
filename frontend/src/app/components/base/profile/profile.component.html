@@ -10,11 +10,12 @@
             <div class="info_about">
                 <p>Имя аккаунта: {{ user.full_name }}</p>
                 <p>Логин: {{ user.login }}</p>
-                <p *ngIf="user.group_name !== undefined">Группа: {{ user.group_name}}</p>
+                <p>Группа: {{ user.group_name }}</p>
                 <button class="bnt_change" (click)="openChangePasswordDialog()">Изменить пароль</button>
+                <button class="btn_delete" (click)="deleteAccount()">Удалить аккаунт</button>
             </div>
         </div>
-        <div class="groups_selector" *ngIf="user.group_name === undefined">
+        <div class="groups_selector" *ngIf="!user.group_name">
             <h3>Выберите группы, у которых вы преподаете:</h3>
             <ul>
                 <li *ngFor="let group of groups">

@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {UserDTO} from "../../login-panel/sign-up/user-dto";
-import {TeacherDTO} from "./teacher-dto";
+import {StudentDTO} from "../../service/student-dto";
+import {TeacherDTO} from "../../service/teacher-dto";
 import {TeacherService} from "./teacher-service";
 import {Router} from "@angular/router";
 
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 @Injectable({ providedIn: 'root' })
 export class TeachersComponent implements OnInit {
-    user: UserDTO | null = null;
+    user: StudentDTO;
     teachers: TeacherDTO[] = [];
     constructor(private teacherService: TeacherService,
                 private router: Router) { }
@@ -24,9 +24,11 @@ export class TeachersComponent implements OnInit {
     }
 
     getTeachersForGroup() {
-        this.teacherService.getTeachersForGroup(this.user?.group_name)
-            .subscribe((teachers: TeacherDTO[]) => {
-                this.teachers = teachers;
-            });
+        if ("group_name" in this.user) {
+            this.teacherService.getTeachersForGroup(this.user?.group_name)
+                .subscribe((teachers: TeacherDTO[]) => {
+                    this.teachers = teachers;
+                });
+        }
     }
 }
