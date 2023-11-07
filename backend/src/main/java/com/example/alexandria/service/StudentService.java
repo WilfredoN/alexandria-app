@@ -1,10 +1,13 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Group;
 import com.example.alexandria.repository.Student;
 import com.example.alexandria.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,24 +16,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final GroupService groupService;
 
-    private StudentDTO mapStudent(Student student) {
+    public StudentDTO mapStudent(Student student) {
         return StudentDTO.builder()
-                .id(student.getId())
                 .full_name(student.getFull_name())
                 .login(student.getLogin())
-                .password(student.getPassword())
                 .group_name(student.getGroup_name())
                 .build();
     }
 
-    public StudentDTO logIn(StudentDTO user) {
-        var foundStudent = studentRepository.findByLogin(user.login());
-        if (foundStudent.isPresent() && foundStudent.get().getPassword().equals(user.password())) {
+    public StudentDTO logIn(StudentDTO student) {
+        var foundStudent = studentRepository.findByLogin(student.login());
+        if (foundStudent.isPresent() && foundStudent.get().checkPassword(student.password())) {
             return mapStudent(foundStudent.get());
         } else {
-            throw new RuntimeException("Invalid login or password");
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Invalid login or password");
         }
     }
 
@@ -43,7 +43,7 @@ public class StudentService {
     public StudentDTO findStudentByLogin(String login) {
         return studentRepository.findByLogin(login)
                 .map(this::mapStudent)
-                .orElseThrow();
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatusCode.valueOf(404), "Student not found"));
     }
 
     public List<StudentDTO> findStudents() {
@@ -53,32 +53,25 @@ public class StudentService {
     }
 
     public void deleteStudent(String login) {
-        var user = studentRepository.findByLogin(login).orElseThrow();
-        studentRepository.delete(user);
+        var student = studentRepository.findByLogin(login).orElseThrow();
+        studentRepository.delete(student);
     }
 
-    public StudentDTO updateStudent(String login, StudentDTO user) {
-        var userToUpdate = studentRepository.findByLogin(login).orElseThrow();
-//        userToUpdate.setFull_name(user.full_name());
-//        userToUpdate.setLogin(user.login());
-        userToUpdate.setPassword(user.password());
-        return mapStudent(studentRepository.save(userToUpdate));
+    public StudentDTO updateStudent(String login, StudentDTO student) {
+        var studentToUpdate = studentRepository.findByLogin(login).orElseThrow();
+        studentToUpdate.setPassword(student.password()); // Убедитесь, что здесь вызывается setPassword
+        return mapStudent(studentRepository.save(studentToUpdate));
     }
 
-    public StudentDTO create(StudentDTO user) {
-        Group group = groupService.findGroup(user.group_name());
-        if (group == null) {
-            groupService.create(Group.builder()
-                    .name(user.group_name())
-                    .build());
-        }
+    public StudentDTO create(StudentDTO student) {
+        String hashedPassword = BCrypt.hashpw(student.password(), BCrypt.gensalt());
         var savedStudent = studentRepository.save(Student.builder()
-                .id(user.id())
-                .full_name(user.full_name())
-                .login(user.login())
-                .password(user.password())
-                .group_name(user.group_name())
+                .full_name(student.full_name())
+                .login(student.login())
+                .password(hashedPassword)
+                .group_name(student.group_name())
                 .build());
         return mapStudent(savedStudent);
     }
+
 }

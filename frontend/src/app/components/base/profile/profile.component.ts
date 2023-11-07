@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    deleteAccount() {
+   /* deleteAccount() {
         this.authService.delete(this.user).subscribe({
             next: response => {
                 console.log(response);
@@ -59,6 +59,6 @@ export class ProfileComponent implements OnInit {
                 console.error('Ошибка при удалении аккаунта', error);
             }
         });
-    }
+    }*/
 
 }

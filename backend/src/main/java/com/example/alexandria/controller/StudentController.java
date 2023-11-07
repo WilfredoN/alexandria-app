@@ -4,6 +4,8 @@ import com.example.alexandria.service.StudentDTO;
 import com.example.alexandria.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,25 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-
-   /* @GetMapping("/{id}")
-    public StudentDTO findStudent(@PathVariable long id) {
-        return studentService.findStudent(id);
-    }*/
-    @GetMapping("/{login}")
-    public StudentDTO findStudentByLogin(@PathVariable String login) {
-        return studentService.findStudentByLogin(login);
-    }
-
-    @DeleteMapping("/{login}")
-    public void deleteStudent(@PathVariable String login) {
-        studentService.deleteStudent(login);
-    }
-
-    @PutMapping("/{login}")
-    public StudentDTO updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {
-        return studentService.updateStudent(login, studentDTO);
-    }
 
     @GetMapping
     public List<StudentDTO> getStudents(
@@ -47,13 +30,24 @@ public class StudentController {
         return studentService.findStudents();
     }
 
+    @GetMapping("/{login}")
+    public StudentDTO findStudentByLogin(@PathVariable String login) {
+        return studentService.findStudentByLogin(login);
+    }
+
     @PostMapping("/login")
-    public StudentDTO logIn(@RequestBody StudentDTO studentDTO) {
+    public StudentDTO login(@RequestBody StudentDTO studentDTO) {
         return studentService.logIn(studentDTO);
     }
 
     @PostMapping("/create")
-    public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
-        return studentService.create(studentDTO);
+    public ResponseEntity<String> createStudent(@RequestBody StudentDTO studentDTO) {
+        try {
+            StudentDTO createdStudent = studentService.create(studentDTO);
+            return new ResponseEntity<>("Student created", HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error creating student", HttpStatus.BAD_REQUEST);
+        }
     }
 }
+

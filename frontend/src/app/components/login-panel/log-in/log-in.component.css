@@ -4,11 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: rgb(255, 255, 255);
 }
 
 .log-in-panel {
     width: 35em;
-    height: 30em;
+    max-height: 35em;
+    height: 35em;
     background: rgba(42, 87, 120, 1);
     border-radius: 60px;
     display: flex;
@@ -20,7 +22,7 @@
 
 .log-in-panel h1 {
     color: rgba(200, 200, 200, 1);
-    margin-bottom: 1.5em;
+    margin-bottom: 1.2em;
 }
 
 :host {
@@ -48,7 +50,15 @@ textarea:focus,
 input:focus {
     outline: none;
 }
-
+fieldset {
+    border: 0;
+    display: flex;
+    text-align: center;
+    font-size: 1.3em;
+}
+.radioInput {
+    margin: .3em;
+}
 .custom-input {
     border-radius: 50px;
     color: white;

@@ -1,11 +1,13 @@
 package com.example.alexandria.controller;
 
 
-import com.example.alexandria.repository.Teacher;
+import com.example.alexandria.service.StudentDTO;
 import com.example.alexandria.service.TeacherDTO;
 import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,24 +20,6 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
-   /* @GetMapping("/{id}")
-    public TeacherDTO findTeacher(@PathVariable long id) {
-        return teacherService.findTeacher(id);
-    }*/
-
-    @GetMapping("/{login}")
-    public TeacherDTO findTeacherByLogin(@PathVariable String login) {
-        return teacherService.findTeacherByLogin(login);
-    }
-    @DeleteMapping("/{login}")
-    public void deleteTeacher(@PathVariable String login) {
-        teacherService.deleteTeacher(login);
-    }
-
-    @PutMapping("/{login}")
-    public TeacherDTO updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
-        return teacherService.updateTeacher(login, teacherDTO);
-    }
     @GetMapping
     public List<TeacherDTO> getTeacher(
             @RequestParam(required = false) String full_name,
@@ -46,9 +30,10 @@ public class TeacherController {
                 , full_name, login, password);
         return teacherService.findTeachers();
     }
-    @GetMapping("/group/{group_name}")
-    public List<Teacher> getTeachersForGroup(@PathVariable String group_name) {
-        return teacherService.getTeachersByGroupName(group_name);
+
+    @GetMapping("/{login}")
+    public TeacherDTO findTeacherByLogin(@PathVariable String login) {
+        return teacherService.findTeacherByLogin(login);
     }
 
     @PostMapping("/login")
@@ -57,8 +42,14 @@ public class TeacherController {
     }
 
     @PostMapping("/create")
-    public TeacherDTO createTeacher(@RequestBody TeacherDTO teacherDTO) {
-        return teacherService.create(teacherDTO);
+    public ResponseEntity<String> createTeacher(@RequestBody TeacherDTO teacherDTO) {
+        try {
+            TeacherDTO createdTeacher = teacherService.create(teacherDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
-
 }
+
+

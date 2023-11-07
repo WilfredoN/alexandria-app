@@ -17,7 +17,7 @@ export interface DialogData {
     templateUrl: 'dialog-change-password.html',
 })
 export class DialogChangePasswordComponent {
-    isStudent : boolean;
+    /*isStudent : boolean;
     constructor(
         public dialogRef: MatDialogRef<DialogChangePasswordComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -53,5 +53,5 @@ export class DialogChangePasswordComponent {
         } else {
             this._snackBar.open('Пароль не изменен', 'Закрыть', { duration: 3000 });
         }
-    }
+    }*/
 }

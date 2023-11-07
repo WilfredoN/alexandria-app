@@ -3,9 +3,15 @@ package com.example.alexandria.service;
 import com.example.alexandria.repository.Teacher;
 import com.example.alexandria.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,16 +24,15 @@ public class TeacherService {
         return TeacherDTO.builder()
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
-                .password(teacher.getPassword())
                 .build();
     }
 
     public TeacherDTO logIn(TeacherDTO teacher) {
         var foundTeacher = teacherRepository.findByLogin(teacher.login());
-        if (foundTeacher.isPresent() && foundTeacher.get().getPassword().equals(teacher.password())) {
+        if (foundTeacher.isPresent() && foundTeacher.get().checkPassword(teacher.password())) {
             return mapTeacher(foundTeacher.get());
         } else {
-            throw new RuntimeException("Invalid login or password");
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Invalid login or password");
         }
     }
 
@@ -42,9 +47,10 @@ public class TeacherService {
     }
 
     public TeacherDTO findTeacherByLogin(String login) {
-        return teacherRepository.findByLogin(login)
+        return teacherRepository.findByLogin(login).stream()
                 .map(this::mapTeacher)
-                .orElseThrow();
+                .findFirst()
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatusCode.valueOf(404), "Teacher not found"));
     }
 
     public List<TeacherDTO> findTeachers() {
@@ -60,18 +66,18 @@ public class TeacherService {
 
     public TeacherDTO updateTeacher(String login, TeacherDTO teacher) {
         var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
-//        teacherToUpdate.setFull_name(teacher.full_name());
-//        teacherToUpdate.setLogin(teacher.login());
         teacherToUpdate.setPassword(teacher.password());
         return mapTeacher(teacherRepository.save(teacherToUpdate));
     }
 
     public TeacherDTO create(TeacherDTO teacher) {
+        String hashedPassword = BCrypt.hashpw(teacher.password(), BCrypt.gensalt());
         var savedTeacher = teacherRepository.save(Teacher.builder()
                 .full_name(teacher.full_name())
                 .login(teacher.login())
-                .password(teacher.password())
+                .password(hashedPassword)
                 .build());
         return mapTeacher(savedTeacher);
     }
 }
+

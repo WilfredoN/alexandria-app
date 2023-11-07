@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Student> findById(long id);
     Optional<Student> findByLogin(String login);
-    //Optional<User> findByRole(String role);
 }
+

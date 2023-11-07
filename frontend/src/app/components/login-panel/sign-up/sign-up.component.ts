@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {StudentService} from "../../service/student-service";
-import {TeacherService} from "../../service/teacher-service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '../../service/auth-service';
 import {Observable} from "rxjs";
 import {TeacherDTO} from "../../service/teacher-dto";
-import {StudentDTO} from "../../service/student-dto";
-import {AuthService} from "../../service/auth-service";
 
 @Component({
     selector: 'app-sign-up',
@@ -20,8 +17,6 @@ export class SignUpComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private studentService: StudentService,
-        private teacherService: TeacherService,
         private _snackBar: MatSnackBar,
         private authService: AuthService,
     ) {
@@ -34,73 +29,38 @@ export class SignUpComponent implements OnInit {
 
     _formValidate() {
         this.myForm = this.fb.group({
-            role: ['Student', Validators.required],
             full_name: ['', Validators.required],
             login: ['', Validators.required],
-            pwd: ['', [Validators.required, Validators.minLength(6)]],
-            prefix_group: ['', Validators.required],
-            code_group: ['', Validators.required],
+            pwd: ['', [Validators.required, Validators.minLength(6)],
+            ],
         });
     }
 
-
-    onRoleChange(event: { value: string }) {
-        console.log(this.myForm.controls)
-        if (event.value === 'Teacher') {
-            this.myForm.controls.prefix_group.reset();
-            this.myForm.controls.prefix_group.disable();
-            this.myForm.controls.code_group.disable();
-            this.myForm.controls.code_group.reset();
-        } else {
-        }
-    }
-
-
     _formSubmit(): void {
         if (this.myForm.controls.full_name.value.length < 5) {
-            this._snackBar.open('Ваше ФИО должно быть больше 5 символов', 'Закрыть', {duration: 3000});
+            this._snackBar.open('Full name should be more than 5 characters', 'Close', {duration: 3000});
             return;
         }
         if (this.myForm.controls.login.value.length < 3) {
-            this._snackBar.open('Логин должен быть больше 3 символов', 'Закрыть', {duration: 3000});
+            this._snackBar.open('Login should be more than 3 characters', 'Close', {duration: 3000});
             return;
         }
         if (this.myForm.controls.pwd.value.length < 6) {
-            this._snackBar.open('Пароль должен быть больше 6 символов', 'Закрыть', {duration: 3000});
+            this._snackBar.open('Password should be more than 6 characters', 'Close', {duration: 3000});
             return;
         }
-        if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.prefix_group.value.length === 0) {
-            this._snackBar.open('Префикс группы не может быть пустым', 'Закрыть', {duration: 3000});
-            return;
-        }
-        if (this.myForm.controls.role.value === 'Student' && this.myForm.controls.code_group.value.length === 0) {
-            this._snackBar.open('Код группы не может быть пустым', 'Закрыть', {duration: 3000});
-            return;
-        }
-
-        const studentDTO: StudentDTO = {
-            full_name: this.myForm.value.full_name,
-            login: this.myForm.value.login,
-            password: this.myForm.value.pwd,
-            group_name: this.myForm.value.prefix_group + "-" + this.myForm.value.code_group,
-        };
         const teacherDTO: TeacherDTO = {
             full_name: this.myForm.value.full_name,
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
         };
-        if (this.myForm.value.role === 'Teacher') {
-            this.handleResponse(this.authService.register(teacherDTO, false));
-        } else {
-            this.handleResponse(this.authService.register(studentDTO, true));
-        }
+        this.handleResponse(this.authService.register(teacherDTO));
     }
 
     private handleResponse(response: Observable<any>) {
         response.subscribe({
             next: (response) => {
                 localStorage.setItem('user', JSON.stringify(response));
-                localStorage.setItem('role', this.myForm.value.role);
                 this._snackBar.open('Регистрация успешна!', 'Закрыть', {duration: 3000});
                 console.log('Регистрация прошла успешно - ', response);
                 this.router.navigate(['base']).then(r => console.log(r));

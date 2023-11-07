@@ -10,12 +10,6 @@ export class BaseComponent {
 	isPanelExpanded: boolean = false;
 
 	constructor(private router: Router) {}
-
-    ngOnInit() {
-        if (localStorage.getItem('user') === null) {
-            this.router.navigate(['/log-in']);
-        }
-    }
 	clickTasksRout() {
 		this.router.navigate(['/tasks']);
 	}

@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {TeacherDTO} from "../../service/teacher-dto";
 import {AuthService} from "../../service/auth-service";
+import {loginDTO} from "../../service/login-dto";
 
 @Component({
     selector: 'app-log-in',
@@ -23,12 +23,14 @@ export class LogInComponent implements OnInit {
 
     ngOnInit() {
         this._formValidate();
+        console.log(this.myForm.controls);
     }
 
     _formValidate() {
         this.myForm = this.fb.group({
             login: ['', Validators.required],
             password: ['', Validators.required],
+            role: ['', Validators.required],
         });
     }
 
@@ -37,23 +39,20 @@ export class LogInComponent implements OnInit {
             this._snackBar.open('Введите корректные данные', 'Закрыть', {duration: 3000});
             return;
         }
-        const defaultDTO: TeacherDTO = {
-            full_name: "",
+        const userDTO: loginDTO = {
             login: this.myForm.value.login,
             password: this.myForm.value.password,
-        };
-            this.authService.logIn(defaultDTO).subscribe({
-                next: (response: any) => {
-                    if (response) {
-                        localStorage.setItem('user', JSON.stringify(response));
-                        this.router.navigate(['/base']).then(r => console.log(r));
-                    }
-                },
-                error: (error) => {
-                    console.error('Ошибка при входе:', error);
-                }
-            });
+            role: this.myForm.value.role
+        }
 
+        this.authService.logIn(userDTO).subscribe({
+            next: () => {
+                this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
+                this.router.navigate(['/base']).then(r => console.log('navigate to /base'));
+            },
+            error: () => {
+                this._snackBar.open('Неверный логин или пароль', 'Закрыть', {duration: 3000});
+            }
+        });
     }
-
 }

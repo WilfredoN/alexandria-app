@@ -20,6 +20,5 @@ export class AppComponent {
 				this.isShowHeader = !(event.url === '/log-in' || event.url === '/sign-up');
 			}
 		});
-        console.log(localStorage.getItem('user'));
 	}
 }

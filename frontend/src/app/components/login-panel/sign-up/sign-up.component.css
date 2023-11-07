@@ -7,9 +7,9 @@
 }
 
 .log-in-panel {
-    width: 35em;
-    min-height: 40em;
-    max-height: 65em;
+    width: 30em;
+    max-height: 35em;
+    height: 35em;
     background: rgba(42, 87, 120, 1);
     border-radius: 60px;
     display: flex;

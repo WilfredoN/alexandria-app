@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core:9.21.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
 	testImplementation 'com.h2database:h2:2.2.224'
+	implementation 'org.springframework.security:spring-security-crypto:6.1.5'
 }
 
 test {
