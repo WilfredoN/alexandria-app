@@ -26,5 +26,13 @@
                 </li>
             </ul>
         </div>
+        <div class="students_creator" *ngIf="!isStudent">
+            <form class="students_form">
+                <mat-form-field class="students_field">
+                    <mat-label>ФІО</mat-label>
+                    <input matInput [(ngModel)]="student.full_name">
+                </mat-form-field>
+            </form>
+        </div>
     </div>
 </div>

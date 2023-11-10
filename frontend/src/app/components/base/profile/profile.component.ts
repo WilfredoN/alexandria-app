@@ -17,6 +17,12 @@ export class ProfileComponent implements OnInit {
     user: loginDTO;
     groups: Group[] = [];
     userDTO: any;
+    student: {
+        full_name: string,
+        login: string,
+        group: string,
+        password: string,
+}
 
     constructor(
         private router: Router,

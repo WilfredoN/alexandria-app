@@ -1,66 +1,69 @@
 import {Component, OnInit} from '@angular/core';
-import {ScheduleService} from './schedule-service.component';
-import {ScheduleItem} from "./schedule-dto";
-import {StudentDTO} from "../../service/student-dto";
+import {ScheduleService} from "../../service/schedule-service";
+import {Schedule} from "../../service/schedule-dto";
+import {forkJoin, Observable} from "rxjs";
 
 @Component({
     selector: 'app-schedule',
-    templateUrl: 'schedule.component.html',
-    styleUrls: ['schedule.component.css']
+    templateUrl: './schedule.component.html',
+    styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-    schedule: ScheduleItem[] = [];
-    user: StudentDTO;
-
-    constructor(private scheduleService: ScheduleService) { }
-    //////// /////////////мое
-    weekNumber: number = 1; // Инициализируем значение номера недели
+    schedules: Schedule[] = [];
+    currentDay: string;
+    constructor(private scheduleService: ScheduleService) {
+        this.currentDay = this.getCurrentDay();
+    }
 
     ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem('user') || 'null');
-        console.log(this.user);
-        let groupName = this.user?.group_name;
-        // Используйте ваш сервис для получения расписания по выбранной группе
-        this.scheduleService.getScheduleByGroup(groupName).subscribe((data : ScheduleItem[]) => {
-            this.schedule = data;
+        this.scheduleService.getSchedules().subscribe(schedules => {
+            this.schedules = schedules;
+
+            const lessonRequests: Observable<{
+                id: number,
+                lesson_name: string,
+            }>[] = schedules.map(schedule =>
+                this.scheduleService.getLessonById(schedule.lessonId)
+            );
+            const teacherRequests: Observable<{ id: number, full_name: string }>[] = schedules.map(schedule =>
+                this.scheduleService.getTeacherById(schedule.teacherId)
+            );
+            forkJoin(lessonRequests).subscribe(lessonNames => {
+                lessonNames.forEach((lesson, index) => {
+                    this.schedules[index].lessonName = lesson.lesson_name;
+                    console.log(this.schedules[index].lessonName);
+                });
+            });
+
+            forkJoin(teacherRequests).subscribe(teacherNames => {
+                teacherNames.forEach((teacher, index) => {
+                    this.schedules[index].teacherName = teacher.full_name;
+                    console.log(this.schedules[index].teacherName);
+                });
+            });
+            console.log(this.schedules);
+            console.log(this.getDaysOfWeek());
         });
-        // пофиксить //////////////////////////////////////
-        const today = new Date();
-        const dayOfWeek = today.getDay();
 
-        if (dayOfWeek === 5) { // Если сегодня пятница
-            const dayOfMonth = today.getDate();
-            this.weekNumber = (dayOfMonth % 2 === 0) ? 2 : 1;
-        }
     }
 
 
-    isRedColor(dayIndex: number): boolean {
-        const today = new Date().getDay();
-        return (today === dayIndex + 1);
+    getDaysOfWeek(): string[] {
+        return Array.from(new Set(this.schedules.map(schedule => schedule.dayOfWeek)));
     }
 
-    getColumnColor(dayIndex: number): object {
-        const today = new Date().getDay();
-        const color = (today === dayIndex + 1) ? 'red' : 'rgba(147, 147, 147, 1)';
-
-        return { 'background-color': color};
+    getSchedulesForDayAndLesson(day: string, lessonNumber: number): Schedule[] {
+        return this.schedules.filter(schedule => schedule.dayOfWeek === day && schedule.lessonNumber === lessonNumber);
     }
 
-    //Пофиксить время пары, а то шото не то.
-    getTimeSlotStyle(index: number): object {
-        const now = new Date();
+    isCurrentDay(day: string): boolean {
+        return day === this.currentDay;
+    }
 
-        const intervals = [
-            { startTime: new Date('2023-11-01T08:00:00'), endTime: new Date('2023-11-01T12:00:00'), color: 'purple' },
-            { startTime: new Date('2023-11-01T14:00:00'), endTime: new Date('2023-11-01T18:00:00'), color: 'purple' },
-            { startTime: new Date('23:50:00'), endTime: new Date('01:00:00'), color: 'purple' },
-        ];
-
-        const currentInterval = intervals.find(interval => now >= interval.startTime && now <= interval.endTime);
-
-        const color = currentInterval ? currentInterval.color : 'rgba(82, 135, 173, 1)';
-
-        return { 'background-color': (index % 2 === 0) ? color : 'rgba(82, 135, 173, 1)' }; // применяем цвет к четным элементам
+    getCurrentDay(): string {
+        const daysOfWeek = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+        const currentDate = new Date();
+        const currentDayIndex = currentDate.getDay();
+        return daysOfWeek[currentDayIndex];
     }
 }

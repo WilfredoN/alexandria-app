@@ -8,28 +8,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "schedule")
+@Table(name = "teacher_lesson")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Schedule {
+public class TeacherLesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
-
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
-
+    private long id;
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
-
-    private String dayOfWeek;
-    private int lesson_num;
-    private int weekType;
+    @ManyToOne
+    @JoinColumn(name = "lesson_id")
+    private Lesson lesson;
 }

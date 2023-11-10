@@ -1,39 +1,50 @@
-td{
+* {
     color: rgba(255, 255, 255, 1);
 }
-p{
+
+th {
+    margin-left: 5em;
+}
+
+p {
+    width: 100%;
     margin: 0;
 }
-ul{
+
+ul {
     margin-left: 0;
     margin-top: 5px;
     padding-left: 0;
 }
-li{
+
+li {
     list-style-type: none;
 }
 
 table {
     border-collapse: separate;
-    border-spacing: 5px; /* Значение отступа между ячейками */
+    border-spacing: 2em; /* Значение отступа между ячейками */
 }
 
 .bold-text {
     font-weight: 700;
 }
-.base-week-text{
+
+.base-week-text {
     font-size: 18px;
 
 
 }
-.container{
+
+.container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     align-items: center;
 }
-.current-info{
-    width:17em;
+
+.current-info {
+    width: 17em;
     height: 30em;
     background: rgba(82, 135, 173, 1);
     border-radius: 12px;
@@ -41,11 +52,12 @@ table {
     text-align: center;
 }
 
-.num-of-week-label{
+.num-of-week-label {
     font-size: 24px;
     margin: 2em 0 1em 0;
 }
-.num-of-week-text{
+
+.num-of-week-text {
     font-size: 18px;
     background: rgba(188, 190, 238, 0.62);
     padding: 1em 0 1em 0;
@@ -57,7 +69,8 @@ table {
     border: 0;
     margin-right: 3em;
 }
-.days-of-week td{
+
+.days-of-week td {
     width: 7em;
     height: 4em;
 }
@@ -68,7 +81,8 @@ table {
     align-items: flex-end;
     margin-top: 1em;
 }
-.num-lessons li{
+
+.num-lessons li {
     background: rgba(82, 135, 173, 1);
     margin-bottom: 10px;
     width: 5em;
@@ -79,21 +93,25 @@ table {
     border-radius: 12px;
 }
 
-.lesson li{
+.lesson li {
     width: 15em;
-    height:4em;
+    height: 5em;
     background: rgba(82, 135, 173, 1);
     margin-bottom: 10px;
     border-radius: 12px;
+    padding: 1em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.lesson li p{
-    font-size: 16px;
-}
 
-.equals{
-    margin: 0 5px 0 5px;
+.lesson li p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0;
+}
+.current-day {
+    color: red;
 }
 
