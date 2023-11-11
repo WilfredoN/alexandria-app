@@ -41,13 +41,8 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createStudent(@RequestBody StudentDTO studentDTO) {
-        try {
-            studentService.create(studentDTO);
-            return new ResponseEntity<>("Student created", HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("Error creating student", HttpStatus.BAD_REQUEST);
-        }
+    public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
+            return studentService.create(studentDTO);
     }
     @PutMapping("/{login}")
     public ResponseEntity<String> updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {

@@ -50,6 +50,7 @@ export class LogInComponent implements OnInit {
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
                 localStorage.setItem('user', JSON.stringify(userDTO));
                 localStorage.setItem('role', userDTO.role);
+                console.log(userDTO);
                 this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },
             error: () => {

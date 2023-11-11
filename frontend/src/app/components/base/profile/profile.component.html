@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="groups_selector" *ngIf="!isStudent">
-            <h3>Выберите группы, у которых вы преподаете:</h3>
+            <h3>Выберите группы, у которых вы преподаете</h3>
             <ul>
                 <li *ngFor="let group of groups">
                     <label>
@@ -27,12 +27,28 @@
             </ul>
         </div>
         <div class="students_creator" *ngIf="!isStudent">
-            <form class="students_form">
-                <mat-form-field class="students_field">
-                    <mat-label>ФІО</mat-label>
-                    <input matInput [(ngModel)]="student.full_name">
-                </mat-form-field>
+            <h3>Добавить студентов</h3>
+            <form class="students_form" (ngSubmit)="createStudent()">
+                <table class="students_field">
+                    <tr>
+                        <td>
+                            <div class="students_field">
+                                <label for="full_name">ФИО</label>
+                                <input type="text" id="full_name" name="full_name" [(ngModel)]="student.full_name" required>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="students_field">
+                                <label for="group">Группа</label>
+                                <input type="text" id="group" name="group" [(ngModel)]="student.group_name" required>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit">Отправить</button>
             </form>
         </div>
+
+
     </div>
 </div>

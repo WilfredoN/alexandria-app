@@ -34,9 +34,9 @@ public class TeacherController {
     public TeacherDTO findTeacherByLogin(@PathVariable String login) {
         return teacherService.findTeacherByLogin(login);
     }*/
-    @GetMapping("/{id}")
-    public TeacherDTO findTeacherById(@PathVariable Long id) {
-        return teacherService.findTeacher(id);
+    @GetMapping("/{login}")
+    public TeacherDTO findTeacherById(@PathVariable String login) {
+        return teacherService.findTeacherByLogin(login);
     }
     @PostMapping("/login")
     public TeacherDTO logIn(@RequestBody TeacherDTO teacherDTO) {

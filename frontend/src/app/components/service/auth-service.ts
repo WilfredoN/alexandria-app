@@ -23,7 +23,12 @@ export class AuthService {
     register(user: TeacherDTO): Observable<Response> {
         return this.http.post<Response>(`${this.baseUrl}/teachers/create`, user, this.httpOptions);
     }
-
+    registerStudent(user: any): Observable<Response> {
+        return this.http.post<Response>(`${this.baseUrl}/students/create`, user, this.httpOptions);
+    }
+    getStudents(): Observable<StudentDTO[]> {
+        return this.http.get<StudentDTO[]>(`${this.baseUrl}/students`);
+    }
     logIn(user: loginDTO): Observable<loginDTO> {
         const endpoint = user.role === 'teacher' ? '/teachers/login' : '/students/login';
         return this.http.post<loginDTO>(`${this.baseUrl}${endpoint}`, user, this.httpOptions);
@@ -36,7 +41,9 @@ export class AuthService {
 
     getUser(user: any): Observable<any> {
         const endpoint = user.role === 'student' ? '/students' : '/teachers';
-        return this.http.get<StudentDTO | TeacherDTO>(`${this.baseUrl}${endpoint}/${user.login}`);
+        const userData = this.http.get<StudentDTO | TeacherDTO>(`${this.baseUrl}${endpoint}/${user.login}`)
+        console.log(userData);
+        return userData;
     }
 
     update(user: loginDTO, newPassword: string) {

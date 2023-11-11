@@ -6,7 +6,6 @@
 
 .container_inner{
     margin-top: 2.5em;
-    width: 1280px;
     height: 100%;
     color: white;
     display: flex;
@@ -60,18 +59,18 @@
 
 /*-------------Сам профиль---------- */
 .profile_info{
-    width: 60em;
-    height:20em;
-    display: flex;
-    align-items: center;
-    background:rgba(11, 59, 95, 1);
-    border-radius: 8px;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
-    margin: 0 15px 15px 0;
-    padding:0;
+    min-width: 40em;
     font-size: 18px;
 }
-
+.profile_info, .groups_selector, .students_creator {
+    height: 20em;
+    background:rgba(11, 59, 95, 1);
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 2em 0 0;
+}
 .bnt_change{
     border:0;
     background: rgb(11, 97, 95);
@@ -90,26 +89,22 @@
 /*-------------Группы---------- */
 
 .groups_selector{
-    width: 26em;
-    background: rgba(11, 59, 95, 1);
-    display: flex;
+    min-width: 30em;
     flex-direction: column;
-    align-items: center;
-    border-radius: 8px;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     text-align: center;
 }
 .groups_selector ul{
+    width: 100%;
     list-style-type: none;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     margin: 0;
     padding: 0;
-    overflow: hidden;
     border-radius: 8px;
 }
 .groups_selector li{
+    width: 5em;
     padding: 1em;
     margin: .5em;
     font-size: 1.2em;
@@ -117,4 +112,26 @@
     text-decoration: none;
     background: rgb(61, 143, 208);
     border-radius: 1.5em;
+}
+.students_creator {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.2em;
+}
+.students_creator h3 {
+    width: 100%;
+    text-align: center;
+}
+tr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 2em 1em;
+}
+td {
+    width: 5em;
+}
+select {
+    width: 10em;
 }
