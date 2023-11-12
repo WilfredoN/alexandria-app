@@ -5,12 +5,12 @@ import lombok.*;
 
 @Builder
 public record ScheduleDTO(
-        Long id,
-        Long lessonId,
-        Long groupId,
-        Long teacherId,
-        String dayOfWeek,
-        int lessonNumber,
-        int weekType
+        long id,
+        long lesson_id,
+        long group_id,
+        long teacher_id,
+        String day_of_week,
+        int lesson_num,
+        int week_type
 ) {}
 

@@ -20,13 +20,7 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping
-    public List<TeacherDTO> getTeacher(
-            @RequestParam(required = false) String full_name,
-            @RequestParam(required = false) String login,
-            @RequestParam(required = false) String password
-    ) {
-        log.info("getUsers: full_name={}, login={}, password={}, "
-                , full_name, login, password);
+    public List<TeacherDTO> getTeacher() {
         return teacherService.findTeachers();
     }
 
@@ -34,9 +28,9 @@ public class TeacherController {
      public TeacherDTO findTeacherByLogin(@PathVariable String login) {
          return teacherService.findTeacherByLogin(login);
      }*/
-    @GetMapping("/{login}")
-    public TeacherDTO findTeacherById(@PathVariable String login) {
-        return teacherService.findTeacherByLogin(login);
+    @GetMapping("/{id}")
+    public TeacherDTO findTeacherById(@PathVariable long id) {
+        return teacherService.findTeacher(id);
     }
 
     @PostMapping("/login")

@@ -28,6 +28,8 @@ import { MatTableModule } from "@angular/material/table";
 import {MatDialogModule} from '@angular/material/dialog';
 import {DialogChangePasswordComponent} from "./base/profile/dialog-change-password";
 import {MatButtonModule} from "@angular/material/button";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -61,7 +63,9 @@ import {MatButtonModule} from "@angular/material/button";
         MatSelectModule,
         MatTableModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        MatExpansionModule,
+        MatAutocompleteModule
     ],
 	providers: [],
 	bootstrap: [AppComponent],

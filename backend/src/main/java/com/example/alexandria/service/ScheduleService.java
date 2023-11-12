@@ -57,24 +57,24 @@ public class ScheduleService {
     private ScheduleDTO mapToDTO(Schedule schedule) {
         return ScheduleDTO.builder()
                 .id(schedule.getId())
-                .dayOfWeek(schedule.getDayOfWeek())
-                .lessonId(schedule.getLesson().getId()) // Choose one consistent approach
-                .groupId(schedule.getGroup().getId())
-                .teacherId(schedule.getTeacher().getId())
-                .weekType(schedule.getWeekType())
-                .lessonNumber(schedule.getLesson_num())
+                .day_of_week(schedule.getDayOfWeek())
+                .lesson_id(schedule.getLesson().getId()) // Choose one consistent approach
+                .group_id(schedule.getGroup().getId())
+                .teacher_id(schedule.getTeacher().getId())
+                .week_type(schedule.getWeekType())
+                .lesson_num(schedule.getLesson_num())
                 .build();
     }
 
     private Schedule mapToEntity(ScheduleDTO schedule) {
         return Schedule.builder()
                 .id(schedule.id())
-                .dayOfWeek(schedule.dayOfWeek())
-                .lesson(scheduleRepository.getLessonById(schedule.lessonId())) // Adjust this based on your repository
-                .group(scheduleRepository.getGroupById(schedule.groupId())) // Adjust this based on your repository
-                .teacher(scheduleRepository.getTeacherById(schedule.teacherId())) // Adjust this based on your repository
-                .weekType(schedule.weekType())
-                .lesson_num(schedule.lessonNumber())
+                .dayOfWeek(schedule.day_of_week())
+                .lesson(scheduleRepository.getLessonById(schedule.lesson_id())) // Adjust this based on your repository
+                .group(scheduleRepository.getGroupById(schedule.group_id())) // Adjust this based on your repository
+                .teacher(scheduleRepository.getTeacherById(schedule.teacher_id())) // Adjust this based on your repository
+                .weekType(schedule.week_type())
+                .lesson_num(schedule.lesson_num())
                 .build();
     }
 }

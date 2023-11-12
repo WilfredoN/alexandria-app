@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ScheduleService} from "../../service/schedule-service";
 import {Schedule} from "../../service/schedule-dto";
 import {forkJoin, Observable} from "rxjs";
+import {AuthService} from "../../service/auth-service";
 
 @Component({
     selector: 'app-schedule',
@@ -11,50 +12,92 @@ import {forkJoin, Observable} from "rxjs";
 export class ScheduleComponent implements OnInit {
     schedules: Schedule[] = [];
     currentDay: string;
-    constructor(private scheduleService: ScheduleService) {
+    user: any;
+    isStudent: boolean;
+
+    lessonNames: { id: number, lesson_name: string }[] = [];
+    teacherNames: { id: number, full_name: string }[] = [];
+    groups: { id: number, name: string }[] = [];
+    daysOfWeek: string[] = [
+        'Понедельник',
+        'Вторник',
+        'Среда',
+        'Четверг',
+        'Пятница'
+    ];
+    lessonNumbers: number[] = [1, 2, 3, 4]
+    lesson: {
+        lesson_id: number,
+        teacher_id: number,
+        lesson_number: number,
+        day_of_week: string,
+        group_id: number,
+        week_type: number;
+    } = {
+        lesson_id: 0,
+        teacher_id: 0,
+        lesson_number: 0,
+        day_of_week: '',
+        group_id: 0,
+        week_type: 1
+    }
+
+
+    constructor(private scheduleService: ScheduleService,
+                private authService: AuthService) {
         this.currentDay = this.getCurrentDay();
     }
 
     ngOnInit(): void {
+        this.getCreatorData();
+        const storedUser = localStorage.getItem('user') as string;
+        this.user = JSON.parse(storedUser);
+        this.user.role = localStorage.getItem('role') as string;
+        this.isStudent = this.user.role === 'student';
+        this.getUserData()
         this.scheduleService.getSchedules().subscribe(schedules => {
             this.schedules = schedules;
+            console.log(this.schedules);
 
             const lessonRequests: Observable<{
                 id: number,
                 lesson_name: string,
             }>[] = schedules.map(schedule =>
-                this.scheduleService.getLessonById(schedule.lessonId)
+                this.scheduleService.getLessonById(schedule.lesson_id)
             );
             const teacherRequests: Observable<{ id: number, full_name: string }>[] = schedules.map(schedule =>
-                this.scheduleService.getTeacherById(schedule.teacherId)
+                this.scheduleService.getTeacherById(schedule.teacher_id)
             );
             forkJoin(lessonRequests).subscribe(lessonNames => {
                 lessonNames.forEach((lesson, index) => {
-                    this.schedules[index].lessonName = lesson.lesson_name;
+                    this.schedules[index].lessonName = lesson?.lesson_name || '';
                     console.log(this.schedules[index].lessonName);
                 });
             });
 
             forkJoin(teacherRequests).subscribe(teacherNames => {
                 teacherNames.forEach((teacher, index) => {
-                    this.schedules[index].teacherName = teacher.full_name;
+                    this.schedules[index].teacherName = teacher?.full_name || '';
                     console.log(this.schedules[index].teacherName);
                 });
             });
-            console.log(this.schedules);
-            console.log(this.getDaysOfWeek());
         });
-
     }
 
-
-    getDaysOfWeek(): string[] {
-        return Array.from(new Set(this.schedules.map(schedule => schedule.dayOfWeek)));
+    getUserData() {
+        this.authService.getUser(this.user).subscribe((user: any) => {
+            this.user = user;
+            this.user.role = localStorage.getItem('role') as string;
+            localStorage.setItem('user', JSON.stringify(user));
+            this.user = JSON.parse(localStorage.getItem('user') as string);
+        });
+        console.log(this.user);
     }
 
     getSchedulesForDayAndLesson(day: string, lessonNumber: number): Schedule[] {
-        return this.schedules.filter(schedule => schedule.dayOfWeek === day && schedule.lessonNumber === lessonNumber);
+        return this.schedules.filter(schedule => schedule.day_of_week === day && schedule.lesson_num === lessonNumber);
     }
+
 
     isCurrentDay(day: string): boolean {
         return day === this.currentDay;
@@ -65,5 +108,49 @@ export class ScheduleComponent implements OnInit {
         const currentDate = new Date();
         const currentDayIndex = currentDate.getDay();
         return daysOfWeek[currentDayIndex];
+    }
+
+    createSchedule() {
+        if (this.lesson.lesson_id === null || this.lesson.teacher_id === null || this.lesson.group_id === null || this.lesson.lesson_number === null || this.lesson.day_of_week === '') {
+            alert('Заполните все поля!');
+            return;
+        }
+        console.log(this.lesson);
+        this.authService.createSchedule(this.lesson).subscribe((response: any) => {
+            console.log(response);
+            alert('Расписание успешно создано!');
+        });
+    }
+
+    private getCreatorData() {
+        this.authService.getTeachers().subscribe((teachers: any) => {
+            this.teacherNames = teachers.map((teacher: any) => {
+                return {id: teacher.id, full_name: teacher.full_name};
+            });
+            console.log('Teachers ', this.teacherNames);
+        });
+
+        this.authService.getLessons().subscribe((lessons: any) => {
+            this.lessonNames = lessons.map((lesson: any) => {
+                return {id: lesson.id, lesson_name: lesson.lesson_name};
+            });
+            console.log('Lessons ', this.lessonNames);
+        });
+
+        this.authService.getGroups().subscribe((groups: any) => {
+            this.groups = groups.map((group: any) => {
+                return {id: group.id, name: group.name};
+            });
+            console.log('Groups ', this.groups);
+        });
+    }
+
+
+    chooseWeekType() {
+        if (this.lesson.week_type == 1) {
+            this.lesson.week_type = 2;
+        } else {
+            this.lesson.week_type = 1;
+        }
     }
 }

@@ -1,7 +1,3 @@
-* {
-    color: rgba(255, 255, 255, 1);
-}
-
 th {
     margin-left: 5em;
 }
@@ -23,7 +19,8 @@ li {
 
 table {
     border-collapse: separate;
-    border-spacing: 2em; /* Значение отступа между ячейками */
+    border-spacing: 2em;
+    color: white;
 }
 
 .bold-text {
@@ -32,20 +29,18 @@ table {
 
 .base-week-text {
     font-size: 18px;
-
-
 }
 
 .container {
     display: flex;
-    justify-content: center;
+    margin-left: 10em;
     margin-top: 20px;
     align-items: center;
 }
 
 .current-info {
-    width: 17em;
-    height: 30em;
+    width: 25em;
+    height: 40em;
     background: rgba(82, 135, 173, 1);
     border-radius: 12px;
     color: white;
@@ -94,8 +89,8 @@ table {
 }
 
 .lesson li {
-    width: 15em;
-    height: 5em;
+    width: 18em;
+    height: 6em;
     background: rgba(82, 135, 173, 1);
     margin-bottom: 10px;
     border-radius: 12px;
@@ -108,10 +103,18 @@ table {
 
 .lesson li p {
     font-size: 1.3em;
-    margin: 0;
-    padding: 0;
+    width: 100%;
+    height: 100%;
 }
+
 .current-day {
     color: red;
 }
-
+mat-expansion-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.num-of-week-selector .num-of-week-text {
+    cursor: pointer;
+}

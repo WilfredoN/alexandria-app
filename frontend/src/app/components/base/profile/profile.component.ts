@@ -59,6 +59,9 @@ export class ProfileComponent implements OnInit {
                 }
             });
         }
+       this.getUserData()
+    }
+    getUserData() {
         this.authService.getUser(this.user).subscribe((userDTO: any) => {
             this.userDTO = userDTO;
             this.userDTO.role = localStorage.getItem('role') as string;
@@ -67,7 +70,6 @@ export class ProfileComponent implements OnInit {
         });
         console.log(this.user);
     }
-
     openChangePasswordDialog() {
         const dialogRef = this.dialog.open(DialogChangePasswordComponent, {
             data: { user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: '' },

@@ -5,7 +5,6 @@ import com.example.alexandria.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -21,6 +20,7 @@ public class TeacherService {
 
     public TeacherDTO mapTeacher(Teacher teacher) {
         return TeacherDTO.builder()
+                .id(teacher.getId())
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
                 .password(teacher.getPassword())
@@ -65,14 +65,9 @@ public class TeacherService {
     }
 
     public void update(String login, TeacherDTO teacher) {
-        try {
             var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
             teacherToUpdate.setPassword(teacher.password());
             teacherRepository.save(teacherToUpdate);
-            new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 
     public TeacherDTO create(TeacherDTO teacher) {

@@ -18,17 +18,14 @@ public class GroupController {
 
     @GetMapping
     public List<Group> getGroups(
-            ) {
+    ) {
         return groupService.findGroups();
-    }
-    @GetMapping("/{name}")
-    public Group getGroup(@PathVariable String name) {
-        return groupService.findGroup(name);
     }
     @GetMapping("/{id}")
     public Group getGroup(@PathVariable long id) {
         return groupService.findGroup(id);
     }
+
     @PostMapping("/create")
     public Group createGroup(@RequestBody Group group) {
         return groupService.create(group);

@@ -40,16 +40,18 @@ export class LogInComponent implements OnInit {
             return;
         }
         const userDTO: loginDTO = {
+            id: 0,
             login: this.myForm.value.login,
             password: this.myForm.value.password,
             role: this.myForm.value.role
         }
 
         this.authService.logIn(userDTO).subscribe({
-            next: () => {
+            next: (response: any) => {
+                console.log(response);
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
+                userDTO.id = response.id;
                 localStorage.setItem('user', JSON.stringify(userDTO));
-                localStorage.setItem('role', userDTO.role);
                 console.log(userDTO);
                 this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },

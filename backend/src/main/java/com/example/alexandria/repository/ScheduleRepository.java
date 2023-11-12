@@ -15,11 +15,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findScheduleByGroupId_Name(String groupName);
 
     @Query("SELECT l FROM Lesson l WHERE l.id = :lessonId")
-    Lesson getLessonById(@Param("lessonId") Long lessonId);
+    Lesson getLessonById(@Param("lessonId") long lessonId);
 
     @Query("SELECT g FROM Group g WHERE g.id = :groupId")
-    Group getGroupById(@Param("groupId") Long groupId);
+    Group getGroupById(@Param("groupId") long groupId);
 
     @Query("SELECT t FROM Teacher t WHERE t.id = :teacherId")
-    Teacher getTeacherById(@Param("teacherId") Long teacherId);
+    Teacher getTeacherById(@Param("teacherId") long teacherId);
 }

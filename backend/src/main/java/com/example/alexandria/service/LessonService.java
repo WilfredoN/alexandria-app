@@ -21,6 +21,7 @@ public class LessonService {
 
     private LessonDTO mapLesson(Lesson lesson) {
         return LessonDTO.builder()
+                .id(lesson.getId())
                 .lesson_name(lesson.getLesson_name())
                 .build();
     }
