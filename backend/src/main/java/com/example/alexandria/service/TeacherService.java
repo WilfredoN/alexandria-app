@@ -59,14 +59,9 @@ public class TeacherService {
                 .collect(toList());
     }
 
-    public ResponseEntity<String> delete(String login) {
-        try {
+    public void delete(String login) {
             var teacher = teacherRepository.findByLogin(login).orElseThrow();
             teacherRepository.delete(teacher);
-            return new ResponseEntity<>("Teacher deleted", HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("Error deleting teacher", HttpStatus.BAD_REQUEST);
-        }
     }
 
     public void update(String login, TeacherDTO teacher) {
@@ -74,9 +69,9 @@ public class TeacherService {
             var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
             teacherToUpdate.setPassword(teacher.password());
             teacherRepository.save(teacherToUpdate);
-            new ResponseEntity<>("Teacher updated", HttpStatus.OK);
+            new ResponseEntity<>(HttpStatus.OK);
         } catch (RuntimeException e) {
-            new ResponseEntity<>("Error updating teacher", HttpStatus.BAD_REQUEST);
+            new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

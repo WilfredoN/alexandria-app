@@ -47,12 +47,21 @@ export class ProfileComponent implements OnInit {
         this.user.role = localStorage.getItem('role') as string;
         this.isStudent = this.user.role === 'student';
         if (!this.isStudent) {
-            this.groupService.getGroups().subscribe((groups) => {
-                this.groups = groups;
+            this.groupService.getGroups().subscribe({
+                next: (response) => {
+                    this.groups = response;
+                    console.log('Список групп:', this.groups);
+                },
+                error: (error) => {
+                    console.error('Ошибка при получении списка групп', error);
+                    this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
+                    return;
+                }
             });
         }
         this.authService.getUser(this.user).subscribe((userDTO: any) => {
             this.userDTO = userDTO;
+            this.userDTO.role = localStorage.getItem('role') as string;
             localStorage.setItem('user', JSON.stringify(userDTO));
             this.user = JSON.parse(localStorage.getItem('user') as string);
         });
@@ -61,20 +70,25 @@ export class ProfileComponent implements OnInit {
 
     openChangePasswordDialog() {
         const dialogRef = this.dialog.open(DialogChangePasswordComponent, {
-            data: {user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: ''},
+            data: { user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: '' },
         });
+
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                // Обновите данные пользователя в localStorage
-                this.user.password = result.user.newPassword;
-                localStorage.setItem('user', JSON.stringify(this.user));
+                this.handlePasswordUpdate(result.user.newPassword);
             }
         });
     }
 
+    private handlePasswordUpdate(newPassword: string) {
+        this.user!.password = newPassword;
+        localStorage.setItem('user', JSON.stringify(this.user));
+    }
+
     deleteAccount() {
-        this.authService.delete(this.user).subscribe({
-            next: () => {
+        this.authService.delete(this.user.login, this.user.role).subscribe({
+            next: (response) => {
+                console.log(response);
                 localStorage.removeItem('user');
                 console.log(localStorage.getItem('user') === null ? 'Account deleted' : 'Account not deleted');
                 this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
@@ -96,7 +110,7 @@ export class ProfileComponent implements OnInit {
         const fullName: string = this.student.full_name;
         const group: string = this.student.group_name;
         const latinizedFullName: string = this.latinizeFullName(fullName.toLowerCase());
-        this.student.login = `${latinizedFullName.split(' ').join('_').toLowerCase().slice(0, 4)}_${group.toLowerCase()}#${group.slice(0, 2)}`;
+        this.student.login = `${latinizedFullName.split(' ').join('_').toLowerCase().slice(0, 4)}_${group.toLowerCase()}${group.slice(0, 2)}`;
         this.student.password = `${latinizedFullName.split(' ').slice(0, 2).join('_').toLowerCase()}#${group.toLowerCase()}`;
         console.log(this.student);
         this.authService.registerStudent(this.student).pipe(

@@ -54,13 +54,8 @@ public class StudentController {
         }
     }
     @DeleteMapping("/{login}")
-    public ResponseEntity<String> deleteStudent(@PathVariable String login) {
-        try {
+    public void deleteStudent(@PathVariable String login) {
             studentService.delete(login);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 }
 

@@ -56,14 +56,9 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<String> delete(String login) {
-        try {
-            var student = studentRepository.findByLogin(login).orElseThrow();
-            studentRepository.delete(student);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public void delete(String login) {
+        var student = studentRepository.findByLogin(login).orElseThrow();
+        studentRepository.delete(student);
     }
 
     public void update(String login, StudentDTO student) {

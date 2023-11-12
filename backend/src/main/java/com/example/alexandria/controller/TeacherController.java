@@ -30,14 +30,15 @@ public class TeacherController {
         return teacherService.findTeachers();
     }
 
-   /* @GetMapping("/{login}")
-    public TeacherDTO findTeacherByLogin(@PathVariable String login) {
-        return teacherService.findTeacherByLogin(login);
-    }*/
+    /* @GetMapping("/{login}")
+     public TeacherDTO findTeacherByLogin(@PathVariable String login) {
+         return teacherService.findTeacherByLogin(login);
+     }*/
     @GetMapping("/{login}")
     public TeacherDTO findTeacherById(@PathVariable String login) {
         return teacherService.findTeacherByLogin(login);
     }
+
     @PostMapping("/login")
     public TeacherDTO logIn(@RequestBody TeacherDTO teacherDTO) {
         return teacherService.logIn(teacherDTO);
@@ -64,13 +65,8 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{login}")
-    public ResponseEntity<String> deleteTeacher(@PathVariable String login) {
-        try {
-            teacherService.delete(login);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public void deleteTeacher(@PathVariable String login) {
+        teacherService.delete(login);
     }
 }
 
