@@ -16,7 +16,7 @@ export class ScheduleComponent implements OnInit {
     currentDay: string;
     user: any;
     isStudent: boolean;
-
+    chosenGroup: string = '';
     lessonNames: { id: number, lesson_name: string }[] = [];
     teacherNames: { id: number, full_name: string }[] = [];
     groups: { id: number, name: string }[] = [];
@@ -57,8 +57,11 @@ export class ScheduleComponent implements OnInit {
         this.user = JSON.parse(storedUser);
         this.user.role = localStorage.getItem('role') as string;
         this.isStudent = this.user.role === 'student';
+        if (this.isStudent) {
+            this.chosenGroup = this.user.group_name;
+        }
         this.getUserData()
-        this.scheduleService.getSchedules().subscribe(schedules => {
+        this.scheduleService.getSchedules(this.chosenGroup).subscribe(schedules => {
             this.schedules = schedules;
             console.log(this.schedules);
 
@@ -183,6 +186,7 @@ export class ScheduleComponent implements OnInit {
                 return {id: group.id, name: group.name};
             });
             console.log('Groups ', this.groups);
+            this.chosenGroup = this.groups[0].name;
         });
     }
 

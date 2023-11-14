@@ -7,12 +7,12 @@ import {Schedule} from "./schedule-dto";
     providedIn: 'root'
 })
 export class ScheduleService {
-    private apiUrl = 'http://localhost:8080/api/schedule/groups/KI-410';
+    private apiUrl = 'http://localhost:8080/api/schedule/groups';
 
     constructor(private http: HttpClient) {}
 
-    getSchedules(): Observable<Schedule[]> {
-        return this.http.get<Schedule[]>(this.apiUrl);
+    getSchedules(group_name: string): Observable<Schedule[]> {
+        return this.http.get<Schedule[]>(`${this.apiUrl}/${group_name}`);
     }
 
     getLessonById(id: number): Observable<{ id: number, lesson_name: string }> {
