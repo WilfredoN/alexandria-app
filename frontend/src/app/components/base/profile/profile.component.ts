@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    private getUserData(): void {
+    public getUserData(): void {
         if (this.user) {
             this.authService.getUser(this.user).subscribe((userDTO: any) => {
                 this.userDTO = userDTO;

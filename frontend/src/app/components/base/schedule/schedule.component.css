@@ -1,3 +1,8 @@
+:host {
+    --mat-expansion-container-background-color: transparent;
+    --mat-expansion-header-text-color: white;
+}
+
 th {
     margin-left: 5em;
 }
@@ -40,7 +45,7 @@ table {
 
 .current-info {
     width: 25em;
-    height: 40em;
+    height: 39em;
     background: rgba(82, 135, 173, 1);
     border-radius: 12px;
     color: white;

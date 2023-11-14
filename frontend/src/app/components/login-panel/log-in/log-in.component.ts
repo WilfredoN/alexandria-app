@@ -3,7 +3,6 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../service/auth-service";
-import {loginDTO} from "../../service/login-dto";
 
 @Component({
     selector: 'app-log-in',
@@ -39,10 +38,11 @@ export class LogInComponent implements OnInit {
             this._snackBar.open('Введите корректные данные', 'Закрыть', {duration: 3000});
             return;
         }
-        const userDTO: loginDTO = {
+        const userDTO = {
             id: 0,
             login: this.myForm.value.login,
             password: this.myForm.value.password,
+            group_name: '',
             role: this.myForm.value.role
         }
 
@@ -50,8 +50,8 @@ export class LogInComponent implements OnInit {
             next: (response: any) => {
                 console.log(response);
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
-                // Обновляем данные пользователя с полученным ID
                 userDTO.id = response.id;
+                userDTO.group_name = response.group_name;
                 // Обновляем localStorage
                 localStorage.setItem('user', JSON.stringify(userDTO));
                 localStorage.setItem('role', userDTO.role);

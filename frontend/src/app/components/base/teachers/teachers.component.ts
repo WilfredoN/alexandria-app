@@ -1,5 +1,4 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {StudentDTO} from "../../service/student-dto";
 import {TeacherDTO} from "../../service/teacher-dto";
 import {TeacherService} from "../../service/teacher-service";
 import {Router} from "@angular/router";
@@ -11,7 +10,8 @@ import {Router} from "@angular/router";
 })
 @Injectable({providedIn: 'root'})
 export class TeachersComponent implements OnInit {
-    user: StudentDTO;
+    user: any;
+    userDTO: any;
     teachers: TeacherDTO[] = [];
 
     constructor(private teacherService: TeacherService,
@@ -20,10 +20,12 @@ export class TeachersComponent implements OnInit {
 
     ngOnInit(): void {
         this.user = JSON.parse(localStorage.getItem('user') || 'null');
-        if (this.user == null) {
-            this.router.navigate(['/log-in']).then(r => console.log(r));
+        if (this.user === null) {
+            this.router.navigate(['/login']).then(r => console.log(r + 'Переход на страницу логина'));
         }
+        console.log(this.user);
         this.getTeachersForGroup();
+        console.log('Пользователь', this.user);
     }
 
     getTeachersForGroup() {

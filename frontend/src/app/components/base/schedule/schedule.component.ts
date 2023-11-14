@@ -137,7 +137,7 @@ export class ScheduleComponent implements OnInit {
 
         if (existingSchedule) {
             const dialogRef = this.dialog.open(DialogChangeLesson, {
-                width: '250px',
+                width: '300px',
                 data: {message: 'Предмет уже добавлен в эту позицию. Хотите заменить его?'}
             });
 
