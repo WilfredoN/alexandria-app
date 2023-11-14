@@ -4,6 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record StudentDTO(
+        long id,
         String full_name,
         String login,
         String password,

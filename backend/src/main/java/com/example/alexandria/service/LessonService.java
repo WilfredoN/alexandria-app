@@ -31,8 +31,10 @@ public class LessonService {
                 .map(this::mapLesson)
                 .collect(Collectors.toList());
     }
+
     public LessonDTO create(LessonDTO lesson) {
         var savedLesson = lessonRepository.save(Lesson.builder()
+                .id(lesson.id())
                 .lesson_name(lesson.lesson_name())
                 .build());
         return mapLesson(savedLesson);

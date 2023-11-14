@@ -20,11 +20,6 @@ export class TeacherService {
         });
     }
 
-    getTeachersForGroup(group_name: string | undefined): Observable<TeacherDTO[]> {
-        // Execute an HTTP request to the backend
-        return this.http.get<TeacherDTO[]>(`${this.apiURL}/${group_name}`);
-    }
-
     updateTeacher(teacher: TeacherDTO, password: string): Observable<TeacherDTO> {
         return this.http.put<TeacherDTO>(`http://localhost:8080/api/teachers/${teacher.login}`,
             {
@@ -39,5 +34,14 @@ export class TeacherService {
     deleteTeacher(login: string): Observable<TeacherDTO> {
         return this.http.delete<TeacherDTO>(`http://localhost:8080/api/teachers/${login}`);
     }
-}
+
+    getTeachersForGroup(groupName: string): Observable<TeacherDTO[]> {
+        const url = `${this.apiURL}/groups/${groupName}`;
+        return this.http.get<TeacherDTO[]>(url, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        }
+    }
 

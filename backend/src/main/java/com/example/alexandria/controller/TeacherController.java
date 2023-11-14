@@ -1,6 +1,8 @@
 package com.example.alexandria.controller;
 
 
+import com.example.alexandria.repository.Teacher;
+import com.example.alexandria.service.GroupDTO;
 import com.example.alexandria.service.TeacherDTO;
 import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController
@@ -56,6 +62,28 @@ public class TeacherController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/{teacherId}/groups")
+    public List<GroupDTO> getTeacherGroups(@PathVariable long teacherId) {
+        Optional<Teacher> optionalTeacher = teacherService.getTeacherWithGroups(teacherId);
+        List<GroupDTO> groupDTOs = new ArrayList<>();
+        if (optionalTeacher.isPresent()) {
+            Teacher teacher = optionalTeacher.get();
+            groupDTOs = teacher.getGroups().stream()
+                    .map(group -> {
+                        GroupDTO dto = new GroupDTO();
+                        dto.setId(group.getId());
+                        dto.setName(group.getName());
+                        return dto;
+                    })
+                    .collect(toList());
+        }
+        return groupDTOs;
+    }
+    @GetMapping("/groups/{groupName}")
+    public List<TeacherDTO> getTeacherByGroup(@PathVariable String groupName) {
+        return teacherService.findTeacherByGroup(groupName);
     }
 
     @DeleteMapping("/{login}")

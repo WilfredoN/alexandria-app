@@ -21,6 +21,7 @@ public class GroupController {
     ) {
         return groupService.findGroups();
     }
+
     @GetMapping("/{id}")
     public Group getGroup(@PathVariable long id) {
         return groupService.findGroup(id);
@@ -29,5 +30,10 @@ public class GroupController {
     @PostMapping("/create")
     public Group createGroup(@RequestBody Group group) {
         return groupService.create(group);
+    }
+
+    @PostMapping("/assign/{teacherId}")
+    public void assignGroups(@PathVariable long teacherId, @RequestBody List<Long> groupIds) {
+        groupService.assignGroupsToTeacher(teacherId, groupIds);
     }
 }

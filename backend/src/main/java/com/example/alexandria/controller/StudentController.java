@@ -30,9 +30,13 @@ public class StudentController {
         return studentService.findStudents();
     }
 
-    @GetMapping("/{login}")
-    public StudentDTO findStudentByLogin(@PathVariable String login) {
-        return studentService.findStudentByLogin(login);
+//    @GetMapping("/{login}")
+//    public StudentDTO findStudentByLogin(@PathVariable String login) {
+//        return studentService.findStudentByLogin(login);
+//    }
+    @GetMapping("/{id}")
+    public StudentDTO findStudentById(@PathVariable long id) {
+        return studentService.findStudent(id);
     }
 
     @PostMapping("/login")

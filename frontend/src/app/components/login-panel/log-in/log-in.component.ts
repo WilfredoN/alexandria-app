@@ -50,8 +50,11 @@ export class LogInComponent implements OnInit {
             next: (response: any) => {
                 console.log(response);
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
+                // Обновляем данные пользователя с полученным ID
                 userDTO.id = response.id;
+                // Обновляем localStorage
                 localStorage.setItem('user', JSON.stringify(userDTO));
+                localStorage.setItem('role', userDTO.role);
                 console.log(userDTO);
                 this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },
@@ -59,5 +62,6 @@ export class LogInComponent implements OnInit {
                 this._snackBar.open('Неверный логин или пароль', 'Закрыть', {duration: 3000});
             }
         });
+
     }
 }

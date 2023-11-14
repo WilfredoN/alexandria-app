@@ -25,6 +25,7 @@
                     </label>
                 </li>
             </ul>
+            <button (click)="saveGroups()">Сохранить</button>
         </div>
         <div class="students_creator" *ngIf="!isStudent">
             <h3>Добавить студентов</h3>
@@ -34,7 +35,8 @@
                         <td>
                             <div class="students_field">
                                 <label for="full_name">ФИО</label>
-                                <input type="text" id="full_name" name="full_name" [(ngModel)]="student.full_name" required>
+                                <input type="text" id="full_name" name="full_name" [(ngModel)]="student.full_name"
+                                       required>
                             </div>
                         </td>
                         <td>
@@ -48,7 +50,22 @@
                 <button type="submit">Отправить</button>
             </form>
         </div>
-
-
+        <div class="lesson_creator" *ngIf="!isStudent">
+            <h3>Создать предмет</h3>
+            <form class="lessons_form" (ngSubmit)="createLesson()">
+                <table class="lessons_field">
+                    <tr>
+                        <td>
+                            <div class="lessons_field">
+                                <label for="lesson_name">Название предмета</label>
+                                <input type="text" id="lesson_name" name="lesson_name" [(ngModel)]="lesson.lesson_name"
+                                       required>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit">Создать</button>
+            </form>
+        </div>
     </div>
 </div>

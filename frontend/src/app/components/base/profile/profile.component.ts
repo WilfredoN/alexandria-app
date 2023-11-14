@@ -3,11 +3,19 @@ import {Router} from '@angular/router';
 import {GroupService} from './group-service';
 import {Group} from './group.model';
 import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../../service/auth-service";
+import {AuthService, LessonDTO} from "../../service/auth-service";
 import {loginDTO} from "../../service/login-dto";
-import {DialogChangePasswordComponent} from "./dialog-change-password";
 import {switchMap} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {DialogChangePasswordComponent} from "./dialog-change-password";
+import {ScheduleService} from "../../service/schedule-service";
+
+interface Student {
+    full_name: string;
+    login: string;
+    group_name: string;
+    password: string;
+}
 
 @Component({
     selector: 'app-profile',
@@ -19,17 +27,16 @@ export class ProfileComponent implements OnInit {
     user: loginDTO;
     groups: Group[] = [];
     userDTO: any;
-    student: {
-        full_name: string,
-        login: string,
-        group_name: string,
-        password: string
-    } = {
+    student: Student = {
         full_name: '',
         login: '',
         group_name: '',
         password: ''
     };
+    lesson: LessonDTO = {
+        id: 0,
+        lesson_name: ''
+    }
     studentList: any;
 
     constructor(
@@ -37,42 +44,66 @@ export class ProfileComponent implements OnInit {
         private groupService: GroupService,
         public dialog: MatDialog,
         public authService: AuthService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private scheduleService: ScheduleService
     ) {
     }
 
     ngOnInit(): void {
-        const storedUser = localStorage.getItem('user') as string;
-        this.user = JSON.parse(storedUser);
-        this.user.role = localStorage.getItem('role') as string;
-        this.isStudent = this.user.role === 'student';
+        this.initializeUser();
+        this.getUserData();
+    }
+
+    private initializeUser(): void {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            this.user = JSON.parse(storedUser);
+            this.user.role = localStorage.getItem('role') || '';
+            this.isStudent = this.user.role === 'student';
+        } else {
+            this.router.navigate(['/log-in']).then(() =>
+                console.log('Переход на страницу входа')
+            );
+        }
+
         if (!this.isStudent) {
-            this.groupService.getGroups().subscribe({
-                next: (response) => {
-                    this.groups = response;
-                    console.log('Список групп:', this.groups);
-                },
-                error: (error) => {
-                    console.error('Ошибка при получении списка групп', error);
-                    this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
-                    return;
-                }
+            this.fetchGroups();
+        }
+    }
+
+    private fetchGroups(): void {
+        this.groupService.getGroups().subscribe({
+            next: (response) => {
+                this.groups = response;
+                console.log('Список групп:', this.groups);
+            },
+            error: (error) => {
+                console.error('Ошибка при получении списка групп', error);
+                this.router.navigate(['/log-in']).then(() =>
+                    console.log('Переход на страницу входа')
+                );
+            }
+        });
+    }
+
+    private getUserData(): void {
+        if (this.user) {
+            this.authService.getUser(this.user).subscribe((userDTO: any) => {
+                this.userDTO = userDTO;
+                this.userDTO.role = localStorage.getItem('role');
+                // Обновляем данные пользователя в localStorage
+                localStorage.setItem('user', JSON.stringify(userDTO));
+                localStorage.setItem('role', this.userDTO.role);
+                this.user = JSON.parse(localStorage.getItem('user') || '');
             });
         }
-       this.getUserData()
-    }
-    getUserData() {
-        this.authService.getUser(this.user).subscribe((userDTO: any) => {
-            this.userDTO = userDTO;
-            this.userDTO.role = localStorage.getItem('role') as string;
-            localStorage.setItem('user', JSON.stringify(userDTO));
-            this.user = JSON.parse(localStorage.getItem('user') as string);
-        });
         console.log(this.user);
     }
-    openChangePasswordDialog() {
+
+
+    openChangePasswordDialog(): void {
         const dialogRef = this.dialog.open(DialogChangePasswordComponent, {
-            data: { user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: '' },
+            data: {user: this.user, oldPassword: '', newPassword: '', newPassword_confirm: ''},
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -82,26 +113,32 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    private handlePasswordUpdate(newPassword: string) {
-        this.user!.password = newPassword;
-        localStorage.setItem('user', JSON.stringify(this.user));
+    private handlePasswordUpdate(newPassword: string): void {
+        if (this.user) {
+            this.user.password = newPassword;
+            localStorage.setItem('user', JSON.stringify(this.user));
+        }
     }
 
-    deleteAccount() {
-        this.authService.delete(this.user.login, this.user.role).subscribe({
-            next: (response) => {
-                console.log(response);
-                localStorage.removeItem('user');
-                console.log(localStorage.getItem('user') === null ? 'Account deleted' : 'Account not deleted');
-                this.router.navigate(['/log-in']).then(r => console.log(r + '\nПереход на страницу входа'));
-            },
-            error: (error) => {
-                console.error('Ошибка при удалении аккаунта', error);
-            }
-        });
+    deleteAccount(): void {
+        if (this.user) {
+            this.authService.delete(this.user.login, this.user.role).subscribe({
+                next: (response) => {
+                    console.log(response);
+                    localStorage.removeItem('user');
+                    console.log(localStorage.getItem('user') === null ? 'Account deleted' : 'Account not deleted');
+                    this.router.navigate(['/log-in']).then(() =>
+                        console.log('Переход на страницу входа')
+                    );
+                },
+                error: (error) => {
+                    console.error('Ошибка при удалении аккаунта', error);
+                }
+            });
+        }
     }
 
-    createStudent() {
+    createStudent(): void {
         if (!this.student.full_name || !this.student.group_name) {
             console.error('Не заполнены обязательные поля');
             this.snackBar.open('Не заполнены обязательные поля', 'Закрыть', {
@@ -109,12 +146,14 @@ export class ProfileComponent implements OnInit {
             });
             return;
         }
+
         const fullName: string = this.student.full_name;
         const group: string = this.student.group_name;
         const latinizedFullName: string = this.latinizeFullName(fullName.toLowerCase());
         this.student.login = `${latinizedFullName.split(' ').join('_').toLowerCase().slice(0, 4)}_${group.toLowerCase()}${group.slice(0, 2)}`;
         this.student.password = `${latinizedFullName.split(' ').slice(0, 2).join('_').toLowerCase()}#${group.toLowerCase()}`;
         console.log(this.student);
+
         this.authService.registerStudent(this.student).pipe(
             switchMap(() => this.authService.getStudents())
         ).subscribe({
@@ -147,6 +186,32 @@ export class ProfileComponent implements OnInit {
         return str.replace(/[а-яА-Я]/g, (match) => {
             const key = match.toLowerCase();
             return map[key] || match;
+        });
+    }
+
+    saveGroups() {
+        this.groupService.assignGroupsToTeacher(this.userDTO.id, this.groups.filter(group => group.selected).map(group => group.id)).subscribe({
+            next: (response) => {
+                console.log(response);
+            },
+            error: (error) => {
+                console.error('Ошибка при сохранении групп', error);
+                console.log('Список групп:', this.groups.filter(group => group.selected).map(group => group.id));
+            }
+        });
+    }
+
+    createLesson() {
+        this.scheduleService.createLesson(this.lesson.lesson_name).subscribe({
+            next: (response) => {
+                this.snackBar.open('Предмет создан', 'Закрыть', {
+                    duration: 2000,
+                });
+                console.log(response);
+            },
+            error: (error) => {
+                console.error('Ошибка при создании предмета', error);
+            }
         });
     }
 }

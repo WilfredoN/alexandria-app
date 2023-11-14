@@ -24,4 +24,8 @@ export class ScheduleService {
         const teacherUrl = `http://localhost:8080/api/teachers/${id}`;
         return this.http.get<{ id: number, full_name: string }>(teacherUrl);
     }
+    createLesson(lesson_name: string): Observable<{ id: number, lesson_name: string }> {
+        const lessonUrl = `http://localhost:8080/api/lessons`;
+        return this.http.post<{ id: number, lesson_name: string }>(`${lessonUrl}/create`, {lesson_name});
+    }
 }

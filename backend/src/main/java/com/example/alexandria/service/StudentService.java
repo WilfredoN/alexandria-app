@@ -22,6 +22,7 @@ public class StudentService {
 
     public StudentDTO mapStudent(Student student) {
         return StudentDTO.builder()
+                .id(student.getId())
                 .full_name(student.getFull_name())
                 .login(student.getLogin())
                 .group_name(student.getGroup_name())
@@ -81,6 +82,7 @@ public class StudentService {
                     .build());
         }
         var savedStudent = studentRepository.save(Student.builder()
+                .id(student.id())
                 .full_name(student.full_name())
                 .login(student.login())
                 .password(hashedPassword)

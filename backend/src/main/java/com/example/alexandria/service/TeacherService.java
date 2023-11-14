@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -36,9 +37,11 @@ public class TeacherService {
         }
     }
 
-    public List<Teacher> getTeachersByGroupName(String name) {
-        return teacherRepository.findTeachersByGroups_Name(name);
+    public Optional<Teacher> getTeacherWithGroups(long teacherId) {
+        return teacherRepository.findByIdWithGroups(teacherId);
     }
+
+
 
     public TeacherDTO findTeacher(long id) {
         return teacherRepository.findById(id)
@@ -59,15 +62,22 @@ public class TeacherService {
                 .collect(toList());
     }
 
+    public List<TeacherDTO> findTeacherByGroup(String groupName) {
+        List<Teacher> teachers = teacherRepository.findByGroupsName(groupName);
+        return teachers.stream()
+                .map(this::mapTeacher)
+                .collect(toList());
+    }
+
     public void delete(String login) {
-            var teacher = teacherRepository.findByLogin(login).orElseThrow();
-            teacherRepository.delete(teacher);
+        var teacher = teacherRepository.findByLogin(login).orElseThrow();
+        teacherRepository.delete(teacher);
     }
 
     public void update(String login, TeacherDTO teacher) {
-            var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
-            teacherToUpdate.setPassword(teacher.password());
-            teacherRepository.save(teacherToUpdate);
+        var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
+        teacherToUpdate.setPassword(teacher.password());
+        teacherRepository.save(teacherToUpdate);
     }
 
     public TeacherDTO create(TeacherDTO teacher) {

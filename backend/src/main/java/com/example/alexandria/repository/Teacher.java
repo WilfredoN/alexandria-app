@@ -33,12 +33,18 @@ public class Teacher {
     private String full_name;
     private String login;
     private String password;
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany
+    @JoinTable(
+            name = "groups_teachers",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
     private List<Group> groups;
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
+
     public boolean checkPassword(String password) {
         return BCrypt.checkpw(password, this.password);
     }
