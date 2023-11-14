@@ -50,8 +50,8 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.initializeUser();
-        this.getUserData();
+        //this.initializeUser();
+        //this.getUserData();
     }
 
     private initializeUser(): void {

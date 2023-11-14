@@ -1,4 +1,4 @@
-<div class="container" *ngIf="user">
+<div class="container">
     <div class="container_inner">
         <div class="profile_info">
             <div class="img-container">
@@ -11,8 +11,8 @@
                 <p>Имя аккаунта: {{ userDTO?.full_name }}</p>
                 <p>Логин: {{ userDTO?.login }}</p>
                 <p *ngIf="isStudent && userDTO?.group_name">Группа: {{ userDTO.group_name }}</p>
-                <button class="bnt_change" (click)="openChangePasswordDialog()">Изменить пароль</button>
-                <button class="btn_delete" (click)="deleteAccount()">Удалить аккаунт</button>
+                <button class="bnt_change bnt-def-style" (click)="openChangePasswordDialog()">Изменить пароль</button>
+                <button class="btn_delete bnt-def-style" (click)="deleteAccount()">Удалить аккаунт</button>
             </div>
         </div>
         <div class="groups_selector" *ngIf="!isStudent">
@@ -25,29 +25,29 @@
                     </label>
                 </li>
             </ul>
-            <button (click)="saveGroups()">Сохранить</button>
+            <button class="bnt-def-style" (click)="saveGroups()">Сохранить</button>
         </div>
         <div class="students_creator" *ngIf="!isStudent">
             <h3>Добавить студентов</h3>
             <form class="students_form" (ngSubmit)="createStudent()">
                 <table class="students_field">
                     <tr>
-                        <td>
+                        <td class="main-width">
                             <div class="students_field">
                                 <label for="full_name">ФИО</label>
-                                <input type="text" id="full_name" name="full_name" [(ngModel)]="student.full_name"
+                                <input class="input-profile" type="text" id="full_name" name="full_name" [(ngModel)]="student.full_name"
                                        required>
                             </div>
                         </td>
-                        <td>
+                        <td class="main-width"> 
                             <div class="students_field">
                                 <label for="group">Группа</label>
-                                <input type="text" id="group" name="group" [(ngModel)]="student.group_name" required>
+                                <input class="input-profile" type="text" id="group" name="group" [(ngModel)]="student.group_name" required>
                             </div>
                         </td>
                     </tr>
                 </table>
-                <button type="submit">Отправить</button>
+                <button style="width: 80%; font-size: 1em;" class="bnt-def-style" type="submit">Отправить</button>
             </form>
         </div>
         <div class="lesson_creator" *ngIf="!isStudent">
@@ -55,16 +55,16 @@
             <form class="lessons_form" (ngSubmit)="createLesson()">
                 <table class="lessons_field">
                     <tr>
-                        <td>
+                        <td class="main-width">
                             <div class="lessons_field">
                                 <label for="lesson_name">Название предмета</label>
-                                <input type="text" id="lesson_name" name="lesson_name" [(ngModel)]="lesson.lesson_name"
+                                <input class="input-profile long-new" type="text" id="lesson_name" name="lesson_name" [(ngModel)]="lesson.lesson_name"
                                        required>
                             </div>
                         </td>
                     </tr>
                 </table>
-                <button type="submit">Создать</button>
+                <button style="width: 80%; font-size: 1em;" class="bnt-def-style" type="submit">Создать</button>
             </form>
         </div>
     </div>

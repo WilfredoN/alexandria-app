@@ -70,7 +70,7 @@
             <thead>
             <tr>
                 <th></th>
-                <th *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']"
+                <th class="current-day-week" *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']"
                     [ngClass]="{ 'current-day': isCurrentDay(day) }">
                     {{ day }}
                 </th>
@@ -85,8 +85,15 @@
                             <p class="lesson-name" *ngIf="schedule.lesson_id">{{ schedule.lessonName }}</p>
                             <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
                         </li>
-                        <li *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
-                            <p class="lesson-name"></p>
+                        
+                        <li class="text-in-box" *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
+                            <div class="icon-div">
+                                <mat-icon class="library_books_style">library_books</mat-icon>
+                            </div>
+                            <div>
+                                <p class="lesson-name">Физика</p>
+                                <p class="lesson-teacher">Архипцева О.В.</p>
+                            </div>
                         </li>
                     </ul>
                 </td>

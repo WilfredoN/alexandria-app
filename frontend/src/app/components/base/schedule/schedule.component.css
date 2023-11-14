@@ -38,8 +38,7 @@ table {
 
 .container {
     display: flex;
-    margin-left: 10em;
-    margin-top: 20px;
+    justify-content: center;
     align-items: center;
 }
 
@@ -55,6 +54,16 @@ table {
 .num-of-week-label {
     font-size: 24px;
     margin: 2em 0 1em 0;
+}
+
+table{ 
+    border-spacing: 1.5em;
+}
+
+.current-day-week{
+    padding: 1em;
+    border: 2px solid #a1a1df;
+    border-radius: 8px;
 }
 
 .num-of-week-text {
@@ -76,9 +85,6 @@ table {
 }
 
 .num-lessons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin-top: 1em;
 }
 
@@ -94,15 +100,13 @@ table {
 }
 
 .lesson li {
-    width: 18em;
-    height: 6em;
+    width: 10em;
+    height: 3em;
     background: rgba(82, 135, 173, 1);
     margin-bottom: 10px;
     border-radius: 12px;
     padding: 1em;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     transition: 0.2s ease-in-out;
 }
@@ -112,15 +116,31 @@ table {
     box-shadow: 0 0 5px rgba(82, 135, 173, 0.62);
     transition: 0.2s ease-in-out;
 }
+.lesson-teacher{
+    font-size: 0.7em;
+}
+.lesson-name{
+    font-weight: 700;
+    margin-bottom: 0.34em;
+}
 
-.lesson li p {
-    font-size: 1.3em;
+.text-in-box {
+    font-size: 1.5em;
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #a1a1df;
+}
+
+.icon-div{
+    display: flex;
+    
+    margin-right: 1em;
 }
 
 .current-day {
-    color: red;
+    color: #9989e6;
 }
 mat-expansion-panel {
     display: flex;
