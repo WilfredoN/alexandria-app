@@ -3,6 +3,8 @@ import {ScheduleService} from "../../service/schedule-service";
 import {Schedule} from "../../service/schedule-dto";
 import {forkJoin, Observable} from "rxjs";
 import {AuthService} from "../../service/auth-service";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogChangeLesson} from "./dialog-change";
 
 @Component({
     selector: 'app-schedule',
@@ -44,7 +46,8 @@ export class ScheduleComponent implements OnInit {
 
 
     constructor(private scheduleService: ScheduleService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private dialog: MatDialog) {
         this.currentDay = this.getCurrentDay();
     }
 
@@ -111,16 +114,54 @@ export class ScheduleComponent implements OnInit {
     }
 
     createSchedule() {
-        if (this.lesson.lesson_id === null || this.lesson.teacher_id === null || this.lesson.group_id === null || this.lesson.lesson_number === null || this.lesson.day_of_week === '') {
+        if (
+            this.lesson.lesson_id === null ||
+            this.lesson.teacher_id === null ||
+            this.lesson.group_id === null ||
+            this.lesson.lesson_number === null ||
+            this.lesson.day_of_week === ''
+        ) {
             alert('Заполните все поля!');
             return;
         }
-        console.log(this.lesson);
-        this.authService.createSchedule(this.lesson).subscribe((response: any) => {
-            console.log(response);
-            alert('Расписание успешно создано!');
-        });
+
+        // Проверка наличия предмета в позиции
+        const existingSchedule = this.schedules.find(schedule =>
+            schedule.lesson_id &&
+            schedule.teacher_id &&
+            schedule.group_id &&
+            schedule.lesson_num &&
+            schedule.day_of_week &&
+            schedule.week_type === this.lesson.week_type
+        );
+
+        if (existingSchedule) {
+            const dialogRef = this.dialog.open(DialogChangeLesson, {
+                width: '250px',
+                data: {message: 'Предмет уже добавлен в эту позицию. Хотите заменить его?'}
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                if (result === 'confirm') {
+                    // Заменить предмет
+                    this.authService.updateSchedule(existingSchedule.id, this.lesson).subscribe((response: any) => {
+                        console.log(response);
+                        alert('Предмет успешно заменен в расписании!');
+                    });
+                } else {
+                    // Отменить операцию
+                    alert('Операция отменена');
+                }
+            });
+        } else {
+            console.log(this.lesson);
+            this.authService.createSchedule(this.lesson).subscribe((response: any) => {
+                console.log(response);
+                alert('Расписание успешно создано!');
+            });
+        }
     }
+
 
     private getCreatorData() {
         this.authService.getTeachers().subscribe((teachers: any) => {

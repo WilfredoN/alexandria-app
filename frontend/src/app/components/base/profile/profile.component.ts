@@ -61,8 +61,11 @@ export class ProfileComponent implements OnInit {
             this.user.role = localStorage.getItem('role') || '';
             this.isStudent = this.user.role === 'student';
         } else {
-            this.router.navigate(['/log-in']).then(() =>
-                console.log('Переход на страницу входа')
+            this.router.navigate(['/log-in']).then(() => {
+                    console.log('Переход на страницу входа');
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('role');
+                }
             );
         }
 

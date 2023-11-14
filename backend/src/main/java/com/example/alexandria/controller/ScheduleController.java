@@ -41,8 +41,8 @@ public class ScheduleController {
         scheduleService.delete(id);
     }
 
-    @GetMapping("/all")
-    public List<ScheduleDTO> getAllSchedules() {
-        return scheduleService.getAll();
+    @PutMapping("/{id}")
+    public ScheduleDTO updateSchedule(@PathVariable long id, @RequestBody ScheduleDTO schedule) {
+        return scheduleService.update(id, schedule);
     }
 }

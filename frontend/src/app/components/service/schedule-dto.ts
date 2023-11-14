@@ -5,7 +5,7 @@ export interface Schedule {
     week_type: number;
     lesson_id: number;
     lessonName?: string;
-    groupId: number;
+    group_id: number;
     teacher_id: number;
     teacherName?: string;
 }

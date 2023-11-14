@@ -99,6 +99,13 @@ table {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: 0.2s ease-in-out;
+}
+.lesson li:hover {
+    background: rgba(82, 135, 173, 0.62);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(82, 135, 173, 0.62);
+    transition: 0.2s ease-in-out;
 }
 
 .lesson li p {

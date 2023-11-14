@@ -9,6 +9,7 @@ export interface LessonDTO {
     id: number;
     lesson_name: string;
 }
+
 export interface GroupDTO {
     id: number;
     name: string;
@@ -40,15 +41,19 @@ export class AuthService {
     getStudents(): Observable<StudentDTO[]> {
         return this.http.get<StudentDTO[]>(`${this.baseUrl}/students`);
     }
+
     getTeachers(): Observable<TeacherDTO[]> {
         return this.http.get<TeacherDTO[]>(`${this.baseUrl}/teachers`);
     }
+
     getLessons(): Observable<LessonDTO[]> {
         return this.http.get<LessonDTO[]>(`${this.baseUrl}/lessons`);
     }
+
     getGroups(): Observable<GroupDTO[]> {
         return this.http.get<GroupDTO[]>(`${this.baseUrl}/groups`);
     }
+
     createSchedule(lesson: any): Observable<any> {
         const schedule = {
             day_of_week: lesson.day_of_week,
@@ -60,6 +65,23 @@ export class AuthService {
         }
         return this.http.post(`${this.baseUrl}/schedule/create`, schedule, this.httpOptions);
     }
+
+    updateSchedule(id: number, lesson: any) {
+        const schedule = {
+            day_of_week: lesson.day_of_week,
+            lesson_num: lesson.lesson_number,
+            week_type: lesson.week_type,
+            lesson_id: lesson.lesson_id,
+            group_id: lesson.group_id.id,
+            teacher_id: lesson.teacher_id.id
+        }
+        return this.http.put(`${this.baseUrl}/schedule/${id}`, schedule, this.httpOptions);
+    }
+
+    deleteSchedule(id: number) {
+        return this.http.delete(`${this.baseUrl}/schedule/${id}`, this.httpOptions);
+    }
+
     logIn(user: loginDTO): Observable<loginDTO> {
         const endpoint = user.role === 'teacher' ? '/teachers/login' : '/students/login';
         return this.http.post<loginDTO>(`${this.baseUrl}${endpoint}`, user, this.httpOptions);
@@ -87,5 +109,6 @@ export class AuthService {
 
         return this.http.put<TeacherDTO | StudentDTO>(url, {"password": newPassword}, {headers});
     }
+
 
 }

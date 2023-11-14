@@ -30,6 +30,8 @@ import {DialogChangePasswordComponent} from "./base/profile/dialog-change-passwo
 import {MatButtonModule} from "@angular/material/button";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {DialogChangeLesson} from "./base/schedule/dialog-change";
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -41,7 +43,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 		AnnouncementsComponent,
 		TeachersComponent,
 		ProfileComponent,
-        DialogChangePasswordComponent
+        DialogChangePasswordComponent,
+        DialogChangeLesson
 	],
     imports: [
         BrowserModule,
