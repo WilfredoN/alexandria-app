@@ -38,7 +38,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.2);
     opacity: 0;
     display: flex;
     justify-content: center;
@@ -183,16 +183,17 @@ td {
     color: antiquewhite;
     border-radius: 8px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 .btn-def-style:hover {
-    background: rgba(95, 238, 72, 0.5);
-    transition: 0.1s linear;
+    background: rgba(98, 144, 204, 0.7);
+    transition: 0.2s ease-in-out;
 }
 
 .btn_delete.btn-def-style:hover {
-    background: red;
-    transition: 0.5s linear;
+    background: rgba(255, 104, 104, 0.7);
+    transition: 0.2s ease-in-out;
 }
 
 .input-profile {

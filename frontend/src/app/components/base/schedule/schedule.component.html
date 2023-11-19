@@ -81,18 +81,20 @@
                 <td class="num-lessons">{{ lesson_num }}</td>
                 <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson">
                     <ul>
-                        <li *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)">
-                            <p class="lesson-name" *ngIf="schedule.lesson_id">{{ schedule.lessonName }}</p>
-                            <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
-                        </li>
-                        
-                        <li class="text-in-box" *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
+                        <li class="text-in-box" *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)">
                             <div class="icon-div">
                                 <mat-icon class="library_books_style">library_books</mat-icon>
                             </div>
                             <div>
-                                <p class="lesson-name">Физика</p>
-                                <p class="lesson-teacher">Архипцева О.В.</p>
+                            <p class="lesson-name" *ngIf="schedule.lesson_id">{{ schedule.lessonName }}</p>
+                            <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
+                            </div>
+                        </li>
+
+                        <li class="text-in-box" *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
+                            <div>
+                                <p class="lesson-name"></p>
+                                <p class="lesson-teacher"></p>
                             </div>
                         </li>
                     </ul>

@@ -12,6 +12,9 @@ export class ScheduleService {
     constructor(private http: HttpClient) {}
 
     getSchedules(group_name: string): Observable<Schedule[]> {
+        if (group_name === '') {
+            return this.http.get<Schedule[]>(`${this.apiUrl}/KI-410`);
+        }
         return this.http.get<Schedule[]>(`${this.apiUrl}/${group_name}`);
     }
 
