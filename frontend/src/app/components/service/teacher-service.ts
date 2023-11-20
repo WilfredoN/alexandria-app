@@ -19,7 +19,9 @@ export class TeacherService {
             },
         });
     }
-
+    getTeacherById(id: number): Observable<TeacherDTO> {
+        return this.http.get<TeacherDTO>(`http://localhost:8080/api/teachers/${id}`);
+    }
     updateTeacher(teacher: TeacherDTO, password: string): Observable<TeacherDTO> {
         return this.http.put<TeacherDTO>(`http://localhost:8080/api/teachers/${teacher.login}`,
             {

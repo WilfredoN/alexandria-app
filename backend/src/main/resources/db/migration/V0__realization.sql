@@ -45,3 +45,12 @@ CREATE TABLE IF NOT EXISTS groups_teachers
     group_id   INTEGER REFERENCES groups (id) ON DELETE CASCADE,
     PRIMARY KEY (teacher_id, group_id)
 );
+CREATE TABLE IF NOT EXISTS announcements
+(
+    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title       VARCHAR(100) NOT NULL,
+    content     TEXT         NOT NULL,
+    author_id   INTEGER NOT NULL REFERENCES teachers (id) ON DELETE CASCADE,
+    posted_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    edited_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

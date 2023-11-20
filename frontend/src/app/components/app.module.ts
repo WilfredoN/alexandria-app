@@ -31,7 +31,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {DialogChangeLesson} from "./base/schedule/dialog-change";
-
+import {registerLocaleData} from "@angular/common";
+import localeRu from '@angular/common/locales/ru';
+registerLocaleData(localeRu, 'ru');
 @NgModule({
 	declarations: [
 		AppComponent,

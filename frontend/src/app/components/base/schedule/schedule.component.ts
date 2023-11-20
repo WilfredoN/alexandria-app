@@ -55,12 +55,10 @@ export class ScheduleComponent implements OnInit {
         this.getCreatorData();
         const storedUser = localStorage.getItem('user') as string;
         this.user = JSON.parse(storedUser);
-        this.user.role = localStorage.getItem('role') as string;
         this.isStudent = this.user.role === 'student';
         if (this.isStudent) {
             this.chosenGroup = this.user.group_name;
         }
-        this.getUserData()
         this.scheduleService.getSchedules(this.chosenGroup).subscribe(schedules => {
             this.schedules = schedules;
             console.log(this.schedules);
@@ -88,16 +86,6 @@ export class ScheduleComponent implements OnInit {
                 });
             });
         });
-    }
-
-    getUserData() {
-        this.authService.getUser(this.user).subscribe((user: any) => {
-            this.user = user;
-            this.user.role = localStorage.getItem('role') as string;
-            localStorage.setItem('user', JSON.stringify(user));
-            this.user = JSON.parse(localStorage.getItem('user') as string);
-        });
-        console.log(this.user);
     }
 
     getSchedulesForDayAndLesson(day: string, lessonNumber: number): Schedule[] {
@@ -181,12 +169,17 @@ export class ScheduleComponent implements OnInit {
             console.log('Lessons ', this.lessonNames);
         });
 
-        this.authService.getGroups().subscribe((groups: any) => {
-            this.groups = groups.map((group: any) => {
-                return {id: group.id, name: group.name};
-            });
-            console.log('Groups ', this.groups);
-            this.chosenGroup = this.groups[0].name;
+        this.authService.getGroups().subscribe( {
+            next: (groups: any) => {
+                this.groups = groups.map((group: any) => {
+                    return {id: group.id, name: group.name};
+                });
+                console.log('Groups ', this.groups);
+                this.chosenGroup = this.groups[0].name || '';
+            },
+            error: (err) => {
+                console.log(err);
+            }
         });
     }
 
