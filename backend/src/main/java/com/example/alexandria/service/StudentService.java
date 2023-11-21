@@ -90,5 +90,10 @@ public class StudentService {
                 .build());
         return mapStudent(savedStudent);
     }
+    public List<StudentDTO> createStudents(List<StudentDTO> students) {
+        return students.stream()
+                .map(this::create)
+                .collect(Collectors.toList());
+    }
 
 }

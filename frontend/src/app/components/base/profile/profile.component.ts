@@ -58,15 +58,10 @@ export class ProfileComponent implements OnInit {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             this.user = JSON.parse(storedUser);
-            this.user.role = localStorage.getItem('role') || '';
             this.isStudent = this.user.role === 'student';
         } else {
-            this.router.navigate(['/log-in']).then(() => {
-                    console.log('Переход на страницу входа');
-                    localStorage.removeItem('user');
-                    localStorage.removeItem('role');
-                }
-            );
+            console.error('Пользователь не найден');
+            alert('Пользователь не найден');
         }
 
         if (!this.isStudent) {
@@ -82,9 +77,6 @@ export class ProfileComponent implements OnInit {
             },
             error: (error) => {
                 console.error('Ошибка при получении списка групп', error);
-                this.router.navigate(['/log-in']).then(() =>
-                    console.log('Переход на страницу входа')
-                );
             }
         });
     }

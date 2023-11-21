@@ -128,6 +128,13 @@ body {
     rgb(16 38 54 / 0.9)),
     url(/assets/teachers.png) repeat center center/64%;
 }
+.students {
+    background: linear-gradient(to right,
+    rgb(49 126 159 / 1),
+    rgb(49 126 159 / .7),
+    rgb(16 38 54 / 0.9)),
+    url(/assets/class.png) repeat center left/69%;
+}
 /*	Media styles  */
 
 @media screen and (max-width: 1024px) {

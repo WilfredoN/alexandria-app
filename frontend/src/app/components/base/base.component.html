@@ -1,67 +1,60 @@
 <div class="container">
     <div class="big-panel">
-        <mat-card class="card note tasks" (click)="clickTasksRout()">
+        <mat-card class="card note tasks" routerLink="/tasks">
             <mat-card-content>
                 <p>Задания</p>
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="card note schedule" (click)="clickScheduleRout()">
+        <mat-card class="card note schedule" routerLink="/schedule">
             <mat-card-content>
                 <p>Расписание</p>
             </mat-card-content>
         </mat-card>
 
-        <mat-card class="card note announcements" (click)="clickAnnouncementsRout()">
+        <mat-card class="card note announcements" routerLink="/announcements">
             <mat-card-content>
                 <p>Объявления</p>
             </mat-card-content>
         </mat-card>
-
-        <mat-card class="card note teachers" (click)="clickTeachersRout()">
+        <mat-card class="card note teachers" routerLink="/teachers" *ngIf="this.user.role === 'student'">
             <mat-card-content>
-                <p>Преподователи</p>
+                <p>Преподаватели</p>
             </mat-card-content>
         </mat-card>
-        <!--        <mat-card class="card note" (click)="clickStudentsRout()" *ngIf="userRole==='Teacher'">-->
-        <!--            <mat-card-header>-->
-        <!--                <mat-card-title>-->
-        <!--                    <mat-icon>group</mat-icon>-->
-        <!--                    <p>Студенты</p>-->
-        <!--                </mat-card-title>-->
-        <!--            </mat-card-header>-->
-        <!--            <mat-card-content>-->
-        <!--                <p></p>-->
-        <!--            </mat-card-content>-->
-        <!--        </mat-card>-->
+        <mat-card class="card note students" routerLink="/students" *ngIf="this.user.role==='teacher'">
+            <mat-card-content>
+                <p>Студенты</p>
+            </mat-card-content>
+        </mat-card>
     </div>
 
-   <!-- <div class="little-panel">
-        <mat-card class="example-card notion">
-            <mat-card-header>
-                <mat-card-title></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p></p>
-            </mat-card-content>
-        </mat-card>
+    <!-- <div class="little-panel">
+         <mat-card class="example-card notion">
+             <mat-card-header>
+                 <mat-card-title></mat-card-title>
+             </mat-card-header>
+             <mat-card-content>
+                 <p></p>
+             </mat-card-content>
+         </mat-card>
 
-        <mat-card class="example-card notion">
-            <mat-card-header>
-                <mat-card-title></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p></p>
-            </mat-card-content>
-        </mat-card>
+         <mat-card class="example-card notion">
+             <mat-card-header>
+                 <mat-card-title></mat-card-title>
+             </mat-card-header>
+             <mat-card-content>
+                 <p></p>
+             </mat-card-content>
+         </mat-card>
 
-        <mat-card class="example-card notion">
-            <mat-card-header>
-                <mat-card-title></mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <p></p>
-            </mat-card-content>
-        </mat-card>
-    </div>-->
+         <mat-card class="example-card notion">
+             <mat-card-header>
+                 <mat-card-title></mat-card-title>
+             </mat-card-header>
+             <mat-card-content>
+                 <p></p>
+             </mat-card-content>
+         </mat-card>
+     </div>-->
 </div>

@@ -33,6 +33,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {DialogChangeLesson} from "./base/schedule/dialog-change";
 import {registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
+import { StudentsComponent } from './base/students/students.component';
 registerLocaleData(localeRu, 'ru');
 @NgModule({
 	declarations: [
@@ -46,7 +47,8 @@ registerLocaleData(localeRu, 'ru');
 		TeachersComponent,
 		ProfileComponent,
         DialogChangePasswordComponent,
-        DialogChangeLesson
+        DialogChangeLesson,
+        StudentsComponent
 	],
     imports: [
         BrowserModule,

@@ -8,6 +8,7 @@ import { AnnouncementsComponent } from './base/announcements/announcements.compo
 import { ScheduleComponent } from './base/schedule/schedule.component';
 import { TeachersComponent } from './base/teachers/teachers.component';
 import { ProfileComponent } from './base/profile/profile.component';
+import {StudentsComponent} from "./base/students/students.component";
 
 const routes: Routes = [
 	{ path: '', component: BaseComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
 	{ path: 'schedule', component: ScheduleComponent },
 	{ path: 'teachers', component: TeachersComponent },
 	{ path: 'profile', component: ProfileComponent },
+    { path: 'students', component: StudentsComponent },
 
 	{
 		path: '**',

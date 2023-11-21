@@ -52,8 +52,8 @@ export class LogInComponent implements OnInit {
                 this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
                 userDTO.id = response.id;
                 userDTO.group_name = response.group_name;
-                localStorage.setItem('user', JSON.stringify(userDTO));
                 userDTO.role = this.myForm.value.role;
+                localStorage.setItem('user', JSON.stringify(userDTO));
                 console.log(userDTO);
                 this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },

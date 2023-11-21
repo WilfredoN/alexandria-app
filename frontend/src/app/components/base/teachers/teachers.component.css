@@ -67,8 +67,12 @@ input:focus {
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.2);
     margin-bottom: 4em;
     margin-left: 2.5em;
+    transition: 0.1s ease-in-out;
 }
-
+.teacher:hover {
+    transform: scale(1.05);
+    transition: 0.1s ease-in-out;
+}
 .teacher p{
     margin-bottom: 1em;
     font-size: 18px;

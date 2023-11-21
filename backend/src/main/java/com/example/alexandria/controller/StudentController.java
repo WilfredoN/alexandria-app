@@ -29,11 +29,6 @@ public class StudentController {
                 , full_name, login, password, group_name);
         return studentService.findStudents();
     }
-
-//    @GetMapping("/{login}")
-//    public StudentDTO findStudentByLogin(@PathVariable String login) {
-//        return studentService.findStudentByLogin(login);
-//    }
     @GetMapping("/{id}")
     public StudentDTO findStudentById(@PathVariable long id) {
         return studentService.findStudent(id);
@@ -47,6 +42,10 @@ public class StudentController {
     @PostMapping("/create")
     public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
             return studentService.create(studentDTO);
+    }
+    @PostMapping("/createMany")
+    public List<StudentDTO> createStudents(@RequestBody List<StudentDTO> studentDTOs) {
+        return studentService.createStudents(studentDTOs);
     }
     @PutMapping("/{login}")
     public ResponseEntity<String> updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {

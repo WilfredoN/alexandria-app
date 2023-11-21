@@ -20,5 +20,12 @@ export class StudentService {
             },
         });
     }
+    getStudents(): Observable<StudentDTO[]> {
+        return this.http.get<StudentDTO[]>('http://localhost:8080/api/students', {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
 }
 
