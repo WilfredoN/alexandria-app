@@ -58,6 +58,7 @@ export class ScheduleComponent implements OnInit {
         this.isStudent = this.user.role === 'student';
         if (this.isStudent) {
             this.chosenGroup = this.user.group_name;
+            this.lesson.week_type = this.updateWeekType(this.lesson.week_type);
         }
         this.scheduleService.getSchedules(this.chosenGroup).subscribe(schedules => {
             this.schedules = schedules;
@@ -89,7 +90,7 @@ export class ScheduleComponent implements OnInit {
     }
 
     getSchedulesForDayAndLesson(day: string, lessonNumber: number): Schedule[] {
-        return this.schedules.filter(schedule => schedule.day_of_week === day && schedule.lesson_num === lessonNumber);
+        return this.schedules.filter(schedule => schedule.day_of_week === day && schedule.lesson_num === lessonNumber && schedule.week_type === this.lesson.week_type);
     }
 
 
@@ -169,7 +170,7 @@ export class ScheduleComponent implements OnInit {
             console.log('Lessons ', this.lessonNames);
         });
 
-        this.authService.getGroups().subscribe( {
+        this.authService.getGroups().subscribe({
             next: (groups: any) => {
                 this.groups = groups.map((group: any) => {
                     return {id: group.id, name: group.name};
@@ -190,5 +191,21 @@ export class ScheduleComponent implements OnInit {
         } else {
             this.lesson.week_type = 1;
         }
+    }
+
+    updateWeekType(lesson: number): number {
+        const currentDate = new Date();
+        const currentDay = currentDate.getDay(); // Получаем текущий день недели (0 - воскресенье, 1 - понедельник, ..., 6 - суббота)
+
+        // Проверяем, если сегодня пятница (день недели 5 для JavaScript, так как нумерация начинается с воскресенья)
+        if (currentDay === 5) {
+            // Обновляем тип недели: если текущий тип недели = 1, меняем на 2 и наоборот
+            lesson = this.lesson.week_type === 1 ? 2 : 1;
+            console.log('Тип недели обновлен!');
+        } else {
+            console.log('Сегодня не пятница, тип недели остается без изменений.');
+        }
+
+        return lesson;
     }
 }

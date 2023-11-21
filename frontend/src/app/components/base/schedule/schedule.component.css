@@ -37,8 +37,7 @@ table {
 }
 
 .container {
-    width: 100%;
-    font-size: 100%;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,14 +57,15 @@ table {
     margin: 2em 0 1em 0;
 }
 
-table{
+table {
     border-spacing: 1.5em;
 }
 
-.current-day-week{
+.current-day-week {
     padding: 1em;
     border: 2px solid #669bc0;
     border-radius: 8px;
+    font-size: 1.2em;
 }
 
 .num-of-week-text {
@@ -112,16 +112,19 @@ table{
     align-items: center;
     transition: 0.2s ease-in-out;
 }
+
 .lesson li:hover {
     background: rgba(82, 135, 173, 0.62);
     cursor: pointer;
     box-shadow: 0 0 5px rgba(82, 135, 173, 0.62);
     transition: 0.2s ease-in-out;
 }
-.lesson-teacher{
+
+.lesson-teacher {
     font-size: 0.7em;
 }
-.lesson-name{
+
+.lesson-name {
     font-weight: 700;
     margin-bottom: 0.34em;
 }
@@ -135,7 +138,7 @@ table{
     outline: 2px solid #669bc0;
 }
 
-.icon-div{
+.icon-div {
     display: flex;
 
     margin-right: 1em;
@@ -144,31 +147,33 @@ table{
 .current-day {
     color: #9989e6;
 }
+
 mat-expansion-panel {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
+
 .num-of-week-selector .num-of-week-text {
     cursor: pointer;
 }
+
 @media screen and (max-width: 1920px) {
     .container {
         justify-content: flex-start;
         font-size: 95%;
     }
+
     .current-info {
         width: 20em;
         height: 35em;
+    }
+
+    .lesson li {
+        width: 7em;
     }
 }
+
 @media screen and (max-width: 1024px) {
-    .container {
-        justify-content: flex-start;
-        font-size: 90%;
-    }
-    .current-info {
-        width: 20em;
-        height: 35em;
-    }
+
 }

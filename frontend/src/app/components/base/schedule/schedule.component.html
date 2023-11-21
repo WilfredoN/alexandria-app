@@ -2,7 +2,7 @@
     <div class="current-info">
         <div *ngIf="isStudent" class="num-of-week">
             <p class="num-of-week-label">Текущий номер недели:</p>
-            <p class="num-of-week-text">{{ 1 }} неделя</p>
+            <p class="num-of-week-text">{{ this.lesson.week_type }} неделя</p>
         </div>
         <div *ngIf="!isStudent" class="num-of-week-selector">
             <p class="num-of-week-text" (click)="chooseWeekType()">{{lesson.week_type}}</p>
