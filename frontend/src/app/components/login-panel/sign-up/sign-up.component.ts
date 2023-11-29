@@ -60,8 +60,8 @@ export class SignUpComponent implements OnInit {
     private handleResponse(response: Observable<any>) {
         response.subscribe({
             next: (response) => {
+                response.role = 'teacher';
                 localStorage.setItem('user', JSON.stringify(response));
-                localStorage.setItem('role', 'teacher');
                 this._snackBar.open('Регистрация успешна!', 'Закрыть', {duration: 3000});
                 console.log('Регистрация прошла успешно - ', response);
                 this.router.navigate(['base']).then(r => console.log(r));

@@ -122,11 +122,12 @@ export class ScheduleComponent implements OnInit {
             schedule.lesson_id &&
             schedule.teacher_id &&
             schedule.group_id &&
-            schedule.lesson_num &&
-            schedule.day_of_week &&
+            schedule.lesson_num === this.lesson.lesson_number &&
+            schedule.day_of_week === this.lesson.day_of_week &&
             schedule.week_type === this.lesson.week_type
         );
 
+        console.log(existingSchedule);
         if (existingSchedule) {
             const dialogRef = this.dialog.open(DialogChangeLesson, {
                 width: '300px',
