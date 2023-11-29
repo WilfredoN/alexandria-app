@@ -30,8 +30,12 @@ export class AuthService {
         })
     };
 
-    register(user: TeacherDTO): Observable<Response> {
-        return this.http.post<Response>(`${this.baseUrl}/teachers/create`, user, this.httpOptions);
+    register(user: any): Observable<Response> {
+        return this.http.post<Response>(`${this.baseUrl}/teachers/create`, {
+            full_name: user.full_name,
+            login: user.login,
+            password: user.password
+        }, this.httpOptions);
     }
 
     registerStudent(user: any): Observable<Response> {

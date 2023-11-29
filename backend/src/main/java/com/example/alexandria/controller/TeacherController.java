@@ -45,13 +45,8 @@ public class TeacherController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createTeacher(@RequestBody TeacherDTO teacherDTO) {
-        try {
-            teacherService.create(teacherDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public TeacherDTO createTeacher(@RequestBody TeacherDTO teacherDTO) {
+            return teacherService.create(teacherDTO);
     }
 
     @PutMapping("/{login}")

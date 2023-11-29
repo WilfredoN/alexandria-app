@@ -3,8 +3,6 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from '../../service/auth-service';
-import {Observable} from "rxjs";
-import {TeacherDTO} from "../../service/teacher-dto";
 
 @Component({
     selector: 'app-sign-up',
@@ -49,27 +47,26 @@ export class SignUpComponent implements OnInit {
             this._snackBar.open('Password should be more than 6 characters', 'Close', {duration: 3000});
             return;
         }
-        const teacherDTO: TeacherDTO = {
+        const userDTO = {
+            id: 0,
             full_name: this.myForm.value.full_name,
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
+            role: 'teacher',
         };
-        this.handleResponse(this.authService.register(teacherDTO));
-    }
-
-    private handleResponse(response: Observable<any>) {
-        response.subscribe({
-            next: (response) => {
-                response.role = 'teacher';
-                localStorage.setItem('user', JSON.stringify(response));
-                this._snackBar.open('Регистрация успешна!', 'Закрыть', {duration: 3000});
-                console.log('Регистрация прошла успешно - ', response);
-                this.router.navigate(['base']).then(r => console.log(r));
+        this.authService.register(userDTO).subscribe({
+            next: (response: any) => {
+                console.log(response);
+                this._snackBar.open('Registration successful!', 'Close', {duration: 3000});
+                userDTO.id = response.id;
+                userDTO.role = 'teacher';
+                localStorage.setItem('user', JSON.stringify(userDTO));
+                this.router.navigate(['base']).then(r => console.log(r + '\nnavigate to /login'));
             },
-            error: (error) => {
-                this._snackBar.open('Ошибка регистрации', 'Закрыть', {duration: 3000});
-                console.error('Ошибка регистрации - ', error);
-            },
+            error: (err) => {
+                this._snackBar.open('Registration error', 'Close', {duration: 3000});
+                console.error(err);
+            }
         });
     }
 }
