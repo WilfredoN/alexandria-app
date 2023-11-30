@@ -30,7 +30,7 @@ public class HomeworkStatusService {
     }
 
     public List<HomeworkStatusDTO> findByHomeworkIdAndDone(Long homeworkId, boolean isDone) {
-        return homeworkStatusRepository.findByHomeworkIdAndDone(homeworkId, isDone).stream()
+        return homeworkStatusRepository.findByHomeworkIdAndIsDone(homeworkId, isDone).stream()
                 .map(this::map)
                 .toList();
     }
@@ -48,7 +48,7 @@ public class HomeworkStatusService {
     }
 
     public HomeworkStatusDTO markHomeworkAsDone(Long homeworkId, Long studentId) {
-        HomeworkStatus homeworkStatus = homeworkStatusRepository.findByHomeworkIdAndDone(homeworkId, false)
+        HomeworkStatus homeworkStatus = homeworkStatusRepository.findByHomeworkIdAndIsDone(homeworkId, false)
                 .stream()
                 .filter(status -> status.getStudent().getId() == studentId)
                 .findFirst()

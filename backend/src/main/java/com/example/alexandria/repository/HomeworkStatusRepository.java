@@ -8,8 +8,9 @@ import java.util.List;
 
 @Repository
 public interface HomeworkStatusRepository extends JpaRepository<HomeworkStatus, Long> {
-    List<HomeworkStatus> findByHomeworkIdAndDone(Long homeworkId, boolean isDone);
+    List<HomeworkStatus> findByHomeworkIdAndIsDone(Long homeworkId, boolean isDone);
 
     List<HomeworkStatus> findByHomeworkId(Long homeworkId);
+
     List<HomeworkStatus> findByStudentId(Long studentId);
 }

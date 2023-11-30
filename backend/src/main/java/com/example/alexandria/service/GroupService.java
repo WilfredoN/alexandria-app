@@ -41,10 +41,6 @@ public class GroupService {
                 .build();
     }
 
-    public List<Group> getGroupsByTeacherId(long teacherId) {
-        return groupRepository.findGroupsByTeachersId(teacherId);
-    }
-
     public Group create(Group group) {
         return groupRepository.save(Group.builder()
                 .name(group.getName())

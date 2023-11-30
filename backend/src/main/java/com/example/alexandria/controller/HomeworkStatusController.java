@@ -26,12 +26,12 @@ public class HomeworkStatusController {
         return homeworkStatusService.findByHomeworkIdAndDone(homeworkId, isDone);
     }
 
-    @GetMapping("/{studentId}")
+    @GetMapping("/student/{studentId}")
     public List<HomeworkStatusDTO> findByStudentId(@PathVariable Long studentId) {
         return homeworkStatusService.findByStudentId(studentId);
     }
 
-    @GetMapping("/{homeworkId}")
+    @GetMapping("/homework/{homeworkId}")
     public List<HomeworkStatusDTO> findByHomeworkId(@PathVariable Long homeworkId) {
         return homeworkStatusService.findByHomeworkId(homeworkId);
     }
