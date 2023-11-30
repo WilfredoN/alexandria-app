@@ -49,6 +49,7 @@ export class ScheduleComponent implements OnInit {
                 private authService: AuthService,
                 private dialog: MatDialog) {
         this.currentDay = this.getCurrentDay();
+        this.lesson.week_type = this.calculateWeekType();
     }
 
     ngOnInit(): void {
@@ -58,7 +59,7 @@ export class ScheduleComponent implements OnInit {
         this.isStudent = this.user.role === 'student';
         if (this.isStudent) {
             this.chosenGroup = this.user.group_name;
-            this.lesson.week_type = this.updateWeekType(this.lesson.week_type);
+            this.lesson.week_type = this.calculateWeekType();
         }
         this.scheduleService.getSchedules(this.chosenGroup).subscribe(schedules => {
             this.schedules = schedules;
@@ -185,6 +186,21 @@ export class ScheduleComponent implements OnInit {
         });
     }
 
+    private calculateWeekType(): number {
+        const currentDate = new Date();
+    
+        const currentYear = currentDate.getFullYear();
+
+        const startDate = new Date(currentYear, 8, 1);
+
+        const diff = currentDate.getTime() - startDate.getTime();
+
+        const weeksPassed = Math.ceil(diff / (1000 * 60 * 60 * 24 * 7));
+        console.log("Прошло недель: ", weeksPassed);
+
+        const weekType = weeksPassed % 2 === 0 ? 2 : 1;
+        return weekType;
+    }
 
     chooseWeekType() {
         if (this.lesson.week_type == 1) {
@@ -192,21 +208,5 @@ export class ScheduleComponent implements OnInit {
         } else {
             this.lesson.week_type = 1;
         }
-    }
-
-    updateWeekType(lesson: number): number {
-        const currentDate = new Date();
-        const currentDay = currentDate.getDay(); // Получаем текущий день недели (0 - воскресенье, 1 - понедельник, ..., 6 - суббота)
-
-        // Проверяем, если сегодня пятница (день недели 5 для JavaScript, так как нумерация начинается с воскресенья)
-        if (currentDay === 5) {
-            // Обновляем тип недели: если текущий тип недели = 1, меняем на 2 и наоборот
-            lesson = this.lesson.week_type === 1 ? 2 : 1;
-            console.log('Тип недели обновлен!');
-        } else {
-            console.log('Сегодня не пятница, тип недели остается без изменений.');
-        }
-
-        return lesson;
     }
 }
