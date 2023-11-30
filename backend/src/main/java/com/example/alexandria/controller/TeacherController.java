@@ -1,14 +1,12 @@
 package com.example.alexandria.controller;
 
 
-import com.example.alexandria.repository.Teacher;
-import com.example.alexandria.service.GroupDTO;
-import com.example.alexandria.service.TeacherDTO;
+import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.dto.GroupDTO;
+import com.example.alexandria.service.dto.TeacherDTO;
 import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -46,17 +44,12 @@ public class TeacherController {
 
     @PostMapping("/create")
     public TeacherDTO createTeacher(@RequestBody TeacherDTO teacherDTO) {
-            return teacherService.create(teacherDTO);
+        return teacherService.create(teacherDTO);
     }
 
     @PutMapping("/{login}")
-    public ResponseEntity<String> updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
-        try {
-            teacherService.update(login, teacherDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public void updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
+        teacherService.update(login, teacherDTO);
     }
 
     @GetMapping("/{teacherId}/groups")
@@ -76,6 +69,7 @@ public class TeacherController {
         }
         return groupDTOs;
     }
+
     @GetMapping("/groups/{groupName}")
     public List<TeacherDTO> getTeacherByGroup(@PathVariable String groupName) {
         return teacherService.findTeacherByGroup(groupName);

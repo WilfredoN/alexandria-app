@@ -1,15 +1,16 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Lesson;
 import com.example.alexandria.repository.LessonRepository;
-import lombok.AllArgsConstructor;
+import com.example.alexandria.repository.entity.Lesson;
+import com.example.alexandria.service.dto.LessonDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LessonService {
     LessonRepository lessonRepository;
 

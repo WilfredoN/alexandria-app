@@ -1,4 +1,4 @@
-package com.example.alexandria.repository;
+package com.example.alexandria.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,18 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "teacher_lesson")
+@Table(name = "lessons")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherLesson {
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-    @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+    private String lesson_name;
 }

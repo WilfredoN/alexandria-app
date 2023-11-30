@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.repository.Group;
+import com.example.alexandria.repository.entity.Group;
 import com.example.alexandria.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

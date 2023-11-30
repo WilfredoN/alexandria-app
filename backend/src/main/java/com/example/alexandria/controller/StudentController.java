@@ -1,11 +1,9 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.service.StudentDTO;
+import com.example.alexandria.service.dto.StudentDTO;
 import com.example.alexandria.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +27,7 @@ public class StudentController {
                 , full_name, login, password, group_name);
         return studentService.findStudents();
     }
+
     @GetMapping("/{id}")
     public StudentDTO findStudentById(@PathVariable long id) {
         return studentService.findStudent(id);
@@ -41,24 +40,23 @@ public class StudentController {
 
     @PostMapping("/create")
     public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
-            return studentService.create(studentDTO);
+        return studentService.create(studentDTO);
     }
+
     @PostMapping("/createMany")
     public List<StudentDTO> createStudents(@RequestBody List<StudentDTO> studentDTOs) {
         return studentService.createStudents(studentDTOs);
     }
+
     @PutMapping("/{login}")
-    public ResponseEntity<String> updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {
-        try {
-            studentService.update(login, studentDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public void updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {
+        studentService.update(login, studentDTO);
+
     }
+
     @DeleteMapping("/{login}")
     public void deleteStudent(@PathVariable String login) {
-            studentService.delete(login);
+        studentService.delete(login);
     }
 }
 

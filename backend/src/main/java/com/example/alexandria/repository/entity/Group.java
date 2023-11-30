@@ -1,4 +1,4 @@
-package com.example.alexandria.repository;
+package com.example.alexandria.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

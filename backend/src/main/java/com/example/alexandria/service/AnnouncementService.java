@@ -1,9 +1,10 @@
 package com.example.alexandria.service;
 
 
-import com.example.alexandria.repository.Announcement;
+import com.example.alexandria.repository.entity.Announcement;
 import com.example.alexandria.repository.AnnouncementRepository;
-import com.example.alexandria.repository.Teacher;
+import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.dto.AnnouncementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

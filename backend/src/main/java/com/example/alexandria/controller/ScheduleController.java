@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.service.ScheduleDTO;
+import com.example.alexandria.service.dto.ScheduleDTO;
 import com.example.alexandria.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

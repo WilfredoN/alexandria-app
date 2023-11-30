@@ -1,4 +1,4 @@
-package com.example.alexandria.service;
+package com.example.alexandria.service.dto;
 
 import lombok.Builder;
 

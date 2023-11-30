@@ -1,29 +1,27 @@
-package com.example.alexandria.repository;
+package com.example.alexandria.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.time.Instant;
-import java.util.List;
+
 
 @Data
 @Entity
-@Table(name = "teachers")
+@Table(name = "students")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Teacher {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @CreatedDate
     private Instant createdAt;
 
@@ -33,14 +31,7 @@ public class Teacher {
     private String full_name;
     private String login;
     private String password;
-    @ManyToMany
-    @JoinTable(
-            name = "groups_teachers",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
-    private List<Group> groups;
-
+    private String group_name;
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }

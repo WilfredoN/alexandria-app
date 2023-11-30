@@ -1,7 +1,8 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Teacher;
+import com.example.alexandria.repository.entity.Teacher;
 import com.example.alexandria.repository.TeacherRepository;
+import com.example.alexandria.service.dto.TeacherDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -24,6 +25,7 @@ public class TeacherService {
                 .id(teacher.getId())
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
+                .is_admin(teacher.is_admin())
                 .password(teacher.getPassword())
                 .build();
     }
@@ -40,7 +42,6 @@ public class TeacherService {
     public Optional<Teacher> getTeacherWithGroups(long teacherId) {
         return teacherRepository.findByIdWithGroups(teacherId);
     }
-
 
 
     public TeacherDTO findTeacher(long id) {
@@ -77,6 +78,7 @@ public class TeacherService {
     public void update(String login, TeacherDTO teacher) {
         var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
         teacherToUpdate.setPassword(teacher.password());
+        teacherToUpdate.set_admin(teacher.is_admin());
         teacherRepository.save(teacherToUpdate);
     }
 
@@ -85,6 +87,7 @@ public class TeacherService {
         var savedTeacher = teacherRepository.save(Teacher.builder()
                 .full_name(teacher.full_name())
                 .login(teacher.login())
+                .is_admin(teacher.is_admin())
                 .password(hashedPassword)
                 .build());
         return mapTeacher(savedTeacher);

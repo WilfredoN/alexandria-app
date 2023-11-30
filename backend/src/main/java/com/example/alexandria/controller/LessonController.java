@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.service.LessonDTO;
+import com.example.alexandria.service.dto.LessonDTO;
 import com.example.alexandria.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

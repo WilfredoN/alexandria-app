@@ -1,8 +1,9 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Group;
-import com.example.alexandria.repository.Student;
+import com.example.alexandria.repository.entity.Group;
+import com.example.alexandria.repository.entity.Student;
 import com.example.alexandria.repository.StudentRepository;
+import com.example.alexandria.service.dto.StudentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

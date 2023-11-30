@@ -1,7 +1,7 @@
 package com.example.alexandria.service;
 
 
-import com.example.alexandria.repository.Group;
+import com.example.alexandria.repository.entity.Group;
 import com.example.alexandria.repository.GroupRepository;
 import com.example.alexandria.repository.TeacherRepository;
 import jakarta.transaction.Transactional;

@@ -1,6 +1,11 @@
 package com.example.alexandria.service;
 
 import com.example.alexandria.repository.*;
+import com.example.alexandria.repository.entity.Group;
+import com.example.alexandria.repository.entity.Lesson;
+import com.example.alexandria.repository.entity.Schedule;
+import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.dto.ScheduleDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
