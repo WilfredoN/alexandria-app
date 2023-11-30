@@ -34,6 +34,7 @@ import {DialogChangeLesson} from "./base/schedule/dialog-change";
 import {registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
 import { StudentsComponent } from './base/students/students.component';
+import { ConfirmDialogComponent } from './base/profile/confirm-dialog.component';
 registerLocaleData(localeRu, 'ru');
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ registerLocaleData(localeRu, 'ru');
 		ProfileComponent,
         DialogChangePasswordComponent,
         DialogChangeLesson,
-        StudentsComponent
+        StudentsComponent,
+        ConfirmDialogComponent 
 	],
     imports: [
         BrowserModule,

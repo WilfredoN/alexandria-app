@@ -9,6 +9,7 @@ import {switchMap} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DialogChangePasswordComponent} from "./dialog-change-password";
 import {ScheduleService} from "../../service/schedule-service";
+import { ConfirmDialogComponent } from './confirm-dialog.component';
 
 interface Student {
     full_name: string;
@@ -116,6 +117,18 @@ export class ProfileComponent implements OnInit {
     }
 
     deleteAccount(): void {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px'
+        });
+      
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.confirmDeleteAccount();
+          }
+        });
+      }
+
+      private confirmDeleteAccount(): void {
         if (this.user) {
             this.authService.delete(this.user.login, this.user.role).subscribe({
                 next: (response) => {
