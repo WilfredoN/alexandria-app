@@ -36,7 +36,7 @@ public class HomeworkStatusController {
         return homeworkStatusService.findByHomeworkId(homeworkId);
     }
 
-    @PutMapping("/{homeworkId}/{studentId}")
+    @PutMapping("/mark/{homeworkId}/{studentId}")
     public HomeworkStatusDTO markHomeworkAsDone(@PathVariable Long homeworkId, @PathVariable Long studentId) {
         return homeworkStatusService.markHomeworkAsDone(homeworkId, studentId);
     }
