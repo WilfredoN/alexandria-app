@@ -25,8 +25,7 @@ RUN apk update && \
     rm flyway.tar.gz
 
 # Copy the built JAR from the Gradle container
-COPY --from=builder /app/build/libs/*.jar /app/
-RUN mv /app/*.jar /app/app.jar
+COPY --from=builder /app/build/libs/* /app/
 COPY --from=builder /app/build/resources/main/application-docker.properties /app/application.properties
 
 # Copy Flyway migration files
@@ -40,4 +39,4 @@ ENV DB_USERNAME=alexandria_login
 ENV DB_PASSWORD=rotpasdbalexandria
 
 # Run migrations and start the application
-CMD ["/bin/sh", "-c", "/usr/local/flyway-9.22.1/flyway migrate -url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} -user=${DB_USERNAME} -password=${DB_PASSWORD} && java -jar app.jar"]
+CMD ["/bin/sh", "-c", "/usr/local/flyway-9.22.1/flyway migrate -url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} -user=${DB_USERNAME} -password=${DB_PASSWORD} && java -jar alexandria-0.0.3.jar"]
