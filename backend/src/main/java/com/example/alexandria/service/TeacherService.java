@@ -1,12 +1,17 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.Teacher;
+import com.example.alexandria.repository.entity.Teacher;
 import com.example.alexandria.repository.TeacherRepository;
+import com.example.alexandria.service.dto.TeacherDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -15,28 +20,41 @@ import static java.util.stream.Collectors.toList;
 public class TeacherService {
     private final TeacherRepository teacherRepository;
 
-    private TeacherDTO mapTeacher(Teacher teacher) {
+    public TeacherDTO mapTeacher(Teacher teacher) {
         return TeacherDTO.builder()
-                .id(UUID.randomUUID().toString())
+                .id(teacher.getId())
                 .full_name(teacher.getFull_name())
                 .login(teacher.getLogin())
+                .is_admin(teacher.is_admin())
                 .password(teacher.getPassword())
                 .build();
     }
 
     public TeacherDTO logIn(TeacherDTO teacher) {
         var foundTeacher = teacherRepository.findByLogin(teacher.login());
-        if (foundTeacher.isPresent() && foundTeacher.get().getPassword().equals(teacher.password())) {
+        if (foundTeacher.isPresent() && foundTeacher.get().checkPassword(teacher.password())) {
             return mapTeacher(foundTeacher.get());
         } else {
-            throw new RuntimeException("Invalid login or password");
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Invalid login or password");
         }
     }
 
-    public TeacherDTO findTeacher(String id) {
-        return teacherRepository.findByUid(id)
+    public Optional<Teacher> getTeacherWithGroups(long teacherId) {
+        return teacherRepository.findByIdWithGroups(teacherId);
+    }
+
+
+    public TeacherDTO findTeacher(long id) {
+        return teacherRepository.findById(id)
                 .map(this::mapTeacher)
                 .orElseThrow();
+    }
+
+    public TeacherDTO findTeacherByLogin(String login) {
+        return teacherRepository.findByLogin(login).stream()
+                .map(this::mapTeacher)
+                .findFirst()
+                .orElseThrow(() -> new HttpClientErrorException(HttpStatusCode.valueOf(404), "Teacher not found"));
     }
 
     public List<TeacherDTO> findTeachers() {
@@ -45,26 +63,34 @@ public class TeacherService {
                 .collect(toList());
     }
 
-    public void deleteTeacher(String uid) {
-        var teacher = teacherRepository.findByUid(uid).orElseThrow();
+    public List<TeacherDTO> findTeacherByGroup(String groupName) {
+        List<Teacher> teachers = teacherRepository.findByGroupsName(groupName);
+        return teachers.stream()
+                .map(this::mapTeacher)
+                .collect(toList());
+    }
+
+    public void delete(String login) {
+        var teacher = teacherRepository.findByLogin(login).orElseThrow();
         teacherRepository.delete(teacher);
     }
 
-    public TeacherDTO updateTeacher(String uid, TeacherDTO teacher) {
-        var teacherToUpdate = teacherRepository.findByUid(uid).orElseThrow();
-        teacherToUpdate.setFull_name(teacher.full_name());
-        teacherToUpdate.setLogin(teacher.login());
+    public void update(String login, TeacherDTO teacher) {
+        var teacherToUpdate = teacherRepository.findByLogin(login).orElseThrow();
         teacherToUpdate.setPassword(teacher.password());
-        return mapTeacher(teacherRepository.save(teacherToUpdate));
+        teacherToUpdate.set_admin(teacher.is_admin());
+        teacherRepository.save(teacherToUpdate);
     }
 
     public TeacherDTO create(TeacherDTO teacher) {
+        String hashedPassword = BCrypt.hashpw(teacher.password(), BCrypt.gensalt());
         var savedTeacher = teacherRepository.save(Teacher.builder()
-                .uid(UUID.randomUUID().toString())
                 .full_name(teacher.full_name())
                 .login(teacher.login())
-                .password(teacher.password())
+                .is_admin(teacher.is_admin())
+                .password(hashedPassword)
                 .build());
         return mapTeacher(savedTeacher);
     }
 }
+

@@ -2,10 +2,6 @@
     <div class="log-in-panel">
         <h1>Registration</h1>
         <form [formGroup]="myForm" (ngSubmit)="_formSubmit()">
-            <mat-button-toggle-group class="em--input" formControlName="role" (change)="onRoleChange($event)">
-                <mat-button-toggle value="Teacher">Teacher</mat-button-toggle>
-                <mat-button-toggle value="Student">Student</mat-button-toggle>
-            </mat-button-toggle-group>
             <input
                 class="em--input"
                 type="text"
@@ -29,14 +25,6 @@
                 placeholder="Choose password"
                 required
             />
-            <div *ngIf="myForm.controls.role.value !== 'Teacher'" class="group_input">
-                <select class="em--input" formControlName="prefix_group">
-                    <option value="KI">KI</option>
-                    <option value="PI">PI</option>
-                    <option value="ET">ET</option>
-                </select>
-                <input type="text" class="em--input" formControlName="code_group" maxlength="3">
-            </div>
             <div class="example-button-row">
                 <input type="submit" value="Register" class="log-inBtn"/>
             </div>

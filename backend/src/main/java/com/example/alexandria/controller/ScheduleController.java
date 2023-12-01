@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.repository.Schedule;
+import com.example.alexandria.service.dto.ScheduleDTO;
 import com.example.alexandria.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,22 +17,22 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping
-    public List<Schedule> getSchedules() {
+    public List<ScheduleDTO> getSchedules() {
         return scheduleService.findSchedules();
     }
 
     @GetMapping("/{id}")
-    public Schedule getSchedule(@PathVariable long id) {
+    public ScheduleDTO getSchedule(@PathVariable long id) {
         return scheduleService.findSchedule(id);
     }
 
     @GetMapping("/groups/{name}")
-    public List<Schedule> getScheduleByGroup(@PathVariable String name) {
+    public List<ScheduleDTO> getScheduleByGroup(@PathVariable String name) {
         return scheduleService.findScheduleByGroupName(name);
     }
 
     @PostMapping("/create")
-    public Schedule createSchedule(@RequestBody Schedule schedule) {
+    public ScheduleDTO createSchedule(@RequestBody ScheduleDTO schedule) {
         return scheduleService.create(schedule);
     }
 
@@ -41,8 +41,8 @@ public class ScheduleController {
         scheduleService.delete(id);
     }
 
-    @GetMapping("/all")
-    public List<Schedule> getAllSchedules() {
-        return scheduleService.getAll();
+    @PutMapping("/{id}")
+    public ScheduleDTO updateSchedule(@PathVariable long id, @RequestBody ScheduleDTO schedule) {
+        return scheduleService.update(id, schedule);
     }
 }

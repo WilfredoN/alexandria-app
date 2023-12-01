@@ -25,7 +25,17 @@ import {MatListModule} from "@angular/material/list";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {DialogChangePasswordComponent} from "./base/profile/dialog-change-password";
+import {MatButtonModule} from "@angular/material/button";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {DialogChangeLesson} from "./base/schedule/dialog-change";
+import {registerLocaleData} from "@angular/common";
+import localeRu from '@angular/common/locales/ru';
+import { StudentsComponent } from './base/students/students.component';
+import { ConfirmDialogComponent } from './base/profile/confirm-dialog.component';
+registerLocaleData(localeRu, 'ru');
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -37,27 +47,35 @@ import { MatTableModule } from "@angular/material/table";
 		AnnouncementsComponent,
 		TeachersComponent,
 		ProfileComponent,
+        DialogChangePasswordComponent,
+        DialogChangeLesson,
+        StudentsComponent,
+        ConfirmDialogComponent 
 	],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatMenuModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    TasksComponent,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatTableModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatCardModule,
+        MatMenuModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        TasksComponent,
+        MatButtonToggleModule,
+        MatChipsModule,
+        MatListModule,
+        MatSnackBarModule,
+        MatSelectModule,
+        MatTableModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatExpansionModule,
+        MatAutocompleteModule
+    ],
 	providers: [],
 	bootstrap: [AppComponent],
 })

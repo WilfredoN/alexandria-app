@@ -11,7 +11,9 @@ export class HeaderComponent {
   public isLoggedOut: boolean = false;
   logout() {
     this.isLoggedOut = true;
-    this.router.navigate(['/log-in']);
+    this.router.navigate(['/log-in']).then(() =>
+        localStorage.removeItem('user'));
+        localStorage.removeItem('role');
   }
   profileIn(){
     this.router.navigate(['/profile']);

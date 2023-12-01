@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.repository.Lesson;
+import com.example.alexandria.service.dto.LessonDTO;
 import com.example.alexandria.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +17,17 @@ public class LessonController {
     private final LessonService lessonService;
 
     @GetMapping
-    public List<Lesson> getLessons() {
+    public List<LessonDTO> getLessons() {
         return lessonService.findLessons();
     }
 
     @GetMapping("/{id}")
-    public List<Lesson> getLesson(@PathVariable long id) {
+    public LessonDTO getLesson(@PathVariable long id) {
         return lessonService.findLesson(id);
     }
 
     @PostMapping("/create")
-    public Lesson createLesson(@RequestBody Lesson lesson) {
+    public LessonDTO createLesson(@RequestBody LessonDTO lesson) {
         return lessonService.create(lesson);
     }
 
@@ -37,7 +37,7 @@ public class LessonController {
     }
 
     @PutMapping("/update")
-    public Lesson updateLesson(@RequestBody Lesson lesson) {
+    public LessonDTO updateLesson(@RequestBody LessonDTO lesson) {
         return lessonService.update(lesson);
     }
 }

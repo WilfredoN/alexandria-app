@@ -1,6 +1,6 @@
 package com.example.alexandria.controller;
 
-import com.example.alexandria.service.StudentDTO;
+import com.example.alexandria.service.dto.StudentDTO;
 import com.example.alexandria.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,21 +16,6 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping("/{id}")
-    public StudentDTO findStudent(@PathVariable String id) {
-        return studentService.findStudent(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable String id) {
-        studentService.deleteStudent(id);
-    }
-
-    @PutMapping("/{id}")
-    public StudentDTO updateStudent(@PathVariable String id, @RequestBody StudentDTO studentDTO) {
-        return studentService.updateStudent(id, studentDTO);
-    }
-
     @GetMapping
     public List<StudentDTO> getStudents(
             @RequestParam(required = false) String full_name,
@@ -43,8 +28,13 @@ public class StudentController {
         return studentService.findStudents();
     }
 
+    @GetMapping("/{id}")
+    public StudentDTO findStudentById(@PathVariable long id) {
+        return studentService.findStudent(id);
+    }
+
     @PostMapping("/login")
-    public StudentDTO logIn(@RequestBody StudentDTO studentDTO) {
+    public StudentDTO login(@RequestBody StudentDTO studentDTO) {
         return studentService.logIn(studentDTO);
     }
 
@@ -52,4 +42,21 @@ public class StudentController {
     public StudentDTO createStudent(@RequestBody StudentDTO studentDTO) {
         return studentService.create(studentDTO);
     }
+
+    @PostMapping("/createMany")
+    public List<StudentDTO> createStudents(@RequestBody List<StudentDTO> studentDTOs) {
+        return studentService.createStudents(studentDTOs);
+    }
+
+    @PutMapping("/{login}")
+    public void updateStudent(@PathVariable String login, @RequestBody StudentDTO studentDTO) {
+        studentService.update(login, studentDTO);
+
+    }
+
+    @DeleteMapping("/{login}")
+    public void deleteStudent(@PathVariable String login) {
+        studentService.delete(login);
+    }
 }
+

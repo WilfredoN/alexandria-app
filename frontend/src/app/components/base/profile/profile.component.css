@@ -1,23 +1,22 @@
-.container{
-    width:100%;
+.container {
     display: flex;
     justify-content: center;
 }
 
-.container_inner{
+.container_inner {
     margin-top: 2.5em;
-    width: 1280px;
-    height: 100%;
     color: white;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 2em;
 }
 
 /*-------------Фото---------- */
-.img-container{
+.img-container {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     background: rgba(217, 217, 217, 1);
     display: inline-block;
@@ -37,7 +36,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.2);
     opacity: 0;
     display: flex;
     justify-content: center;
@@ -48,76 +47,173 @@
 
 .text {
     color: white;
-    font-size: 24px;
+    font-size: 16px;
 }
+
 .text:hover {
     cursor: pointer;
     user-select: none;
 }
+
 .img-container:hover .overlay {
     opacity: 1;
 }
 
 /*-------------Сам профиль---------- */
-.profile_info{
-    width: 60em;
-    height:20em;
+.profile_info {
+    grid-area: 1/1/2/4;
+    font-size: 18px;
+}
+
+.info_about {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 2em 0 0;
+}
+
+.profile_info, .groups_selector, .students_creator, .lesson_creator {
+    min-height: 20em;
+    background: rgba(11, 59, 95, 1);
     display: flex;
     align-items: center;
-    background:rgba(11, 59, 95, 1);
-    border-radius: 8px;
+    border-radius: 16px;
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
-    margin: 0 15px 15px 0;
-    padding:0;
-    font-size: 18px;
 }
 
-.bnt_change{
-    border:0;
-    background: rgb(11, 97, 95);
-    height: 2em;
-    border-radius: 8px;
-    width: 10em;
+.btn_change {
     color: white;
     font-size: 18px;
+    margin: 0 0 1em 0;
 }
 
-.bnt_change:hover{
+.btn_change:hover {
     background: rgb(8, 77, 75);
     cursor: pointer;
 }
 
-/*-------------Темы---------- */
+/*-------------Группы---------- */
 
-.theme_profile{
-    width: 26em;
-    background: rgba(11, 59, 95, 1);
+.groups_selector {
+    grid-area: 1/4/2/7;
+    flex-direction: column;
+    text-align: center;
+}
+
+.groups_selector ul {
+    list-style-type: none;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.groups_selector li {
+    width: 5em;
+    padding: 1em;
+    margin: .5em;
+    font-size: 1.2em;
+    color: white;
+    text-decoration: none;
+    background: rgb(61, 143, 208);
+    border-radius: 1.5em;
+}
+
+.groups_selector li label {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.students_creator {
+    grid-area: 2/1/3/3;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.2em;
+}
+
+h3 {
+    width: 100%;
+    text-align: center;
+}
+
+select {
+    width: 10em;
+}
+
+.lesson_creator {
+    grid-area: 2/3/3/5;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    display: flex;
+    flex-direction: column;
+}
+
+td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.btn-def-style {
+    border: 2px solid white;
+    background: #0b3b5f;
+    padding: 0.5em;
+    color: antiquewhite;
     border-radius: 8px;
-    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
-.add_icon{
-    width: 1em;
-    height: 1em;
-    font-size: 10em;
-    margin:0;
-    padding:0;
+.btn-def-style:hover {
+    background: rgba(98, 144, 204, 0.7);
+    transition: 0.2s ease-in-out;
 }
 
-.pictures {
-    width:80%;
-    display: grid;
-    grid-template-rows: auto auto;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-    padding-bottom: 1em;
-    margin-right: 1em;
+.btn_delete.btn-def-style:hover {
+    background: rgba(255, 104, 104, 0.7);
+    transition: 0.2s ease-in-out;
 }
 
-.picture img {
-    width: 140px;
+.input-profile {
+    width: 80%;
+    padding: 0.5em;
+    border: 0;
+    margin: 0.5em 0 0.5em 0;
+    font-size: 1em;
+    border-radius: 4px;
+}
+
+label {
+    width: 80%;
+    text-align: left;
+}
+
+.btn_create {
+    font-size: 1.1em;
+}
+.profile_info.student-info {
+    font-size: 1.6em;
+    width: 120%;
+    height: 100%;
+    grid-area: 1/1/3/6;
 }

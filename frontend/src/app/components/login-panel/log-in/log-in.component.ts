@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from "../sign-up/user-service";
-import {UserDTO} from "../sign-up/user-dto";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {AuthService} from "../../service/auth-service";
 
 @Component({
     selector: 'app-log-in',
@@ -16,19 +15,21 @@ export class LogInComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
-        private userService: UserService,
+        private authService: AuthService,
         private _snackBar: MatSnackBar
     ) {
     }
 
     ngOnInit() {
         this._formValidate();
+        console.log(this.myForm.controls);
     }
 
     _formValidate() {
         this.myForm = this.fb.group({
             login: ['', Validators.required],
             password: ['', Validators.required],
+            role: ['', Validators.required],
         });
     }
 
@@ -37,26 +38,29 @@ export class LogInComponent implements OnInit {
             this._snackBar.open('Введите корректные данные', 'Закрыть', {duration: 3000});
             return;
         }
-
-        const userDTO: UserDTO = {
-            full_name: "", group_name: "",
+        const userDTO = {
+            id: 0,
             login: this.myForm.value.login,
             password: this.myForm.value.password,
-        };
+            group_name: '',
+            role: this.myForm.value.role
+        }
 
-        this.userService.logIn(userDTO).subscribe({
-            next: (response) => {
-                localStorage.setItem('user', JSON.stringify(response));
-                this.router.navigate(['base']).then(r => console.log(r));
-                console.log('User Logged In - ', response);
-                this._snackBar.open('Авторизация успешна!', 'Закрыть', {duration: 2000});
+        this.authService.logIn(userDTO).subscribe({
+            next: (response: any) => {
+                console.log(response);
+                this._snackBar.open('Вы успешно вошли в систему', 'Закрыть', {duration: 3000});
+                userDTO.id = response.id;
+                userDTO.group_name = response.group_name;
+                userDTO.role = this.myForm.value.role;
+                localStorage.setItem('user', JSON.stringify(userDTO));
+                console.log(userDTO);
+                this.router.navigate(['/base']).then(r => console.log(r + '\nnavigate to /base'));
             },
-            error: (error) => {
-                this._snackBar.open(
-                    'Неправильно введен логин или пароль!', 'Закрыть', {duration: 2000}
-                );
-                console.error('Login Failed - ', error);
-            },
+            error: () => {
+                this._snackBar.open('Неверный логин или пароль', 'Закрыть', {duration: 3000});
+            }
         });
+
     }
 }

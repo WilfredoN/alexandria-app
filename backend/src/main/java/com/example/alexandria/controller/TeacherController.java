@@ -1,13 +1,19 @@
 package com.example.alexandria.controller;
 
 
+import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.dto.GroupDTO;
+import com.example.alexandria.service.dto.TeacherDTO;
 import com.example.alexandria.service.TeacherService;
-import com.example.alexandria.service.TeacherDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController
@@ -17,30 +23,18 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
-    @GetMapping("/{id}")
-    public TeacherDTO findTeacher(@PathVariable String id) {
-        return teacherService.findTeacher(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteTeacher(@PathVariable String id) {
-        teacherService.deleteTeacher(id);
-    }
-
-    @PutMapping("/{id}")
-    public TeacherDTO updateTeacher(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) {
-        return teacherService.updateTeacher(id, teacherDTO);
-    }
-
     @GetMapping
-    public List<TeacherDTO> getTeacher(
-            @RequestParam(required = false) String full_name,
-            @RequestParam(required = false) String login,
-            @RequestParam(required = false) String password
-    ) {
-        log.info("getUsers: full_name={}, login={}, password={}, "
-                , full_name, login, password);
+    public List<TeacherDTO> getTeacher() {
         return teacherService.findTeachers();
+    }
+
+    /* @GetMapping("/{login}")
+     public TeacherDTO findTeacherByLogin(@PathVariable String login) {
+         return teacherService.findTeacherByLogin(login);
+     }*/
+    @GetMapping("/{id}")
+    public TeacherDTO findTeacherById(@PathVariable long id) {
+        return teacherService.findTeacher(id);
     }
 
     @PostMapping("/login")
@@ -53,4 +47,38 @@ public class TeacherController {
         return teacherService.create(teacherDTO);
     }
 
+    @PutMapping("/{login}")
+    public void updateTeacher(@PathVariable String login, @RequestBody TeacherDTO teacherDTO) {
+        teacherService.update(login, teacherDTO);
+    }
+
+    @GetMapping("/{teacherId}/groups")
+    public List<GroupDTO> getTeacherGroups(@PathVariable long teacherId) {
+        Optional<Teacher> optionalTeacher = teacherService.getTeacherWithGroups(teacherId);
+        List<GroupDTO> groupDTOs = new ArrayList<>();
+        if (optionalTeacher.isPresent()) {
+            Teacher teacher = optionalTeacher.get();
+            groupDTOs = teacher.getGroups().stream()
+                    .map(group -> {
+                        GroupDTO dto = new GroupDTO();
+                        dto.setId(group.getId());
+                        dto.setName(group.getName());
+                        return dto;
+                    })
+                    .collect(toList());
+        }
+        return groupDTOs;
+    }
+
+    @GetMapping("/groups/{groupName}")
+    public List<TeacherDTO> getTeacherByGroup(@PathVariable String groupName) {
+        return teacherService.findTeacherByGroup(groupName);
+    }
+
+    @DeleteMapping("/{login}")
+    public void deleteTeacher(@PathVariable String login) {
+        teacherService.delete(login);
+    }
 }
+
+
