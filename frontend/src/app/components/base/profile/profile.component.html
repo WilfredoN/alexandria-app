@@ -10,6 +10,13 @@
             <div class="info_about">
                 <p>Имя аккаунта: {{ userDTO?.full_name }}</p>
                 <p>Логин: {{ userDTO?.login }}</p>
+                <div class="switch-text-panel">
+                    <p>Admin:</p>
+                    <label class="switch">
+                        <input type="checkbox" [(ngModel)]="isChecked" (click)="adminAccount()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <p *ngIf="isStudent && userDTO?.group_name">Группа: {{ userDTO.group_name }}</p>
                 <button class="btn_change btn-def-style" (click)="openChangePasswordDialog()">Изменить пароль</button>
                 <button class="btn_delete btn-def-style" (click)="deleteAccount()">Удалить аккаунт</button>
