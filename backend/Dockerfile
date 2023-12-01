@@ -25,7 +25,7 @@ RUN apk update && \
     rm flyway.tar.gz
 
 # Copy the built JAR from the Gradle container
-COPY --from=builder /app/build/libs/ /app/
+COPY --from=builder /app/build/libs/*.jar /app/
 RUN mv /app/*.jar /app/app.jar
 COPY --from=builder /app/build/resources/main/application-docker.properties /app/application.properties
 
