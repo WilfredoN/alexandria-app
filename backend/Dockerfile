@@ -4,11 +4,10 @@ FROM gradle:latest AS builder
 # Set the working directory
 WORKDIR /app
 
-# Copy project files for building
+# Copy all project files excluding application.properties
 COPY . .
-
 # Build the Gradle project
-RUN gradle build
+RUN gradle clean build
 
 # Stage 2: Run the application
 FROM openjdk:17-alpine
@@ -26,17 +25,10 @@ RUN apk update && \
 
 # Copy the built JAR from the Gradle container
 COPY --from=builder /app/build/libs/* /app/
-COPY --from=builder /app/build/resources/main/application-docker.properties /app/application.properties
-
-# Copy Flyway migration files
-COPY src/main/resources/db/migration/* /flyway/db/migration/
-
 # Define environment variables for the database
 ENV DB_HOST=db
 ENV DB_PORT=5432
 ENV DB_NAME=alexandria
 ENV DB_USERNAME=alexandria_login
 ENV DB_PASSWORD=rotpasdbalexandria
-
-# Run migrations and start the application
-CMD ["/bin/sh", "-c", "/usr/local/flyway-9.22.1/flyway migrate -url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} -user=${DB_USERNAME} -password=${DB_PASSWORD} && java -jar alexandria-0.0.3.jar"]
+CMD ["/bin/sh", "-c", "java -jar alexandria-0.0.3.jar"]

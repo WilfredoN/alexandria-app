@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 public record ScheduleDTO(
         long id,
-        long lesson_id,
+        long subject_id,
         long group_id,
         long teacher_id,
         String day_of_week,

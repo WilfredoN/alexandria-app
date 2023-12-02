@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record HomeworkDTO(
         long id,
-        long lesson_id,
+        long subject_id,
         long group_id,
         long teacher_id,
         String title,

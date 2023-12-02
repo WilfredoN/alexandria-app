@@ -4,7 +4,7 @@ package com.example.alexandria.service;
 import com.example.alexandria.repository.HomeworkRepository;
 import com.example.alexandria.repository.entity.Group;
 import com.example.alexandria.repository.entity.Homework;
-import com.example.alexandria.repository.entity.Lesson;
+import com.example.alexandria.repository.entity.Subject;
 import com.example.alexandria.repository.entity.Teacher;
 import com.example.alexandria.service.dto.HomeworkDTO;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class HomeworkService {
                 .title(homework.getTitle())
                 .description(homework.getDescription())
                 .deadline(homework.getDeadline().toString())
-                .lesson_id(homework.getLesson().getId())
+                .subject_id(homework.getSubject().getId())
                 .teacher_id(homework.getTeacher().getId())
                 .group_id(homework.getGroup().getId())
                 .build();
@@ -53,7 +53,7 @@ public class HomeworkService {
                 .title(homeworkDTO.title())
                 .description(homeworkDTO.description())
                 .deadline(Instant.parse(homeworkDTO.deadline()))
-                .lesson(Lesson.builder().id(homeworkDTO.lesson_id()).build())
+                .subject(Subject.builder().id(homeworkDTO.subject_id()).build())
                 .teacher(Teacher.builder().id(homeworkDTO.teacher_id()).build())
                 .group(Group.builder().id(homeworkDTO.group_id()).build())
                 .build());
@@ -64,7 +64,7 @@ public class HomeworkService {
         Homework homeworkToUpdate = homeworkRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Homework not found for id: " + id));
 
-        homeworkToUpdate.setLesson(Lesson.builder().id(updatedHomework.lesson_id()).build());
+        homeworkToUpdate.setSubject(Subject.builder().id(updatedHomework.subject_id()).build());
         homeworkToUpdate.setGroup(Group.builder().id(updatedHomework.group_id()).build());
         homeworkToUpdate.setTeacher(Teacher.builder().id(updatedHomework.teacher_id()).build());
         homeworkToUpdate.setTitle(updatedHomework.title());

@@ -51,7 +51,7 @@ export class AuthService {
     }
 
     getLessons(): Observable<LessonDTO[]> {
-        return this.http.get<LessonDTO[]>(`${this.baseUrl}/lessons`);
+        return this.http.get<LessonDTO[]>(`${this.baseUrl}/subjects`);
     }
 
     getGroups(): Observable<GroupDTO[]> {

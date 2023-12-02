@@ -2,7 +2,7 @@ package com.example.alexandria.service;
 
 import com.example.alexandria.repository.*;
 import com.example.alexandria.repository.entity.Group;
-import com.example.alexandria.repository.entity.Lesson;
+import com.example.alexandria.repository.entity.Subject;
 import com.example.alexandria.repository.entity.Schedule;
 import com.example.alexandria.repository.entity.Teacher;
 import com.example.alexandria.service.dto.ScheduleDTO;
@@ -43,7 +43,7 @@ public class ScheduleService {
                 .dayOfWeek(schedule.day_of_week())
                 .lesson_num(schedule.lesson_num())
                 .weekType(schedule.week_type())
-                .lesson(Lesson.builder().id(schedule.lesson_id()).build())
+                .subject(Subject.builder().id(schedule.subject_id()).build())
                 .group(Group.builder().id(schedule.group_id()).build())
                 .teacher(Teacher.builder().id(schedule.teacher_id()).build())
                 .build());
@@ -54,7 +54,7 @@ public class ScheduleService {
         Schedule scheduleToUpdate = scheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Schedule not found for id: " + id));
 
-        scheduleToUpdate.setLesson(Lesson.builder().id(updatedSchedule.lesson_id()).build());
+        scheduleToUpdate.setSubject(Subject.builder().id(updatedSchedule.subject_id()).build());
         scheduleToUpdate.setGroup(Group.builder().id(updatedSchedule.group_id()).build());
         scheduleToUpdate.setTeacher(Teacher.builder().id(updatedSchedule.teacher_id()).build());
         scheduleToUpdate.setDayOfWeek(updatedSchedule.day_of_week());
@@ -73,7 +73,7 @@ public class ScheduleService {
         return ScheduleDTO.builder()
                 .id(schedule.getId())
                 .day_of_week(schedule.getDayOfWeek())
-                .lesson_id(schedule.getLesson().getId())
+                .subject_id(schedule.getSubject().getId())
                 .group_id(schedule.getGroup().getId())
                 .teacher_id(schedule.getTeacher().getId())
                 .week_type(schedule.getWeekType())
