@@ -11,7 +11,7 @@ import {ProfileComponent} from './base/profile/profile.component';
 import {StudentsComponent} from "./base/students/students.component";
 
 const routes: Routes = [
-    {path: '', title:'Главная', component: BaseComponent},
+    {path: '', title: 'Главная', component: BaseComponent},
     {path: 'log-in', title: 'Авторизация', component: LogInComponent},
     {path: 'sign-up', title: 'Регистрация', component: SignUpComponent},
     {path: 'tasks', title: 'Задания', component: TasksComponent},
