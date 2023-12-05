@@ -1,19 +1,14 @@
 package com.example.alexandria.controller;
 
 
-import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.TeacherService;
 import com.example.alexandria.service.dto.GroupDTO;
 import com.example.alexandria.service.dto.TeacherDTO;
-import com.example.alexandria.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController
@@ -28,10 +23,6 @@ public class TeacherController {
         return teacherService.findTeachers();
     }
 
-    /* @GetMapping("/{login}")
-     public TeacherDTO findTeacherByLogin(@PathVariable String login) {
-         return teacherService.findTeacherByLogin(login);
-     }*/
     @GetMapping("/{id}")
     public TeacherDTO findTeacherById(@PathVariable long id) {
         return teacherService.findTeacher(id);
@@ -54,20 +45,7 @@ public class TeacherController {
 
     @GetMapping("/{teacherId}/groups")
     public List<GroupDTO> getTeacherGroups(@PathVariable long teacherId) {
-        Optional<Teacher> optionalTeacher = teacherService.getTeacherWithGroups(teacherId);
-        List<GroupDTO> groupDTOs = new ArrayList<>();
-        if (optionalTeacher.isPresent()) {
-            Teacher teacher = optionalTeacher.get();
-            groupDTOs = teacher.getGroups().stream()
-                    .map(group -> {
-                        GroupDTO dto = new GroupDTO();
-                        dto.setId(group.getId());
-                        dto.setName(group.getName());
-                        return dto;
-                    })
-                    .collect(toList());
-        }
-        return groupDTOs;
+        return teacherService.getTeacherWithGroups(teacherId);
     }
 
     @GetMapping("/groups/{groupName}")
