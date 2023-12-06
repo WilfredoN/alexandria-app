@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -55,7 +54,7 @@ public class StudentService {
     public List<StudentDTO> findStudents() {
         return studentRepository.findAll().stream()
                 .map(this::mapStudent)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void delete(String login) {
@@ -94,7 +93,7 @@ public class StudentService {
     public List<StudentDTO> createStudents(List<StudentDTO> students) {
         return students.stream()
                 .map(this::create)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

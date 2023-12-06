@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from "@angular/material/chips";
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignUpComponent } from './login-panel/sign-up/sign-up.component';
@@ -35,6 +34,9 @@ import {registerLocaleData} from "@angular/common";
 import localeRu from '@angular/common/locales/ru';
 import { StudentsComponent } from './base/students/students.component';
 import { ConfirmDialogComponent } from './base/profile/confirm-dialog.component';
+import {NotFoundComponent} from "./base/not-found/not-found.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+
 registerLocaleData(localeRu, 'ru');
 @NgModule({
 	declarations: [
@@ -50,7 +52,8 @@ registerLocaleData(localeRu, 'ru');
         DialogChangePasswordComponent,
         DialogChangeLesson,
         StudentsComponent,
-        ConfirmDialogComponent 
+        ConfirmDialogComponent,
+        NotFoundComponent
 	],
     imports: [
         BrowserModule,
@@ -66,7 +69,6 @@ registerLocaleData(localeRu, 'ru');
         HttpClientModule,
         TasksComponent,
         MatButtonToggleModule,
-        MatChipsModule,
         MatListModule,
         MatSnackBarModule,
         MatSelectModule,
@@ -74,7 +76,8 @@ registerLocaleData(localeRu, 'ru');
         MatDialogModule,
         MatButtonModule,
         MatExpansionModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        DragDropModule
     ],
 	providers: [],
 	bootstrap: [AppComponent],

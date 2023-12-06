@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
                 // Обновляем данные пользователя в localStorage
                 localStorage.setItem('user', JSON.stringify(userDTO));
                 localStorage.setItem('role', this.userDTO.role);
-                this.user = JSON.parse(localStorage.getItem('user') || '');
+                this.user = JSON.parse(localStorage.getItem('user') ?? '');
             });
         }
         console.log(this.user);
@@ -120,7 +120,7 @@ export class ProfileComponent implements OnInit {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '250px'
         });
-      
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.confirmDeleteAccount();

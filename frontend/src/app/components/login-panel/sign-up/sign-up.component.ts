@@ -53,6 +53,7 @@ export class SignUpComponent implements OnInit {
             login: this.myForm.value.login,
             password: this.myForm.value.pwd,
             role: 'teacher',
+            isAdmin: false
         };
         this.authService.register(userDTO).subscribe({
             next: (response: any) => {

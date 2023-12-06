@@ -24,7 +24,7 @@ li {
 
 table {
     border-collapse: separate;
-    border-spacing: 2em;
+    border-spacing: 1.5em;
     color: white;
 }
 
@@ -55,10 +55,6 @@ table {
 .num-of-week-label {
     font-size: 24px;
     margin: 2em 0 1em 0;
-}
-
-table {
-    border-spacing: 1.5em;
 }
 
 .current-day-week {
@@ -147,7 +143,6 @@ table {
 .current-day {
     color: #9989e6;
 }
-
 mat-expansion-panel {
     display: flex;
     flex-direction: column;
@@ -158,21 +153,3 @@ mat-expansion-panel {
     cursor: pointer;
 }
 
-@media screen and (max-width: 1920px) {
-    .container {
-        font-size: 95%;
-    }
-
-    .current-info {
-        width: 20em;
-        height: 35em;
-    }
-
-    .lesson li {
-        width: 7em;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-
-}

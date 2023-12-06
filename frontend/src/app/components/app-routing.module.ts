@@ -9,9 +9,11 @@ import {ScheduleComponent} from './base/schedule/schedule.component';
 import {TeachersComponent} from './base/teachers/teachers.component';
 import {ProfileComponent} from './base/profile/profile.component';
 import {StudentsComponent} from "./base/students/students.component";
+import {NotFoundComponent} from "./base/not-found/not-found.component";
 
 const routes: Routes = [
-    {path: '', title: 'Главная', component: BaseComponent},
+    {path: '', redirectTo: 'log-in', pathMatch: 'full'},
+    {path: 'base', title: 'Главная', component: BaseComponent},
     {path: 'log-in', title: 'Авторизация', component: LogInComponent},
     {path: 'sign-up', title: 'Регистрация', component: SignUpComponent},
     {path: 'tasks', title: 'Задания', component: TasksComponent},
@@ -20,12 +22,9 @@ const routes: Routes = [
     {path: 'teachers', title: 'Преподаватели', component: TeachersComponent},
     {path: 'profile', title: 'Профиль', component: ProfileComponent},
     {path: 'students', title: 'Студенты', component: StudentsComponent},
-
     {
-        path: '**',
-        redirectTo: '',
-        component: BaseComponent,
-    } /*проверить, при перекиде сюда - смотреть входил ли в акк*/,
+        path: '**', title: 'Страница не найдена', component: NotFoundComponent,
+    },
 ];
 
 @NgModule({

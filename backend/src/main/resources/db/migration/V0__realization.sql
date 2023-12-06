@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS schedule
 (
     id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     day_of_week VARCHAR(15) NOT NULL,
-    subject_num INTEGER     NOT NULL CHECK ( subject_num >= 1 AND subject_num <= 6 ),
+    lesson_num INTEGER     NOT NULL CHECK ( lesson_num >= 1 AND lesson_num <= 6 ),
     week_type   INTEGER     NOT NULL CHECK ( week_type >= 1 AND week_type <= 2 ),
     subject_id  INTEGER     NOT NULL REFERENCES subjects (id) ON DELETE CASCADE,
     group_id    INTEGER     NOT NULL REFERENCES groups (id) ON DELETE CASCADE,

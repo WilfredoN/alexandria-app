@@ -63,7 +63,7 @@ export class AuthService {
             day_of_week: lesson.day_of_week,
             lesson_num: lesson.lesson_number,
             week_type: lesson.week_type,
-            lesson_id: lesson.lesson_id,
+            subject_id: lesson.subject_id,
             group_id: lesson.group_id.id,
             teacher_id: lesson.teacher_id.id
         }
@@ -75,7 +75,7 @@ export class AuthService {
             day_of_week: lesson.day_of_week,
             lesson_num: lesson.lesson_number,
             week_type: lesson.week_type,
-            lesson_id: lesson.lesson_id,
+            subject_id: lesson.subject_id,
             group_id: lesson.group_id.id,
             teacher_id: lesson.teacher_id.id
         }

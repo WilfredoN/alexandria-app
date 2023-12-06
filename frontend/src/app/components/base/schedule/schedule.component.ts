@@ -5,6 +5,7 @@ import {forkJoin, Observable} from "rxjs";
 import {AuthService} from "../../service/auth-service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogChangeLesson} from "./dialog-change";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
     selector: 'app-schedule',
@@ -16,8 +17,9 @@ export class ScheduleComponent implements OnInit {
     currentDay: string;
     user: any;
     isStudent: boolean;
+    public selectedSchedule: any;
     chosenGroup: string = '';
-    lessonNames: { id: number, lesson_name: string }[] = [];
+    lessonNames: { id: number, subject_name: string }[] = [];
     teacherNames: { id: number, full_name: string }[] = [];
     groups: { id: number, name: string }[] = [];
     daysOfWeek: string[] = [
@@ -29,14 +31,14 @@ export class ScheduleComponent implements OnInit {
     ];
     lessonNumbers: number[] = [1, 2, 3, 4]
     lesson: {
-        lesson_id: number,
+        subject_id: number,
         teacher_id: number,
         lesson_number: number,
         day_of_week: string,
         group_id: number,
         week_type: number;
     } = {
-        lesson_id: 0,
+        subject_id: 0,
         teacher_id: 0,
         lesson_number: 0,
         day_of_week: '',
@@ -67,16 +69,16 @@ export class ScheduleComponent implements OnInit {
 
             const lessonRequests: Observable<{
                 id: number,
-                lesson_name: string,
+                subject_name: string,
             }>[] = schedules.map(schedule =>
-                this.scheduleService.getLessonById(schedule.lesson_id)
+                this.scheduleService.getLessonById(schedule.subject_id)
             );
             const teacherRequests: Observable<{ id: number, full_name: string }>[] = schedules.map(schedule =>
                 this.scheduleService.getTeacherById(schedule.teacher_id)
             );
             forkJoin(lessonRequests).subscribe(lessonNames => {
                 lessonNames.forEach((lesson, index) => {
-                    this.schedules[index].lessonName = lesson?.lesson_name || '';
+                    this.schedules[index].lessonName = lesson?.subject_name || '';
                     console.log(this.schedules[index].lessonName);
                 });
             });
@@ -108,7 +110,7 @@ export class ScheduleComponent implements OnInit {
 
     createSchedule() {
         if (
-            this.lesson.lesson_id === null ||
+            this.lesson.subject_id === null ||
             this.lesson.teacher_id === null ||
             this.lesson.group_id === null ||
             this.lesson.lesson_number === null ||
@@ -120,7 +122,7 @@ export class ScheduleComponent implements OnInit {
 
         // Проверка наличия предмета в позиции
         const existingSchedule = this.schedules.find(schedule =>
-            schedule.lesson_id &&
+            schedule.subject_id &&
             schedule.teacher_id &&
             schedule.group_id &&
             schedule.lesson_num === this.lesson.lesson_number &&
@@ -167,7 +169,7 @@ export class ScheduleComponent implements OnInit {
 
         this.authService.getLessons().subscribe((lessons: any) => {
             this.lessonNames = lessons.map((lesson: any) => {
-                return {id: lesson.id, lesson_name: lesson.lesson_name};
+                return {id: lesson.id, subject_name: lesson.subject_name};
             });
             console.log('Lessons ', this.lessonNames);
         });
@@ -178,7 +180,7 @@ export class ScheduleComponent implements OnInit {
                     return {id: group.id, name: group.name};
                 });
                 console.log('Groups ', this.groups);
-                this.chosenGroup = this.groups[0].name || '';
+                this.chosenGroup = this.groups[0]?.name ?? '';
             },
             error: (err) => {
                 console.log(err);
@@ -188,7 +190,7 @@ export class ScheduleComponent implements OnInit {
 
     private calculateWeekType(): number {
         const currentDate = new Date();
-    
+
         const currentYear = currentDate.getFullYear();
 
         const startDate = new Date(currentYear, 8, 1);
@@ -198,8 +200,7 @@ export class ScheduleComponent implements OnInit {
         const weeksPassed = Math.ceil(diff / (1000 * 60 * 60 * 24 * 7));
         console.log("Прошло недель: ", weeksPassed);
 
-        const weekType = weeksPassed % 2 === 0 ? 2 : 1;
-        return weekType;
+        return weeksPassed % 2 === 0 ? 2 : 1;
     }
 
     chooseWeekType() {
@@ -207,6 +208,43 @@ export class ScheduleComponent implements OnInit {
             this.lesson.week_type = 2;
         } else {
             this.lesson.week_type = 1;
+        }
+    }
+
+    public lessonSelect(schedule: any) {
+        if (this.selectedSchedule === schedule) {
+            this.selectedSchedule = '';
+        } else {
+            this.selectedSchedule = schedule;
+        }
+    }
+
+    public subjectHoverAction(num: any, day: any) {
+        return;
+    }
+
+    drop(event: CdkDragDrop<Schedule[]>) {
+        console.log(event);
+        const previousIndex = this.schedules.findIndex((schedule) => schedule === event.item.data);
+        const newIndex = event.currentIndex;
+        console.log(previousIndex, newIndex);
+        if (previousIndex !== newIndex) {
+            moveItemInArray(this.schedules, previousIndex, newIndex);
+            const movedSchedule = this.schedules[newIndex];
+            console.log(movedSchedule);
+            // Отправка запроса на обновление данных на сервере
+            this.scheduleService.updateSchedule(movedSchedule.id, movedSchedule).subscribe({
+                next: (updatedSchedule) => {
+                    // Обновление данных на сервере выполнено успешно
+                    console.log('Расписание обновлено:', updatedSchedule);
+                },
+                error: (error) => {
+                    // Обработка ошибки при обновлении данных
+                    console.error('Ошибка обновления расписания:', error);
+                    // Вернуть элемент на предыдущее место в случае ошибки
+                    moveItemInArray(this.schedules, newIndex, previousIndex);
+                }
+            });
         }
     }
 }

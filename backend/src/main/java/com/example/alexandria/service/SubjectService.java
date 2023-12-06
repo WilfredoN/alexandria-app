@@ -7,12 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SubjectService {
-    SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
 
     public SubjectDTO findSubject(Long id) {
         return subjectRepository.findSubjectById(id)
@@ -20,23 +19,23 @@ public class SubjectService {
                 .orElseThrow();
     }
 
-    private SubjectDTO mapSubject(Subject subject) {
+    public SubjectDTO mapSubject(Subject subject) {
         return SubjectDTO.builder()
                 .id(subject.getId())
-                .subject_name(subject.getSubject_name())
+                .subject_name(subject.getSubjectName())
                 .build();
     }
 
     public List<SubjectDTO> findSubjects() {
         return subjectRepository.findAll().stream()
                 .map(this::mapSubject)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public SubjectDTO create(SubjectDTO subject) {
         var savedSubject = subjectRepository.save(Subject.builder()
                 .id(subject.id())
-                .subject_name(subject.subject_name())
+                .subjectName(subject.subject_name())
                 .build());
         return mapSubject(savedSubject);
     }
@@ -44,7 +43,7 @@ public class SubjectService {
     public SubjectDTO update(SubjectDTO subject) {
         return subjectRepository.findSubjectById(subject.id())
                 .map(foundSubject -> {
-                    foundSubject.setSubject_name(subject.subject_name());
+                    foundSubject.setSubjectName(subject.subject_name());
                     return mapSubject(subjectRepository.save(foundSubject));
                 })
                 .orElseThrow();

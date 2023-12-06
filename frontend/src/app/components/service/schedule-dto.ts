@@ -3,7 +3,7 @@ export interface Schedule {
     day_of_week: string;
     lesson_num: number;
     week_type: number;
-    lesson_id: number;
+    subject_id: number;
     lessonName?: string;
     group_id: number;
     teacher_id: number;

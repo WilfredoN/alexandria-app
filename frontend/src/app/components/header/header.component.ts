@@ -15,11 +15,4 @@ export class HeaderComponent {
         localStorage.removeItem('user'));
         localStorage.removeItem('role');
   }
-  profileIn(){
-    this.router.navigate(['/profile']);
-  }
-
-  goToBase(){
-    this.router.navigate(['/base']);
-  }
 }

@@ -1,13 +1,13 @@
 <div class="container">
     <div class="current-info">
-        <div *ngIf="!isStudent" class="num-of-week">
+        <div *ngIf="isStudent" class="num-of-week">
             <p class="num-of-week-label">Текущий номер недели:</p>
             <p class="num-of-week-text">{{ this.lesson.week_type }} неделя</p>
         </div>
-        <div *ngIf="isStudent" class="num-of-week-selector">
+        <div *ngIf="!isStudent" class="num-of-week-selector">
             <p class="num-of-week-text" (click)="chooseWeekType()">{{lesson.week_type}}</p>
         </div>
-        <div *ngIf="isStudent" class="lesson_creator">
+        <div *ngIf="!isStudent" class="lesson_creator">
             <mat-accordion class="accordion" multi>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -17,9 +17,9 @@
                     </mat-expansion-panel-header>
                     <mat-form-field>
                         <mat-label>Название урока</mat-label>
-                        <mat-select [(ngModel)]="lesson.lesson_id">
+                        <mat-select [(ngModel)]="lesson.subject_id">
                             <mat-option *ngFor="let name of this.lessonNames" [value]="name.id">
-                                {{ name.lesson_name }}
+                                {{ name.subject_name }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -70,7 +70,8 @@
             <thead>
             <tr>
                 <th></th>
-                <th class="current-day-week" *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']"
+                <th class="current-day-week"
+                    *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']"
                     [ngClass]="{ 'current-day': isCurrentDay(day) }">
                     {{ day }}
                 </th>
@@ -79,15 +80,21 @@
             <tbody>
             <tr *ngFor="let lesson_num of [1, 2, 3, 4]">
                 <td class="num-lessons">{{ lesson_num }}</td>
-                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson">
+                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson"
+                    (mouseenter)="subjectHoverAction(this.lesson_num, this.day)"
+                    cdkDropList>
                     <ul>
-                        <li class="text-in-box" *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)">
+                        <li class="text-in-box"
+                            *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)"
+                            cdkDrag
+                            [cdkDragData]="schedule"
+                            (cdkDragDropped)="drop($event)">
                             <div class="icon-div">
                                 <mat-icon class="library_books_style">library_books</mat-icon>
                             </div>
                             <div>
-                            <p class="lesson-name" *ngIf="schedule.lesson_id">{{ schedule.lessonName }}</p>
-                            <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
+                                <p class="lesson-name" *ngIf="schedule.subject_id">{{ schedule.lessonName }}</p>
+                                <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
                             </div>
                         </li>
 

@@ -18,17 +18,21 @@ export class ScheduleService {
         return this.http.get<Schedule[]>(`${this.apiUrl}/${group_name}`);
     }
 
-    getLessonById(id: number): Observable<{ id: number, lesson_name: string }> {
-        const lessonUrl = `http://localhost:8080/api/lessons/${id}`;
-        return this.http.get<{ id: number, lesson_name: string}>(lessonUrl);
+    getLessonById(id: number): Observable<{ id: number, subject_name: string }> {
+        const lessonUrl = `http://localhost:8080/api/subjects/${id}`;
+        return this.http.get<{ id: number, subject_name: string}>(lessonUrl);
     }
 
     getTeacherById(id: number): Observable<{ id: number, full_name: string }> {
         const teacherUrl = `http://localhost:8080/api/teachers/${id}`;
         return this.http.get<{ id: number, full_name: string }>(teacherUrl);
     }
-    createLesson(lesson_name: string): Observable<{ id: number, lesson_name: string }> {
-        const lessonUrl = `http://localhost:8080/api/lessons`;
-        return this.http.post<{ id: number, lesson_name: string }>(`${lessonUrl}/create`, {lesson_name});
+    createLesson(subject_name: string): Observable<{ id: number, subject_name: string }> {
+        const lessonUrl = `http://localhost:8080/api/subjects`;
+        return this.http.post<{ id: number, subject_name: string }>(`${lessonUrl}/create`, {subject_name});
+    }
+    updateSchedule(id: number, schedule: Schedule): Observable<Schedule> {
+        const updateUrl = `http://localhost:8080/api/schedule/${id}`;
+        return this.http.put<Schedule>(updateUrl, schedule);
     }
 }
