@@ -5,7 +5,6 @@ import {forkJoin, Observable} from "rxjs";
 import {AuthService} from "../../service/auth-service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogChangeLesson} from "./dialog-change";
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
     selector: 'app-schedule',
@@ -220,31 +219,18 @@ export class ScheduleComponent implements OnInit {
     }
 
     public subjectHoverAction(num: any, day: any) {
-        return;
+        return
     }
 
-    drop(event: CdkDragDrop<Schedule[]>) {
-        console.log(event);
-        const previousIndex = this.schedules.findIndex((schedule) => schedule === event.item.data);
-        const newIndex = event.currentIndex;
-        console.log(previousIndex, newIndex);
-        if (previousIndex !== newIndex) {
-            moveItemInArray(this.schedules, previousIndex, newIndex);
-            const movedSchedule = this.schedules[newIndex];
-            console.log(movedSchedule);
-            // Отправка запроса на обновление данных на сервере
-            this.scheduleService.updateSchedule(movedSchedule.id, movedSchedule).subscribe({
-                next: (updatedSchedule) => {
-                    // Обновление данных на сервере выполнено успешно
-                    console.log('Расписание обновлено:', updatedSchedule);
-                },
-                error: (error) => {
-                    // Обработка ошибки при обновлении данных
-                    console.error('Ошибка обновления расписания:', error);
-                    // Вернуть элемент на предыдущее место в случае ошибки
-                    moveItemInArray(this.schedules, newIndex, previousIndex);
-                }
-            });
-        }
+    editSchedule(day: string, lesson_num: number) {
+        return
+    }
+
+    deleteSchedule(day: string, lesson_num: number) {
+        return
+    }
+
+    addSchedule(day: string, lesson_num: number) {
+        return
     }
 }

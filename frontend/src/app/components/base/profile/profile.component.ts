@@ -63,6 +63,9 @@ export class ProfileComponent implements OnInit {
         } else {
             console.error('Пользователь не найден');
             alert('Пользователь не найден');
+            this.router.navigate(['/log-in']).then(() =>
+                console.log('Переход на страницу входа')
+            );
         }
 
         if (!this.isStudent) {

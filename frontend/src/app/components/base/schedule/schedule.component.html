@@ -8,7 +8,7 @@
             <p class="num-of-week-text" (click)="chooseWeekType()">{{lesson.week_type}}</p>
         </div>
         <div *ngIf="!isStudent" class="lesson_creator">
-            <mat-accordion class="accordion" multi>
+            <mat-accordion class="accordion">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
@@ -80,25 +80,28 @@
             <tbody>
             <tr *ngFor="let lesson_num of [1, 2, 3, 4]">
                 <td class="num-lessons">{{ lesson_num }}</td>
-                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson"
-                    (mouseenter)="subjectHoverAction(this.lesson_num, this.day)"
-                    cdkDropList>
+                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson">
+                    <div class="pop-up">
+                        <mat-icon id="edit" class="pop-up_icon" (click)="editSchedule(day, lesson_num)">edit</mat-icon>
+                        <mat-icon id="add" class="pop-up_icon" (click)="addSchedule(day, lesson_num)">add</mat-icon>
+                        <mat-icon id="delete" class="pop-up_icon" (click)="deleteSchedule(day, lesson_num)">delete</mat-icon>
+                    </div>
                     <ul>
                         <li class="text-in-box"
                             *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)"
-                            cdkDrag
-                            [cdkDragData]="schedule"
-                            (cdkDragDropped)="drop($event)">
+                            (mouseenter)="subjectHoverAction(this.lesson_num, this.day)">
                             <div class="icon-div">
                                 <mat-icon class="library_books_style">library_books</mat-icon>
                             </div>
                             <div>
-                                <p class="lesson-name" *ngIf="schedule.subject_id">{{ schedule.lessonName }}</p>
-                                <p class="lesson-teacher" *ngIf="schedule.teacher_id">{{ schedule.teacherName }}</p>
+                                <p class="lesson-name">{{ schedule.lessonName }}</p>
+                                <p class="lesson-teacher">{{ schedule.teacherName }}</p>
                             </div>
                         </li>
 
-                        <li class="text-in-box" *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
+                        <li class="text-in-box"
+                            *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length"
+                            (mouseenter)="subjectHoverAction(this.lesson_num, this.day)">
                             <div>
                                 <p class="lesson-name"></p>
                                 <p class="lesson-teacher"></p>
