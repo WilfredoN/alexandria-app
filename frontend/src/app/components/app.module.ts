@@ -35,7 +35,6 @@ import localeRu from '@angular/common/locales/ru';
 import { StudentsComponent } from './base/students/students.component';
 import { ConfirmDialogComponent } from './base/profile/confirm-dialog.component';
 import {NotFoundComponent} from "./base/not-found/not-found.component";
-import {DragDropModule} from "@angular/cdk/drag-drop";
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -77,7 +76,6 @@ registerLocaleData(localeRu, 'ru');
         MatButtonModule,
         MatExpansionModule,
         MatAutocompleteModule,
-        DragDropModule
     ],
 	providers: [],
 	bootstrap: [AppComponent],
