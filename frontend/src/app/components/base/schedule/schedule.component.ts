@@ -16,7 +16,6 @@ export class ScheduleComponent implements OnInit {
     currentDay: string;
     user: any;
     isStudent: boolean;
-    public selectedSchedule: any;
     chosenGroup: string = '';
     lessonNames: { id: number, subject_name: string }[] = [];
     teacherNames: { id: number, full_name: string }[] = [];
@@ -44,7 +43,7 @@ export class ScheduleComponent implements OnInit {
         group_id: 0,
         week_type: 1
     }
-
+    lessonNameInput = '';
 
     constructor(private scheduleService: ScheduleService,
                 private authService: AuthService,
@@ -209,28 +208,65 @@ export class ScheduleComponent implements OnInit {
             this.lesson.week_type = 1;
         }
     }
-
-    public lessonSelect(schedule: any) {
-        if (this.selectedSchedule === schedule) {
-            this.selectedSchedule = '';
-        } else {
-            this.selectedSchedule = schedule;
-        }
-    }
-
     public subjectHoverAction(num: any, day: any) {
         return
     }
 
-    editSchedule(day: string, lesson_num: number) {
-        return
+    popUpVisibility: {
+        day: string,
+        num: number
+    } = {
+        day: '',
+        num: 0
+    }
+    selectedSchedule: number | null = null;
+    deleteStageSet(id: number) {
+        if (this.selectedSchedule === id) {
+            this.authService.deleteSchedule(id).subscribe(() => {
+                console.log(`Schedule with id ${id} deleted successfully.`);
+                this.selectedSchedule = null;
+            });
+        } else {
+            this.selectedSchedule = id;
+            return;
+        }
+    }
+    isConfirmReady: boolean = false;
+    togglePopUp(num: number, day: string) {
+        if (this.popUpVisibility.num === num && this.popUpVisibility?.day === day) {
+            this.popUpVisibility = {
+                day: '',
+                num: 0
+            };
+        }
+        else {
+            this.popUpVisibility = {
+                day: day,
+                num: num
+            };
+        }
     }
 
-    deleteSchedule(day: string, lesson_num: number) {
-        return
+    toggleAddition() {
+        this.isConfirmReady = !this.isConfirmReady;
     }
-
-    addSchedule(day: string, lesson_num: number) {
-        return
+    createLesson() {
+        if (this.lessonNameInput === '') {
+            alert('Введите название предмета!');
+            return;
+        }
+        const existingLesson = this.lessonNames.find(lesson => lesson.subject_name === this.lessonNameInput);
+        const schedule = {
+            subject_id: existingLesson?.id,
+            teacher_id: this.user.id,
+            lesson_num: this.popUpVisibility.num,
+            day_of_week: this.popUpVisibility.day,
+            group_id: 1,
+            week_type: this.lesson.week_type
+        }
+        this.authService.createSchedule(schedule).subscribe((response: any) => {
+            console.log(response);
+            alert('Предмет успешно добавлен в расписание!');
+        });
     }
 }

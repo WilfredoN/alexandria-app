@@ -61,12 +61,13 @@ export class AuthService {
     createSchedule(lesson: any): Observable<any> {
         const schedule = {
             day_of_week: lesson.day_of_week,
-            lesson_num: lesson.lesson_number,
+            lesson_num: lesson.lesson_num,
             week_type: lesson.week_type,
             subject_id: lesson.subject_id,
-            group_id: lesson.group_id.id,
-            teacher_id: lesson.teacher_id.id
+            group_id: lesson.group_id,
+            teacher_id: lesson.teacher_id
         }
+        console.log(schedule);
         return this.http.post(`${this.baseUrl}/schedule/create`, schedule, this.httpOptions);
     }
 

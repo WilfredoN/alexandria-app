@@ -35,6 +35,7 @@ import localeRu from '@angular/common/locales/ru';
 import { StudentsComponent } from './base/students/students.component';
 import { ConfirmDialogComponent } from './base/profile/confirm-dialog.component';
 import {NotFoundComponent} from "./base/not-found/not-found.component";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 registerLocaleData(localeRu, 'ru');
 @NgModule({
@@ -76,6 +77,7 @@ registerLocaleData(localeRu, 'ru');
         MatButtonModule,
         MatExpansionModule,
         MatAutocompleteModule,
+        MatTooltipModule,
     ],
 	providers: [],
 	bootstrap: [AppComponent],

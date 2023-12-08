@@ -165,33 +165,54 @@ mat-expansion-panel {
         opacity: 1;
     }
 }
-@keyframes hidePopUp {
-    0% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-
-}
 
 .pop-up {
-    animation: .25s ease-in-out 0s 1 normal none running showPopUp;
+    animation: .35s ease-in-out 0s 1 normal none running showPopUp;
     position: absolute;
-    margin-left: 5em;
     margin-bottom: 5em;
-    width: 8em;
+    width: 10em;
     display: none;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
     z-index: 1;
 }
+.create_lesson_input:not(.input-active) {
+    display: none;
+}
+.create_lesson_input {
+    width: 90%;
+    position: absolute;
+    height: 1.5em;
+    border-radius: 16em;
+    border: 1px solid #669bc0;
+    outline: none;
+    padding: .8em;
+    margin-bottom: 7em;
+}
 
-.lesson:hover .pop-up {
+
+.active-present, .active-empty {
     display: flex;
+    z-index: 10;
+}
+.pop-up:not(.active-empty) {
+    flex-direction: row;
+}
+.pop-up:not(.active-present) {
+    flex-direction: column;
+}
+.create_lesson_input, .input-active {
+    animation: .35s ease-in-out 0s 1 normal none running showPopUp;
+    display: flex;
+    z-index: 10;
+}
+#icons-empty {
+    display:flex;
+    flex-direction: row;
+}
+#drag {
+    margin-left: .5em;
+    margin-right: .5em;
 }
 
 .pop-up_icon {
@@ -200,19 +221,32 @@ mat-expansion-panel {
     background-color: white;
     color: #070101;
     border-radius: 50%;
-    margin-right: 0.5em;
     padding: 0.1em;
-    font-size: 1.5em;
+    font-size: 1.3em;
     box-shadow: 1px 0 5px 1px rgba(82, 135, 173, 0.3);
     outline: 2px solid #669bc0;
     font-weight: 500;
 }
-#add {
-    font-size: 1.7em;
-}
 
-.pop-up_icon:hover {
+.pop-up_icon:hover:not(.delete-icon-active) {
     cursor: pointer;
     background-color: #b9b9b9;
     transition: 0.2s ease-in-out;
+}
+
+.delete-icon-active {
+    background-color: #ff0000;
+    transition: 0.2s ease-in-out;
+}
+
+input[type="text"] {
+    font-size: .8em;
+}
+
+.input_create {
+    width: 100%;
+}
+
+#confirm {
+    margin-left: .2em;
 }
