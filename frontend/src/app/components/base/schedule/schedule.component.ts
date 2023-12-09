@@ -61,6 +61,10 @@ export class ScheduleComponent implements OnInit {
             this.chosenGroup = this.user.group_name;
             this.lesson.week_type = this.calculateWeekType();
         }
+        this.fetchSchedules();
+
+    }
+    fetchSchedules() {
         this.scheduleService.getSchedules(this.chosenGroup).subscribe(schedules => {
             this.schedules = schedules;
             console.log(this.schedules);
@@ -89,7 +93,6 @@ export class ScheduleComponent implements OnInit {
             });
         });
     }
-
     getSchedulesForDayAndLesson(day: string, lessonNumber: number): Schedule[] {
         return this.schedules.filter(schedule => schedule.day_of_week === day && schedule.lesson_num === lessonNumber && schedule.week_type === this.lesson.week_type);
     }
@@ -208,6 +211,7 @@ export class ScheduleComponent implements OnInit {
             this.lesson.week_type = 1;
         }
     }
+
     public subjectHoverAction(num: any, day: any) {
         return
     }
@@ -220,26 +224,35 @@ export class ScheduleComponent implements OnInit {
         num: 0
     }
     selectedSchedule: number | null = null;
+
     deleteStageSet(id: number) {
         if (this.selectedSchedule === id) {
-            this.authService.deleteSchedule(id).subscribe(() => {
-                console.log(`Schedule with id ${id} deleted successfully.`);
-                this.selectedSchedule = null;
+            this.authService.deleteSchedule(id).subscribe({
+                next: (response: any) => {
+                    console.log(response);
+                    // alert('Предмет успешно удален из расписания!');
+                    this.fetchSchedules();
+                    this.togglePopUp(0, '');
+                },
+                error: (err) => {
+                    console.log(err);
+                }
             });
         } else {
             this.selectedSchedule = id;
             return;
         }
     }
+
     isConfirmReady: boolean = false;
+
     togglePopUp(num: number, day: string) {
         if (this.popUpVisibility.num === num && this.popUpVisibility?.day === day) {
             this.popUpVisibility = {
                 day: '',
                 num: 0
             };
-        }
-        else {
+        } else {
             this.popUpVisibility = {
                 day: day,
                 num: num
@@ -250,12 +263,17 @@ export class ScheduleComponent implements OnInit {
     toggleAddition() {
         this.isConfirmReady = !this.isConfirmReady;
     }
+
     createLesson() {
         if (this.lessonNameInput === '') {
             alert('Введите название предмета!');
             return;
         }
         const existingLesson = this.lessonNames.find(lesson => lesson.subject_name === this.lessonNameInput);
+        if (!existingLesson) {
+            alert('Такого предмета не существует!');
+            return;
+        }
         const schedule = {
             subject_id: existingLesson?.id,
             teacher_id: this.user.id,
@@ -264,9 +282,17 @@ export class ScheduleComponent implements OnInit {
             group_id: 1,
             week_type: this.lesson.week_type
         }
-        this.authService.createSchedule(schedule).subscribe((response: any) => {
-            console.log(response);
-            alert('Предмет успешно добавлен в расписание!');
+        this.authService.createSchedule(schedule).subscribe({
+            next: (response: any) => {
+                console.log(response);
+                // alert('Предмет успешно добавлен в расписание!');
+                this.toggleAddition();
+                this.fetchSchedules();
+                this.lessonNameInput = '';
+            },
+            error: (err) => {
+                console.log(err);
+            }
         });
     }
 }
