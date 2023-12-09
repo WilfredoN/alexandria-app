@@ -2,12 +2,13 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Announcement} from "./announcement-dto";
+import {ApiService} from "./api-service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AnnouncementsService {
-    private apiURL = 'http://localhost:8080/api/announcements';
+    private apiURL = ApiService.API_URL + '/announcements';
 
     constructor(private http: HttpClient) {
     }

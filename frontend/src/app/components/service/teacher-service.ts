@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TeacherDTO} from "./teacher-dto";
+import {ApiService} from "./api-service";
 
 @Injectable({providedIn: 'root'})
 export class TeacherService {
@@ -9,41 +10,18 @@ export class TeacherService {
     }
 
     user: TeacherDTO;
-    apiURL: string = 'http://localhost:8080/api/teachers';
+    apiURL: string = ApiService.API_URL;
 
-    getTeacher(user : TeacherDTO): Observable<TeacherDTO> {
-        this.user = user;
-        return this.http.get<TeacherDTO>('http://localhost:8080/api/teachers/' + this.user.login, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    }
     getTeacherById(id: number): Observable<TeacherDTO> {
-        return this.http.get<TeacherDTO>(`http://localhost:8080/api/teachers/${id}`);
-    }
-    updateTeacher(teacher: TeacherDTO, password: string): Observable<TeacherDTO> {
-        return this.http.put<TeacherDTO>(`http://localhost:8080/api/teachers/${teacher.login}`,
-            {
-                "password": password,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    }
-
-    deleteTeacher(login: string): Observable<TeacherDTO> {
-        return this.http.delete<TeacherDTO>(`http://localhost:8080/api/teachers/${login}`);
+        return this.http.get<TeacherDTO>(this.apiURL + '/teachers/' + id);
     }
 
     getTeachersForGroup(groupName: string): Observable<TeacherDTO[]> {
-        const url = `${this.apiURL}/groups/${groupName}`;
-        return this.http.get<TeacherDTO[]>(url, {
+        return this.http.get<TeacherDTO[]>(this.apiURL + '/teachers/groups/' + groupName, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        }
     }
+}
 
