@@ -24,18 +24,18 @@ CREATE TABLE IF NOT EXISTS groups
     teacher_id INTEGER REFERENCES teachers (id) ON DELETE CASCADE,
     name       VARCHAR(8) NOT NULL UNIQUE
 );
-CREATE TABLE IF NOT EXISTS lessons
+CREATE TABLE IF NOT EXISTS subjects
 (
-    id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    lesson_name VARCHAR(80) NOT NULL UNIQUE
+    id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    subject_name VARCHAR(80) NOT NULL UNIQUE
 );
 CREATE TABLE IF NOT EXISTS schedule
 (
     id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     day_of_week VARCHAR(15) NOT NULL,
-    lesson_num  INTEGER     NOT NULL CHECK ( lesson_num >= 1 AND lesson_num <= 6 ),
+    lesson_num INTEGER     NOT NULL CHECK ( lesson_num >= 1 AND lesson_num <= 6 ),
     week_type   INTEGER     NOT NULL CHECK ( week_type >= 1 AND week_type <= 2 ),
-    lesson_id   INTEGER     NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+    subject_id  INTEGER     NOT NULL REFERENCES subjects (id) ON DELETE CASCADE,
     group_id    INTEGER     NOT NULL REFERENCES groups (id) ON DELETE CASCADE,
     teacher_id  INTEGER     NOT NULL REFERENCES teachers (id) ON DELETE CASCADE
 );

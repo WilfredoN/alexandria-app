@@ -6,6 +6,5 @@ import {Component} from '@angular/core';
     styleUrls: ['./base.component.css'],
 })
 export class BaseComponent {
-    isPanelExpanded: boolean = false;
     user: any = JSON.parse(localStorage.getItem('user') as string);
 }

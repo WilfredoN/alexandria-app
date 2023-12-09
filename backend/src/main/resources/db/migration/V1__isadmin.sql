@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS homework
     updated_at  TIMESTAMP    NOT NULL DEFAULT NOW(),
     deadline    TIMESTAMP    NOT NULL,
     group_id    INTEGER      NOT NULL REFERENCES groups (id) ON DELETE CASCADE,
-    lesson_id   INTEGER      NOT NULL REFERENCES lessons (id) ON DELETE CASCADE,
+    subject_id   INTEGER      NOT NULL REFERENCES subjects (id) ON DELETE CASCADE,
     teacher_id  INTEGER      NOT NULL REFERENCES teachers (id) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS homework_status

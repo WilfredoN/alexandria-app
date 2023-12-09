@@ -51,7 +51,7 @@ export class AuthService {
     }
 
     getLessons(): Observable<LessonDTO[]> {
-        return this.http.get<LessonDTO[]>(`${this.baseUrl}/lessons`);
+        return this.http.get<LessonDTO[]>(`${this.baseUrl}/subjects`);
     }
 
     getGroups(): Observable<GroupDTO[]> {
@@ -61,25 +61,18 @@ export class AuthService {
     createSchedule(lesson: any): Observable<any> {
         const schedule = {
             day_of_week: lesson.day_of_week,
-            lesson_num: lesson.lesson_number,
+            lesson_num: lesson.lesson_num,
             week_type: lesson.week_type,
-            lesson_id: lesson.lesson_id,
-            group_id: lesson.group_id.id,
-            teacher_id: lesson.teacher_id.id
+            subject_id: lesson.subject_id,
+            group_id: lesson.group_id,
+            teacher_id: lesson.teacher_id
         }
+        console.log(schedule);
         return this.http.post(`${this.baseUrl}/schedule/create`, schedule, this.httpOptions);
     }
 
     updateSchedule(id: number, lesson: any) {
-        const schedule = {
-            day_of_week: lesson.day_of_week,
-            lesson_num: lesson.lesson_number,
-            week_type: lesson.week_type,
-            lesson_id: lesson.lesson_id,
-            group_id: lesson.group_id.id,
-            teacher_id: lesson.teacher_id.id
-        }
-        return this.http.put(`${this.baseUrl}/schedule/${id}`, schedule, this.httpOptions);
+        return this.http.put(`${this.baseUrl}/schedule/${id}`, lesson, this.httpOptions);
     }
 
     deleteSchedule(id: number) {

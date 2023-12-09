@@ -65,6 +65,9 @@ export class ProfileComponent implements OnInit {
         } else {
             console.error('Пользователь не найден');
             alert('Пользователь не найден');
+            this.router.navigate(['/log-in']).then(() =>
+                console.log('Переход на страницу входа')
+            );
         }
 
         if (!this.isStudent) {
@@ -92,7 +95,7 @@ export class ProfileComponent implements OnInit {
                 // Обновляем данные пользователя в localStorage
                 localStorage.setItem('user', JSON.stringify(userDTO));
                 localStorage.setItem('role', this.userDTO.role);
-                this.user = JSON.parse(localStorage.getItem('user') || '');
+                this.user = JSON.parse(localStorage.getItem('user') ?? '');
             });
         }
         console.log(this.user);
@@ -148,7 +151,7 @@ export class ProfileComponent implements OnInit {
           width: '250px',
           data: { message: 'Вы точно хотите удалить свой аккаунт?' }
         });
-      
+
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.confirmDeleteAccount();

@@ -21,4 +21,6 @@ public class Group {
     private String name;
     @ManyToMany
     private List<Teacher> teachers;
+    @ManyToMany
+    private List<Subject> subjects;
 }

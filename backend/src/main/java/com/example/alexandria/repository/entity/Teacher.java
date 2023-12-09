@@ -41,6 +41,13 @@ public class Teacher {
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     private List<Group> groups;
+    @ManyToMany
+    @JoinTable(
+            name = "subjects_teachers",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private List<Subject> subjects;
 
     public void setPassword(String password) {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());

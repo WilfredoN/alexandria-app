@@ -30,8 +30,8 @@ public class Homework {
     @LastModifiedDate
     private Instant updatedAt;
     @ManyToOne
-    @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;

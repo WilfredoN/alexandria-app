@@ -1,19 +1,18 @@
 package com.example.alexandria.service;
 
-import com.example.alexandria.repository.entity.Teacher;
 import com.example.alexandria.repository.TeacherRepository;
+import com.example.alexandria.repository.entity.Teacher;
+import com.example.alexandria.service.dto.GroupDTO;
 import com.example.alexandria.service.dto.TeacherDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -39,8 +38,21 @@ public class TeacherService {
         }
     }
 
-    public Optional<Teacher> getTeacherWithGroups(long teacherId) {
-        return teacherRepository.findByIdWithGroups(teacherId);
+    public List<GroupDTO> getTeacherWithGroups(long teacherId) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findByIdWithGroups(teacherId);
+        List<GroupDTO> groupDTOs = new ArrayList<>();
+        if (optionalTeacher.isPresent()) {
+            Teacher teacher = optionalTeacher.get();
+            groupDTOs = teacher.getGroups().stream()
+                    .map(group -> {
+                        GroupDTO dto = new GroupDTO();
+                        dto.setId(group.getId());
+                        dto.setName(group.getName());
+                        return dto;
+                    })
+                    .toList();
+        }
+        return groupDTOs;
     }
 
 
@@ -49,25 +61,17 @@ public class TeacherService {
                 .map(this::mapTeacher)
                 .orElseThrow();
     }
-
-    public TeacherDTO findTeacherByLogin(String login) {
-        return teacherRepository.findByLogin(login).stream()
-                .map(this::mapTeacher)
-                .findFirst()
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatusCode.valueOf(404), "Teacher not found"));
-    }
-
     public List<TeacherDTO> findTeachers() {
         return teacherRepository.findAll().stream()
                 .map(this::mapTeacher)
-                .collect(toList());
+                .toList();
     }
 
     public List<TeacherDTO> findTeacherByGroup(String groupName) {
         List<Teacher> teachers = teacherRepository.findByGroupsName(groupName);
         return teachers.stream()
                 .map(this::mapTeacher)
-                .collect(toList());
+                .toList();
     }
 
     public void delete(String login) {
