@@ -8,10 +8,10 @@ import {ApiService} from "./api-service";
     providedIn: 'root'
 })
 export class AnnouncementsService {
-    private apiURL = ApiService.API_URL + '/announcements';
 
     constructor(private http: HttpClient) {
     }
+    private apiURL = ApiService.API_URL + '/announcements';
 
     getAnnouncements(): Observable<Announcement[]> {
         return this.http.get<Announcement[]>(this.apiURL);

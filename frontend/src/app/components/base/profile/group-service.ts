@@ -8,10 +8,10 @@ import {ApiService} from "../../service/api-service";
     providedIn: 'root',
 })
 export class GroupService {
-    private baseUrl = ApiService.API_URL + '/groups';
 
     constructor(private http: HttpClient) {
     }
+    private baseUrl = ApiService.API_URL + '/groups';
 
     getGroups(): Observable<Group[]> {
         return this.http.get<Group[]>(`${this.baseUrl}`);

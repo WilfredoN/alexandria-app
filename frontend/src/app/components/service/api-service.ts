@@ -1,3 +1,8 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class ApiService {
-    public static readonly API_URL = 'https://alexandria-app-backend.onrender.com/api';
+  public static API_URL = 'http://localhost:8080/api';
 }
