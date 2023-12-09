@@ -211,6 +211,7 @@ export class ScheduleComponent implements OnInit {
             this.lesson.week_type = 1;
         }
     }
+
     popUpVisibility: {
         day: string,
         num: number
@@ -247,11 +248,13 @@ export class ScheduleComponent implements OnInit {
                 day: '',
                 num: 0
             };
+
         } else {
             this.popUpVisibility = {
                 day: day,
                 num: num
             };
+
         }
     }
 
@@ -290,4 +293,34 @@ export class ScheduleComponent implements OnInit {
             }
         });
     }
+    movingSchedule: any | null = null;
+
+    setMovingSchedule(schedule: any) {
+        this.movingSchedule = schedule;
+    }
+    insertSchedule(lesson_num: number, day: string) {
+        if (this.movingSchedule) {
+            const newSchedule = {
+                subject_id: this.movingSchedule.subject_id,
+                teacher_id: this.movingSchedule.teacher_id,
+                lesson_num: lesson_num,
+                day_of_week: day,
+                group_id: 1,
+                week_type: this.lesson.week_type
+            };
+        console.log(newSchedule);
+            this.authService.updateSchedule(this.movingSchedule.id, newSchedule).subscribe({
+                next: (response: any) => {
+                    console.log(response);
+                    this.movingSchedule = null;
+                    this.fetchSchedules(); // Обновите данные о расписании после вставки
+                    this.togglePopUp(0, ''); // Скрыть pop-up после вставки
+                },
+                error: (error: any) => {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
 }

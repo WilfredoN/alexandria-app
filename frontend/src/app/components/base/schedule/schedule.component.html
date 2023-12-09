@@ -80,7 +80,8 @@
             <tbody>
             <tr *ngFor="let lesson_num of [1, 2, 3, 4]">
                 <td class="num-lessons">{{ lesson_num }}</td>
-                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson">
+                <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson"
+                    (click)="insertSchedule(lesson_num, day)">
                     <ul (click)="togglePopUp(this.lesson_num, this.day)">
                         <li class="text-in-box"
                             *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)">
@@ -95,7 +96,7 @@
                                 <mat-icon id="drag" class="pop-up_icon" [matTooltipPosition]="'above'"
                                           [matTooltipShowDelay]="500"
                                           matTooltip="Переместить"
-                                          (click)="$event.stopPropagation();">
+                                          (click)="$event.stopPropagation(); setMovingSchedule(schedule)">
                                     apps
                                 </mat-icon>
                                 <mat-icon id="delete" class="pop-up_icon"

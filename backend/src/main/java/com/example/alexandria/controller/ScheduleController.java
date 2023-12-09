@@ -42,7 +42,7 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public ScheduleDTO updateSchedule(@PathVariable long id, @RequestBody ScheduleDTO schedule) {
-        return scheduleService.update(id, schedule);
+    public void updateSchedule(@PathVariable long id, @RequestBody ScheduleDTO schedule) {
+        scheduleService.update(id, schedule);
     }
 }

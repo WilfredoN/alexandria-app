@@ -21,7 +21,7 @@ public class Schedule {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "group_id")
     private Group group;
 
@@ -30,6 +30,6 @@ public class Schedule {
     private Teacher teacher;
 
     private String dayOfWeek;
-    private int lesson_num;
+    private int lessonNum;
     private int weekType;
 }
