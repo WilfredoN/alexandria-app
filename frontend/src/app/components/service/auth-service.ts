@@ -20,10 +20,10 @@ export interface GroupDTO {
     providedIn: 'root',
 })
 export class AuthService {
-    private apiURL = ApiService.API_URL;
 
     constructor(private http: HttpClient) {
     }
+    private apiURL = ApiService.API_URL;
 
     httpOptions = {
         headers: new HttpHeaders({
@@ -82,6 +82,7 @@ export class AuthService {
     }
 
     logIn(user: loginDTO): Observable<loginDTO> {
+        console.log(this.apiURL)
         const endpoint = user.role === 'teacher' ? '/teachers/login' : '/students/login';
         return this.http.post<loginDTO>(`${this.apiURL}${endpoint}`, user, this.httpOptions);
     }
