@@ -83,8 +83,7 @@
                 <td *ngFor="let day of ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница']" class="lesson">
                     <ul (click)="togglePopUp(this.lesson_num, this.day)">
                         <li class="text-in-box"
-                            *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)"
-                            (mouseenter)="subjectHoverAction(this.lesson_num, this.day)">
+                            *ngFor="let schedule of getSchedulesForDayAndLesson(day, lesson_num)">
                             <div class="pop-up"
                                  [class.active-present]="this.popUpVisibility.day === this.day && this.popUpVisibility.num === this.lesson_num">
                                 <mat-icon id="edit" class="pop-up_icon"
@@ -117,8 +116,7 @@
                         </li>
 
                         <li class="text-in-box"
-                            *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length"
-                            (mouseenter)="subjectHoverAction(this.lesson_num, this.day)">
+                            *ngIf="!getSchedulesForDayAndLesson(day, lesson_num).length">
                             <div class="pop-up"
                                  [class.active-empty]="this.popUpVisibility.day === this.day && this.popUpVisibility.num === this.lesson_num">
                                 <input class="create_lesson_input" type="text"

@@ -211,11 +211,6 @@ export class ScheduleComponent implements OnInit {
             this.lesson.week_type = 1;
         }
     }
-
-    public subjectHoverAction(num: any, day: any) {
-        return
-    }
-
     popUpVisibility: {
         day: string,
         num: number
