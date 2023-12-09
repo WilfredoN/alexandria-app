@@ -40,6 +40,8 @@ export class ProfileComponent implements OnInit {
     }
     studentList: any;
 
+    isChecked = false;
+
     constructor(
         private router: Router,
         private groupService: GroupService,
@@ -116,9 +118,35 @@ export class ProfileComponent implements OnInit {
         }
     }
 
+    adminAccount(): void {
+        if(!this.isChecked){
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                width: '250px',
+                data: { message: 'Вы точно хотите перейти на админа?' }
+            });
+        
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.switchToAdmin();
+                } else {
+                    this.resetCheckbox();
+                }
+            });
+        }
+    }
+     
+    private switchToAdmin(): void {
+        
+    }
+    
+    private resetCheckbox(): void {
+        this.isChecked = false;
+    }
+
     deleteAccount(): void {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          width: '250px'
+          width: '250px',
+          data: { message: 'Вы точно хотите удалить свой аккаунт?' }
         });
       
         dialogRef.afterClosed().subscribe(result => {

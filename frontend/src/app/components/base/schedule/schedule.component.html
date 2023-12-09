@@ -1,13 +1,13 @@
 <div class="container">
     <div class="current-info">
-        <div *ngIf="!isStudent" class="num-of-week">
+        <div *ngIf="isStudent" class="num-of-week">
             <p class="num-of-week-label">Текущий номер недели:</p>
             <p class="num-of-week-text">{{ this.lesson.week_type }} неделя</p>
         </div>
-        <div *ngIf="isStudent" class="num-of-week-selector">
+        <div *ngIf="!isStudent" class="num-of-week-selector">
             <p class="num-of-week-text" (click)="chooseWeekType()">{{lesson.week_type}}</p>
         </div>
-        <div *ngIf="isStudent" class="lesson_creator">
+        <div *ngIf="!isStudent" class="lesson_creator">
             <mat-accordion class="accordion" multi>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -48,15 +48,7 @@
                                 {{ day }}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Группа</mat-label>
-                        <mat-select [(ngModel)]="lesson.group_id">
-                            <mat-option *ngFor="let group of this.groups" [value]="group">
-                                {{ group.name }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    </mat-form-field>   
                     <br>
                     <button mat-raised-button color="primary" (click)="createSchedule()">Создать</button>
                 </mat-expansion-panel>
