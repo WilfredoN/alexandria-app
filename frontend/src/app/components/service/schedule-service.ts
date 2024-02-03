@@ -8,9 +8,9 @@ import {ApiService} from "./api-service";
     providedIn: 'root'
 })
 export class ScheduleService {
-    private apiURL = ApiService.API_URL;
 
     constructor(private http: HttpClient) {}
+    private apiURL = ApiService.API_URL;
 
     getSchedules(group_name: string): Observable<Schedule[]> {
         if (group_name === '') {

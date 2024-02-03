@@ -16,4 +16,4 @@ WORKDIR /app
 
 COPY --from=builder /app/build/libs/* /app/
 COPY --from=builder /app/build/resources/main/db/migration /app/db/migration
-CMD ["/bin/sh", "-c", "java -jar alexandria-0.0.3.jar --spring.profiles.active='prod'"]
+CMD ["/bin/sh", "-c", "java -jar alexandria-0.0.3.jar --spring.profiles.active='${ACTIVE_PROFILE}'"]
