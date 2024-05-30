@@ -53,7 +53,7 @@ registerLocaleData(localeRu, 'ru');
         DialogChangeLesson,
         StudentsComponent,
         ConfirmDialogComponent,
-        NotFoundComponent
+        NotFoundComponent,
 	],
     imports: [
         BrowserModule,
